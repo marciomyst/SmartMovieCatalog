@@ -4,9 +4,9 @@ using SmartMovieCatalog.Infrastructure;
 
 namespace SmartMovieCatalog.Api
 {
-    public class Program
+    public static class Program
     {
-        private const string HealthCheckUrl = "http://127.0.0.1:8080/health";
+        private static readonly Uri HealthCheckUri = BuildHealthCheckUri();
 
         public static int Main(string[] args)
         {
@@ -62,7 +62,7 @@ namespace SmartMovieCatalog.Api
 
             try
             {
-                using var response = httpClient.GetAsync(HealthCheckUrl).GetAwaiter().GetResult();
+                using var response = httpClient.GetAsync(HealthCheckUri).GetAwaiter().GetResult();
                 return response.IsSuccessStatusCode ? 0 : 1;
             }
             catch (HttpRequestException)
@@ -73,6 +73,17 @@ namespace SmartMovieCatalog.Api
             {
                 return 1;
             }
+        }
+
+        private static Uri BuildHealthCheckUri()
+        {
+            return new UriBuilder
+            {
+                Scheme = Uri.UriSchemeHttp,
+                Host = "127.0.0.1",
+                Port = 8080,
+                Path = "health"
+            }.Uri;
         }
     }
 }
