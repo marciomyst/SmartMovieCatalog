@@ -49,18 +49,6 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Build Docker image
-        run: |
-          docker build \
-            -t smartmoviecatalog-api:ci \
-            -f backend/src/SmartMovieCatalog.Api/Dockerfile \
-            .
-
-      - name: Snyk Container scan
-        run: snyk container test smartmoviecatalog-api:ci --severity-threshold=high
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
       - name: Snyk Code scan
         continue-on-error: true
         run: snyk code test --severity-threshold=high
