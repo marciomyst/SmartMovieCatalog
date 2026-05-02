@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-smart_movie_catalog}
+      POSTGRES_USER: ${POSTGRES_USER:-smartmovie}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-smartmovie_dev_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    image: ai-flix-api:local
+    build:
+      context: .
+      dockerfile: backend/src/SmartMovieCatalog.Api/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      ASPNETCORE_HTTP_PORTS: ${ASPNETCORE_HTTP_PORTS:-8080}
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=${POSTGRES_DB:-smart_movie_catalog};Username=${POSTGRES_USER:-smartmovie};Password=${POSTGRES_PASSWORD:-smartmovie_dev_password}
+    ports:
+      - "${API_HTTP_PORT:-5048}:8080"
+
+volumes:
+  postgres_data:

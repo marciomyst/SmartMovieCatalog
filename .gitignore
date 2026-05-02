@@ -1,0 +1,47 @@
+# Build output
+bin/
+obj/
+dist/
+out/
+
+# .NET
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Node / Angular
+node_modules/
+.angular/cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vs/
+.vscode/*.user
+*.code-workspace.user
+.ai/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+secrets.*.json
+*.pfx
+*.p12
+*.key
+*.pem
+
+# Docker / local artifacts
+docker-compose.override.local.yml
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
