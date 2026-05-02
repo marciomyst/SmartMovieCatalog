@@ -55,7 +55,7 @@ jobs:
             /d:sonar.qualitygate.wait=true \
             /d:sonar.qualitygate.timeout=300 \
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
-            /d:sonar.javascript.lcov.reportPaths="frontend/coverage/lcov.info" \
+            /d:sonar.javascript.lcov.reportPaths="frontend/coverage/smartmoviecatalog.angular/lcov.info" \
             /d:sonar.exclusions="**/bin/**,**/obj/**,**/node_modules/**,**/dist/**,**/.angular/**"
 
       - name: Restore backend
@@ -78,7 +78,7 @@ jobs:
 
       - name: Run frontend tests with coverage
         working-directory: frontend
-        run: npm test -- --watch=false --code-coverage
+        run: npm test -- --watch=false --coverage --coverage-reporters=lcov
 
       - name: End SonarCloud analysis
         run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
