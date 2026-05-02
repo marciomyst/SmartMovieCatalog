@@ -39,7 +39,14 @@ RUN dotnet restore "./backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.cs
 COPY . .
 
 WORKDIR "/src/backend/src/SmartMovieCatalog.Api"
-RUN dotnet publish "./SmartMovieCatalog.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish --no-restore --no-self-contained /p:UseAppHost=false /p:BuildInParallel=false -maxcpucount:1
+RUN dotnet publish "./SmartMovieCatalog.Api.csproj" \
+    -c $BUILD_CONFIGURATION \
+    -o /app/publish \
+    --no-restore \
+    --no-self-contained \
+    /p:UseAppHost=false \
+    /p:BuildInParallel=false \
+    -maxcpucount:1
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
