@@ -1,0 +1,11 @@
+{
+  "name": "smart-movie-catalog",
+  "private": true,
+  "scripts": {
+    "prepare": "node .husky/install.mjs",
+    "prepush": "dotnet build SmartMovieCatalog.slnx && npm --prefix frontend run build && npm --prefix frontend test -- --watch=false"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

@@ -1,0 +1,47 @@
+# Exclude everything by default. The Docker image only needs backend source
+# projects and the Angular build inputs.
+**
+
+# Optional repository-level build configuration.
+!global.json
+!NuGet.config
+!Directory.Build.props
+!Directory.Build.targets
+!Directory.Packages.props
+
+# Backend build inputs.
+!backend/
+!backend/src/
+!backend/src/**
+
+# Frontend build inputs used by the ASP.NET SPA project reference.
+!frontend/
+!frontend/Smartmoviecatalog.Angular.esproj
+!frontend/angular.json
+!frontend/package.json
+!frontend/package-lock.json
+!frontend/tsconfig.json
+!frontend/tsconfig.app.json
+!frontend/src/
+!frontend/src/**
+!frontend/public/
+!frontend/public/**
+
+# Keep generated and local-only output out even under included source paths.
+**/bin/
+**/obj/
+**/dist/
+**/node_modules/
+**/.angular/
+**/.vs/
+**/.vscode/
+**/*.*proj.user
+**/.env
+**/.git
+**/.gitignore
+**/Dockerfile*
+**/docker-compose*
+**/*.http
+**/CHANGELOG.md
+backend/src/**/Properties/launchSettings.json
+frontend/src/**/*.spec.ts
