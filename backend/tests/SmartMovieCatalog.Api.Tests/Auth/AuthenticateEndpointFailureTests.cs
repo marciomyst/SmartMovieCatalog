@@ -30,6 +30,24 @@ public sealed class AuthenticateEndpointFailureTests : IClassFixture<SmartMovieC
         Assert.NotNull(problem);
         Assert.Equal(400, problem.Status);
         Assert.True(problem.Errors.ContainsKey(nameof(AuthenticateRequest.Email)));
+        Assert.True(problem.Errors.ContainsKey(nameof(AuthenticateRequest.Password)));
+    }
+
+    [Fact]
+    public async Task Authenticate_WithoutRequestBody_ReturnsValidationProblem()
+    {
+        HttpClient client = _factory.CreateClient();
+
+        using HttpRequestMessage request = new(HttpMethod.Post, "/api/auth/authenticate");
+        request.Content = new StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        ValidationProblemDetails? problem = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(problem);
+        Assert.Equal(400, problem.Status);
+        Assert.True(problem.Errors.ContainsKey(string.Empty));
     }
 
     [Fact]

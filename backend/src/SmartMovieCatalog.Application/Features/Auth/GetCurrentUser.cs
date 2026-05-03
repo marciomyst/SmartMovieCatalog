@@ -1,3 +1,4 @@
+using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Application.Abstractions.Authentication;
 using SmartMovieCatalog.Application.Abstractions.Persistence;
 using SmartMovieCatalog.Domain.Users;
@@ -17,29 +18,29 @@ public sealed class GetCurrentUser
         _userRepository = userRepository;
     }
 
-    public async Task<CurrentUserResult> GetAsync(CancellationToken cancellationToken)
+    public async Task<Result<CurrentUserProfile, AuthenticationFailure>> GetAsync(CancellationToken cancellationToken)
     {
         CurrentUserPrincipal? principal = _principalAccessor.GetCurrentUserPrincipal();
         if (principal is null)
         {
-            return CurrentUserResult.Failed(AuthenticationFailure.Unauthenticated);
+            return Result<CurrentUserProfile, AuthenticationFailure>.Failure(AuthenticationFailure.Unauthenticated);
         }
 
         User? user = await _userRepository.GetByIdAsync(principal.UserId, cancellationToken);
         if (user is null || !user.CanAuthenticate)
         {
-            return CurrentUserResult.Failed(AuthenticationFailure.UserUnavailable);
+            return Result<CurrentUserProfile, AuthenticationFailure>.Failure(AuthenticationFailure.UserUnavailable);
         }
 
         string[] roles = user.Roles
             .Select(role => role.Name)
             .ToArray();
 
-        return CurrentUserResult.Success(
+        return Result<CurrentUserProfile, AuthenticationFailure>.Success(new CurrentUserProfile(
             user.Id,
             user.Email.Value,
             user.Name,
             roles,
-            user.MustChangePasswordOnFirstLogin);
+            user.MustChangePasswordOnFirstLogin));
     }
 }

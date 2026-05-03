@@ -1,3 +1,4 @@
+using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Application.Features.Auth;
 using SmartMovieCatalog.Application.Tests.TestSupport;
 
@@ -15,13 +16,16 @@ public sealed class GetCurrentUserTests
         principalAccessor.SetUser(user);
         GetCurrentUser useCase = new(principalAccessor, users);
 
-        CurrentUserResult result = await useCase.GetAsync(CancellationToken.None);
+        Result<CurrentUserProfile, AuthenticationFailure> result = await useCase.GetAsync(CancellationToken.None);
 
-        Assert.True(result.Succeeded);
-        Assert.Equal(user.Id, result.UserId);
-        Assert.Equal("user@example.com", result.Email);
-        Assert.Equal("Example User", result.Name);
-        Assert.Equal(["User"], result.Roles);
-        Assert.False(result.MustChangePasswordOnFirstLogin);
+        Assert.True(result.IsSuccess);
+        Assert.False(result.IsFailure);
+
+        CurrentUserProfile currentUser = result.Value;
+        Assert.Equal(user.Id, currentUser.UserId);
+        Assert.Equal("user@example.com", currentUser.Email);
+        Assert.Equal("Example User", currentUser.Name);
+        Assert.Equal(["User"], currentUser.Roles);
+        Assert.False(currentUser.MustChangePasswordOnFirstLogin);
     }
 }

@@ -28,7 +28,7 @@ Validation and invariants:
 
 State transitions:
 
-- Create active development/test seed user.
+- Create optional active admin seed user when admin seed credentials are supplied from non-versioned configuration.
 - Authenticate active, non-removed user after successful password verification.
 - Deactivate user by setting `IsActive = false`.
 - Soft-delete user by setting `RemovedAtUtc`.

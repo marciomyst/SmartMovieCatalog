@@ -38,7 +38,8 @@ public static class DependencyInjection
         services.AddSingleton<IAccessTokenService, JwtAccessTokenService>();
         services.AddScoped<ICurrentUserPrincipalAccessor, HttpCurrentUserPrincipalAccessor>();
         services.AddSingleton<IClock, SystemClock>();
-        services.AddScoped<DevelopmentUserSeeder>();
+        services.AddScoped<AdminUserSeeder>();
+        services.AddScoped<DatabaseBootstrapper>();
 
         return services;
     }

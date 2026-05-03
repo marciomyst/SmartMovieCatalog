@@ -7,6 +7,8 @@ This roadmap is a planning document, not an implementation promise.
 - WeatherForecast API scaffold removed when backend auth endpoints were introduced.
 - Frontend build command confirmed.
 - Backend test framework added for authentication behavior.
+- Backend HTTP endpoints now use Minimal API feature slices under `SmartMovieCatalog.Api/Features`.
+- Backend use cases now dispatch through Wolverine as an in-process CQRS mediator.
 
 ## Phase 1 - Product Foundation
 - Define core movie catalog use cases.
@@ -17,7 +19,7 @@ This roadmap is a planning document, not an implementation promise.
 ## Phase 2 - Domain And Persistence
 - Persistence provider decided as EF Core with PostgreSQL and documented with an ADR.
 - Define movie identity, metadata ownership, and uniqueness rules.
-- Introduce persistence behind clear application boundaries if needed.
+- Extend persistence behind clear application boundaries as movie catalog behavior is introduced.
 - Add integration tests for persistence-backed endpoints.
 
 ## Phase 3 - AI Features

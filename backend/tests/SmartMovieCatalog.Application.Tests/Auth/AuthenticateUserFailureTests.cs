@@ -1,3 +1,4 @@
+using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Application.Features.Auth;
 using SmartMovieCatalog.Application.Tests.TestSupport;
 
@@ -12,10 +13,11 @@ public sealed class AuthenticateUserFailureTests
         users.Add(TestUsers.ActiveUser());
         AuthenticateUser useCase = CreateUseCase(users);
 
-        AuthenticationResult result = await useCase.AuthenticateAsync("user@example.com", "wrong", CancellationToken.None);
+        Result<AuthenticatedUser, AuthenticationFailure> result = await useCase.AuthenticateAsync("user@example.com", "wrong", CancellationToken.None);
 
-        Assert.False(result.Succeeded);
-        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Failure);
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Error);
     }
 
     [Fact]
@@ -23,10 +25,11 @@ public sealed class AuthenticateUserFailureTests
     {
         AuthenticateUser useCase = CreateUseCase(new FakeUserRepository());
 
-        AuthenticationResult result = await useCase.AuthenticateAsync("missing@example.com", TestUsers.Password, CancellationToken.None);
+        Result<AuthenticatedUser, AuthenticationFailure> result = await useCase.AuthenticateAsync("missing@example.com", TestUsers.Password, CancellationToken.None);
 
-        Assert.False(result.Succeeded);
-        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Failure);
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Error);
     }
 
     [Fact]
@@ -38,10 +41,11 @@ public sealed class AuthenticateUserFailureTests
         users.Add(user);
         AuthenticateUser useCase = CreateUseCase(users);
 
-        AuthenticationResult result = await useCase.AuthenticateAsync("user@example.com", TestUsers.Password, CancellationToken.None);
+        Result<AuthenticatedUser, AuthenticationFailure> result = await useCase.AuthenticateAsync("user@example.com", TestUsers.Password, CancellationToken.None);
 
-        Assert.False(result.Succeeded);
-        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Failure);
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Error);
     }
 
     [Fact]
@@ -53,10 +57,11 @@ public sealed class AuthenticateUserFailureTests
         users.Add(user);
         AuthenticateUser useCase = CreateUseCase(users);
 
-        AuthenticationResult result = await useCase.AuthenticateAsync("user@example.com", TestUsers.Password, CancellationToken.None);
+        Result<AuthenticatedUser, AuthenticationFailure> result = await useCase.AuthenticateAsync("user@example.com", TestUsers.Password, CancellationToken.None);
 
-        Assert.False(result.Succeeded);
-        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Failure);
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Error);
     }
 
     private static AuthenticateUser CreateUseCase(FakeUserRepository users)

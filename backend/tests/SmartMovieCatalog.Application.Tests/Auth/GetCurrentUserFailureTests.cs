@@ -1,4 +1,5 @@
 using SmartMovieCatalog.Application.Abstractions.Authentication;
+using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Application.Features.Auth;
 using SmartMovieCatalog.Application.Tests.TestSupport;
 using SmartMovieCatalog.Domain.Users;
@@ -12,10 +13,11 @@ public sealed class GetCurrentUserFailureTests
     {
         GetCurrentUser useCase = new(new FakeCurrentUserPrincipalAccessor(), new FakeUserRepository());
 
-        CurrentUserResult result = await useCase.GetAsync(CancellationToken.None);
+        Result<CurrentUserProfile, AuthenticationFailure> result = await useCase.GetAsync(CancellationToken.None);
 
-        Assert.False(result.Succeeded);
-        Assert.Equal(AuthenticationFailure.Unauthenticated, result.Failure);
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.Unauthenticated, result.Error);
     }
 
     [Fact]
@@ -27,10 +29,11 @@ public sealed class GetCurrentUserFailureTests
         };
         GetCurrentUser useCase = new(principalAccessor, new FakeUserRepository());
 
-        CurrentUserResult result = await useCase.GetAsync(CancellationToken.None);
+        Result<CurrentUserProfile, AuthenticationFailure> result = await useCase.GetAsync(CancellationToken.None);
 
-        Assert.False(result.Succeeded);
-        Assert.Equal(AuthenticationFailure.UserUnavailable, result.Failure);
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.UserUnavailable, result.Error);
     }
 
     [Fact]
@@ -44,10 +47,11 @@ public sealed class GetCurrentUserFailureTests
         principalAccessor.SetUser(user);
         GetCurrentUser useCase = new(principalAccessor, users);
 
-        CurrentUserResult result = await useCase.GetAsync(CancellationToken.None);
+        Result<CurrentUserProfile, AuthenticationFailure> result = await useCase.GetAsync(CancellationToken.None);
 
-        Assert.False(result.Succeeded);
-        Assert.Equal(AuthenticationFailure.UserUnavailable, result.Failure);
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.UserUnavailable, result.Error);
     }
 
     [Fact]
@@ -61,9 +65,10 @@ public sealed class GetCurrentUserFailureTests
         principalAccessor.SetUser(user);
         GetCurrentUser useCase = new(principalAccessor, users);
 
-        CurrentUserResult result = await useCase.GetAsync(CancellationToken.None);
+        Result<CurrentUserProfile, AuthenticationFailure> result = await useCase.GetAsync(CancellationToken.None);
 
-        Assert.False(result.Succeeded);
-        Assert.Equal(AuthenticationFailure.UserUnavailable, result.Failure);
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.UserUnavailable, result.Error);
     }
 }

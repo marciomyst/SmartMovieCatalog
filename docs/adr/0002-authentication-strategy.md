@@ -4,7 +4,7 @@
 Accepted
 
 ## Context
-Authentication has not been implemented yet. Issue #21 requires a backend-only authentication foundation for product API endpoints using local email/password credentials and JWT bearer access tokens.
+Issue #21 introduced a backend-only authentication foundation for product API endpoints using local email/password credentials and JWT bearer access tokens.
 
 The current feature scope is backend API only. Angular login/session UI, refresh tokens, registration, password recovery, external identity providers, tenancy, and granular authorization policies are out of scope for the initial implementation.
 
@@ -42,3 +42,10 @@ Frontend token storage and session behavior are intentionally not selected by th
 - API endpoints must return generic authentication failures for invalid credentials, nonexistent users, inactive users, and removed users to avoid account enumeration.
 - Logs must not include passwords, password hashes, access tokens, signing keys, or raw authorization headers.
 - Refresh tokens, registration, password recovery, external identity providers, tenancy, and frontend auth/session code remain out of scope until separate decisions or feature requests introduce them.
+
+## Implementation Notes
+
+- Auth HTTP endpoints are implemented as Minimal API feature slices under `backend/src/SmartMovieCatalog.Api/Features/Auth`.
+- Public request/response DTOs are in `backend/src/SmartMovieCatalog.Contracts/Auth`.
+- Application use cases remain in `backend/src/SmartMovieCatalog.Application/Features/Auth`.
+- HTTP endpoints dispatch auth command/query messages through Wolverine as accepted in `docs/adr/0007-wolverine-cqrs-mediator.md`.

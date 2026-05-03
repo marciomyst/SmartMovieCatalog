@@ -50,7 +50,7 @@
 - [X] T014 Add EF Core DbContext and design-time factory in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/SmartMovieCatalogDbContext.cs` and `backend/src/SmartMovieCatalog.Infrastructure/Persistence/SmartMovieCatalogDbContextFactory.cs`
 - [X] T015 Add user persistence mapping in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/Configurations/UserConfiguration.cs`
 - [X] T016 Add the initial user and role EF Core migration in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/Migrations/`
-- [X] T017 Add development/test-only user seeding support in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/DevelopmentUserSeeder.cs`
+- [X] T017 Apply migrations on non-test API startup and seed optional admin from non-versioned configuration
 - [X] T018 Wire EF Core, repository, password hasher, JWT service, current-user accessor, and clock registrations in `backend/src/SmartMovieCatalog.Infrastructure/DependencyInjection.cs`
 - [X] T019 Register application auth use cases in `backend/src/SmartMovieCatalog.Application/DependencyInjection.cs`
 - [X] T020 Configure JWT authentication, authorization, option validation, `UseAuthentication()`, and middleware ordering in `backend/src/SmartMovieCatalog.Api/Program.cs`
@@ -77,7 +77,7 @@
 - [X] T027 [US1] Implement normalized-email user lookup and active-user persistence behavior in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/EfUserRepository.cs`
 - [X] T028 [US1] Implement secure framework-backed password hashing and verification in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/PasswordHasher.cs`
 - [X] T029 [US1] Implement JWT access token creation with subject and role claims in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/JwtAccessTokenService.cs`
-- [X] T030 [US1] Add `POST /api/auth/authenticate` endpoint handling in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T030 [US1] Add `POST /api/auth/authenticate` endpoint handling in `backend/src/SmartMovieCatalog.Api/Features/Auth/Authenticate/AuthenticateEndpoint.cs`
 - [X] T031 [US1] Update the login request example in `backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.http`
 
 **Checkpoint**: US1 is complete when valid credentials return a token and all US1 tests pass independently.
@@ -97,10 +97,10 @@
 
 ### Implementation For User Story 2
 
-- [X] T034 [US2] Add authentication request validation without echoing passwords in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T034 [US2] Add authentication request validation without echoing passwords in `backend/src/SmartMovieCatalog.Api/Features/Auth/Authenticate/AuthenticateEndpoint.cs`
 - [X] T035 [US2] Map authentication failures to generic `ProblemDetails` in `backend/src/SmartMovieCatalog.Api/Common/AuthProblemDetails.cs`
 - [X] T036 [US2] Reject inactive and removed users in `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticateUser.cs`
-- [X] T037 [US2] Add safe authentication failure logging without passwords, hashes, tokens, or enumeration details in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T037 [US2] Add safe authentication failure logging without passwords, hashes, tokens, or enumeration details in `backend/src/SmartMovieCatalog.Api/Features/Auth/Authenticate/AuthenticateEndpoint.cs`
 
 **Checkpoint**: US2 is complete when invalid auth attempts fail with the accepted error contract and no account-enumeration detail.
 
@@ -121,7 +121,7 @@
 
 - [X] T040 [US3] Implement current principal extraction from bearer claims in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/HttpCurrentUserPrincipalAccessor.cs`
 - [X] T041 [US3] Implement the current-user use case in `backend/src/SmartMovieCatalog.Application/Features/Auth/GetCurrentUser.cs`
-- [X] T042 [US3] Add authorized `GET /api/auth/me` endpoint handling in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T042 [US3] Add authorized `GET /api/auth/me` endpoint handling in `backend/src/SmartMovieCatalog.Api/Features/Auth/GetCurrentUser/GetCurrentUserEndpoint.cs`
 - [X] T043 [US3] Update the current-user request example in `backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.http`
 
 **Checkpoint**: US3 is complete when authenticated current-user lookup returns the expected identity contract.
@@ -140,7 +140,7 @@
 
 ### Implementation For User Story 4
 
-- [X] T045 [US4] Ensure `GET /api/auth/me` requires authorization metadata in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T045 [US4] Ensure `GET /api/auth/me` requires authorization metadata in `backend/src/SmartMovieCatalog.Api/Features/Auth/GetCurrentUser/GetCurrentUserEndpoint.cs`
 - [X] T046 [US4] Configure JWT bearer challenge behavior for accepted `ProblemDetails` responses in `backend/src/SmartMovieCatalog.Api/Program.cs`
 
 **Checkpoint**: US4 is complete when unauthenticated current-user requests consistently return `401 Unauthorized`.
@@ -175,7 +175,7 @@
 - [X] T052 [P] Update security documentation for password hashing, JWT configuration, secret handling, user provisioning, and auth logging in `docs/SECURITY.md`
 - [X] T053 [P] Update local setup and user provisioning notes in `README.md`
 - [X] T054 [P] Add safe JWT and database environment variable placeholders without secret values in `docker-compose.yml`
-- [X] T055 Remove WeatherForecast scaffold endpoint and model in `backend/src/SmartMovieCatalog.Api/Controllers/WeatherForecastController.cs` and `backend/src/SmartMovieCatalog.Api/WeatherForecast.cs`
+- [X] T055 Remove WeatherForecast scaffold endpoint and model from `backend/src/SmartMovieCatalog.Api`
 - [X] T056 Run backend auth tests for `backend/tests/SmartMovieCatalog.Application.Tests/SmartMovieCatalog.Application.Tests.csproj` and `backend/tests/SmartMovieCatalog.Api.Tests/SmartMovieCatalog.Api.Tests.csproj`
 - [X] T057 Run final solution verification for `SmartMovieCatalog.slnx`
 
@@ -203,7 +203,7 @@
 ### Within Each Story
 
 - Write the listed tests before implementation tasks in that story.
-- Keep domain and application behavior outside controllers.
+- Keep domain and application behavior outside HTTP endpoints.
 - Implement application services before endpoint wiring.
 - Keep authentication failures generic and avoid logging secrets or enumeration details.
 

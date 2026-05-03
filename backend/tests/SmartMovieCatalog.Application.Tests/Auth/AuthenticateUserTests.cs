@@ -1,3 +1,4 @@
+using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Application.Features.Auth;
 using SmartMovieCatalog.Application.Tests.TestSupport;
 
@@ -17,15 +18,18 @@ public sealed class AuthenticateUserTests
             new FakeAccessTokenService(),
             new FakeClock());
 
-        AuthenticationResult result = await useCase.AuthenticateAsync(
+        Result<AuthenticatedUser, AuthenticationFailure> result = await useCase.AuthenticateAsync(
             " USER@example.com ",
             TestUsers.Password,
             CancellationToken.None);
 
-        Assert.True(result.Succeeded);
-        Assert.NotEqual(Guid.Empty, result.UserId);
-        Assert.Equal("user@example.com", result.Email);
-        Assert.Equal("fake-token", result.AccessToken);
-        Assert.Equal(new DateTimeOffset(2026, 5, 3, 3, 0, 0, TimeSpan.Zero), result.AccessTokenExpiresAtUtc);
+        Assert.True(result.IsSuccess);
+        Assert.False(result.IsFailure);
+
+        AuthenticatedUser authenticatedUser = result.Value;
+        Assert.NotEqual(Guid.Empty, authenticatedUser.UserId);
+        Assert.Equal("user@example.com", authenticatedUser.Email);
+        Assert.Equal("fake-token", authenticatedUser.AccessToken);
+        Assert.Equal(new DateTimeOffset(2026, 5, 3, 3, 0, 0, TimeSpan.Zero), authenticatedUser.AccessTokenExpiresAtUtc);
     }
 }

@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:18
+    image: postgres:17-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-smart_movie_catalog}
       POSTGRES_USER: ${POSTGRES_USER:-smartmovie}
@@ -33,6 +33,9 @@ services:
       Jwt__Audience: ${JWT_AUDIENCE:-SmartMovieCatalog.Api}
       Jwt__SigningKey: ${JWT_SIGNING_KEY:?Set JWT_SIGNING_KEY in .env or environment}
       Jwt__AccessTokenLifetimeMinutes: ${JWT_ACCESS_TOKEN_LIFETIME_MINUTES:-60}
+      AdminSeedUser__Email: ${ADMIN_SEED_EMAIL:-}
+      AdminSeedUser__Password: ${ADMIN_SEED_PASSWORD:-}
+      AdminSeedUser__Name: ${ADMIN_SEED_NAME:-}
     ports:
       - "${API_HTTP_PORT:-5048}:8080"
 

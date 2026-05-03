@@ -34,7 +34,10 @@ public static class AuthApiFixture
 
     public static string CreateToken(Guid userId, DateTimeOffset? expiresAtUtc = null, string? signingKey = null)
     {
-        DateTimeOffset now = new(2026, 5, 3, 2, 0, 0, TimeSpan.Zero);
+        DateTimeOffset now = DateTimeOffset.UtcNow;
+        DateTimeOffset notBefore = expiresAtUtc is { } expiresAt && expiresAt <= now
+            ? expiresAt.AddMinutes(-5)
+            : now.AddMinutes(-5);
         SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(signingKey ?? TestJwtOptions.SigningKey));
         SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha256);
         JwtSecurityToken token = new(
@@ -46,7 +49,7 @@ public static class AuthApiFixture
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(ClaimTypes.Role, UserRole.User)
             ],
-            notBefore: now.UtcDateTime.AddMinutes(-5),
+            notBefore: notBefore.UtcDateTime,
             expires: (expiresAtUtc ?? now.AddMinutes(60)).UtcDateTime,
             signingCredentials: credentials);
 

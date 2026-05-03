@@ -29,7 +29,7 @@
 - Database connection strings must use `ConnectionStrings:DefaultConnection` from environment variables or user-secrets.
 - Authentication failures intentionally return generic `401 Unauthorized` responses and must not disclose whether an email exists, a password is wrong, or a user is inactive or removed.
 - Authentication logs must not contain passwords, password hashes, bearer tokens, signing keys, raw authorization headers, or account-enumeration details.
-- Development/Test seed users may be provisioned only from non-versioned configuration. Production users are provisioned operationally outside application startup and migrations.
+- Non-test API startup applies EF Core migrations and may seed an optional admin user only when `AdminSeedUser:Email` and `AdminSeedUser:Password` are supplied from non-versioned configuration. Do not add admin seed credentials to source files, `appsettings*.json`, Dockerfiles, migrations, or committed documentation.
 
 ## Frontend Security
 - Do not store long-lived secrets in browser storage.

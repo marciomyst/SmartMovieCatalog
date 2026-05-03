@@ -4,9 +4,9 @@
 Accepted
 
 ## Context
-Persistence has not been implemented yet. Issue #21 requires persisted local users for backend authentication.
+Issue #21 introduced persisted local users for backend authentication.
 
-The repository already includes a PostgreSQL service in `docker-compose.yml` and passes `ConnectionStrings__DefaultConnection` to the API container. The current scaffold does not use persistence yet.
+The repository includes a PostgreSQL service in `docker-compose.yml` and passes `ConnectionStrings__DefaultConnection` to the API container.
 
 ## Decision
 Use EF Core with PostgreSQL for backend persistence.
@@ -30,6 +30,7 @@ Backup, retention, and production operations policy are not selected by this ADR
 - Backend implementation may add EF Core and the PostgreSQL provider as production dependencies.
 - Backend implementation may add DbContext configuration, entity mappings, repositories, and migrations in Infrastructure.
 - The API must validate `ConnectionStrings:DefaultConnection` when persistence is required and fail clearly when missing or invalid.
+- Non-test API startup applies EF Core migrations and may seed an optional admin user from non-versioned configuration.
 - Docker Compose remains the local PostgreSQL path for development.
 - Domain code must not depend on EF Core attributes, DbContext, database provider APIs, migrations, or connection-string concerns.
 - Public API contracts must not leak persistence entities or database-specific details.

@@ -26,16 +26,16 @@ Rationale: User state has product invariants: normalized email uniqueness, activ
 
 Alternatives considered:
 
-- Persistence entity as the only user model: rejected because active/removal and role rules would be hidden in infrastructure/controller code.
+- Persistence entity as the only user model: rejected because active/removal and role rules would be hidden in infrastructure or HTTP endpoint code.
 - Full identity domain with registration, password recovery, refresh tokens, and policy authorization: rejected because those behaviors are out of scope.
 
 ## Decision: Keep authentication orchestration in Application services/use cases
 
-Rationale: Controllers should handle HTTP concerns only. Application services should validate use-case flow, request repositories, verify passwords through an abstraction, issue tokens through an abstraction, and return explicit success/failure results. Infrastructure implements persistence, password hashing, JWT generation, and current request user access.
+Rationale: Minimal API endpoints should handle HTTP concerns only. Application services should validate use-case flow, request repositories, verify passwords through an abstraction, issue tokens through an abstraction, and return explicit success/failure results. Infrastructure implements persistence, password hashing, JWT generation, and current request user access.
 
 Alternatives considered:
 
-- Authentication logic in controllers: rejected because it mixes HTTP, validation, persistence, hashing, and token generation.
+- Authentication logic in HTTP endpoints: rejected because it mixes HTTP, validation, persistence, hashing, and token generation.
 - CQRS command/query stack: rejected because the repository has not introduced CQRS and the feature does not require that abstraction.
 
 ## Decision: Use ASP.NET Core `ProblemDetails` and `ValidationProblemDetails` for product auth errors

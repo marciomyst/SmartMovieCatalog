@@ -1,3 +1,4 @@
+using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Application.Abstractions.Authentication;
 using SmartMovieCatalog.Application.Abstractions.Persistence;
 using SmartMovieCatalog.Application.Abstractions.Time;
@@ -24,28 +25,35 @@ public sealed class AuthenticateUser
         _clock = clock;
     }
 
-    public async Task<AuthenticationResult> AuthenticateAsync(string? email, string? password, CancellationToken cancellationToken)
+    public async Task<Result<AuthenticatedUser, AuthenticationFailure>> AuthenticateAsync(
+        string? email,
+        string? password,
+        CancellationToken cancellationToken)
     {
         if (!EmailAddress.TryCreate(email, out EmailAddress? emailAddress) ||
             emailAddress is null ||
             string.IsNullOrWhiteSpace(password))
         {
-            return AuthenticationResult.Failed(AuthenticationFailure.InvalidCredentials);
+            return Result<AuthenticatedUser, AuthenticationFailure>.Failure(AuthenticationFailure.InvalidCredentials);
         }
 
         User? user = await _userRepository.FindByNormalizedEmailAsync(emailAddress.NormalizedValue, cancellationToken);
         if (user is null || !user.CanAuthenticate)
         {
-            return AuthenticationResult.Failed(AuthenticationFailure.InvalidCredentials);
+            return Result<AuthenticatedUser, AuthenticationFailure>.Failure(AuthenticationFailure.InvalidCredentials);
         }
 
         if (!_passwordHasher.VerifyPassword(user, password))
         {
-            return AuthenticationResult.Failed(AuthenticationFailure.InvalidCredentials);
+            return Result<AuthenticatedUser, AuthenticationFailure>.Failure(AuthenticationFailure.InvalidCredentials);
         }
 
         AccessToken accessToken = _accessTokenService.CreateAccessToken(user, _clock.UtcNow);
 
-        return AuthenticationResult.Success(user.Id, user.Email.Value, accessToken.Value, accessToken.ExpiresAtUtc);
+        return Result<AuthenticatedUser, AuthenticationFailure>.Success(new AuthenticatedUser(
+            user.Id,
+            user.Email.Value,
+            accessToken.Value,
+            accessToken.ExpiresAtUtc));
     }
 }

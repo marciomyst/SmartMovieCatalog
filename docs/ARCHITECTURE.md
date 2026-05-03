@@ -7,6 +7,7 @@ AI Flix / SmartMovieCatalog is a small monorepo with two runtime surfaces:
 - Frontend: Angular 21 in `frontend`.
 
 The backend uses a Clean Architecture project split and integrates the Angular SPA through ASP.NET Core SpaProxy.
+Authentication and persistence are implemented: local email/password authentication issues JWT bearer access tokens, local users are stored with EF Core/PostgreSQL, and backend use cases are dispatched through Wolverine as an in-process CQRS mediator.
 
 ## Source Of Truth
 - Solution: `SmartMovieCatalog.slnx`
@@ -16,6 +17,7 @@ The backend uses a Clean Architecture project split and integrates the Angular S
 - Infrastructure project: `backend/src/SmartMovieCatalog.Infrastructure/SmartMovieCatalog.Infrastructure.csproj`
 - Contracts project: `backend/src/SmartMovieCatalog.Contracts/SmartMovieCatalog.Contracts.csproj`
 - Backend entry point: `backend/src/SmartMovieCatalog.Api/Program.cs`
+- Backend HTTP features: `backend/src/SmartMovieCatalog.Api/Features`
 - Frontend package manifest: `frontend/package.json`
 - Frontend visual rules: `frontend/DESIGN.md`
 
@@ -26,8 +28,9 @@ The backend uses a Clean Architecture project split and integrates the Angular S
 - Generated and vendor paths are not architectural input: `node_modules`, `bin`, `obj`, `dist`, `.vs`, `.angular/cache`.
 
 ## Architectural Constraints
-- Do not assume CQRS, EF Core, PostgreSQL, Wolverine, background workers, or messaging infrastructure until they exist in the codebase or are explicitly requested as an architecture change.
-- Do not introduce persistence, external services, or cross-process infrastructure without documenting the decision and validating its impact.
+- EF Core/PostgreSQL, JWT authentication, and Wolverine in-process CQRS are accepted for the implemented backend foundation.
+- Do not assume Wolverine transports, background workers, distributed messaging infrastructure, external AI providers, or additional persistence stores until they exist in the codebase or are explicitly requested as an architecture change.
+- Do not introduce new persistence providers, external services, or cross-process infrastructure without documenting the decision and validating its impact.
 - Keep layer boundaries useful: add behavior to the layer that owns the responsibility, not to whichever project is convenient.
 
 ## Dependency Direction
@@ -51,3 +54,5 @@ Current ADRs:
 - `docs/adr/0003-database-strategy.md`
 - `docs/adr/0004-api-error-contract.md`
 - `docs/adr/0005-spec-kit-workflow.md`
+- `docs/adr/0006-domain-aggregate-organization.md`
+- `docs/adr/0007-wolverine-cqrs-mediator.md`

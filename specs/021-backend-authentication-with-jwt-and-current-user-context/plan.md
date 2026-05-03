@@ -17,7 +17,7 @@ Implement backend-only local email/password authentication with JWT bearer acces
 **Project Type**: Backend web API inside a backend/frontend monorepo; no frontend implementation in this feature  
 **Performance Goals**: Authentication and current-user requests should use indexed normalized-email/user-id lookups and avoid unnecessary database round trips  
 **Constraints**: Clean Architecture dependency direction; no committed secrets; generic authentication failures; `UseAuthentication()` before `UseAuthorization()`; no refresh tokens, registration, password recovery, external identity provider, frontend auth, or TestContainers assumption  
-**Scale/Scope**: First product backend security foundation: two API endpoints, one persisted user model, basic `Admin`/`User` role claims, development/test-only seed path
+**Scale/Scope**: First product backend security foundation: two API endpoints, one persisted user model, basic `Admin`/`User` role claims, non-test startup migration bootstrap, and optional admin seed from non-versioned configuration
 
 ## Constitution Check
 
@@ -52,8 +52,13 @@ specs/021-backend-authentication-with-jwt-and-current-user-context/
 backend/
 +-- src/
 |   +-- SmartMovieCatalog.Api/
-|   |   +-- Controllers/
-|   |   |   +-- AuthController.cs
+|   |   +-- Features/
+|   |   |   +-- Auth/
+|   |   |   |   +-- AuthEndpoints.cs
+|   |   |   |   +-- Authenticate/
+|   |   |   |   |   +-- AuthenticateEndpoint.cs
+|   |   |   |   +-- GetCurrentUser/
+|   |   |   |   |   +-- GetCurrentUserEndpoint.cs
 |   |   +-- Program.cs
 |   |   +-- SmartMovieCatalog.Api.http
 |   +-- SmartMovieCatalog.Application/
@@ -75,7 +80,7 @@ backend/
     +-- SmartMovieCatalog.Infrastructure.Tests/
 ```
 
-**Structure Decision**: Use the current Clean Architecture backend layout. Public HTTP DTOs live in Contracts, HTTP routing and response shaping live in Api, orchestration and abstractions live in Application, the user aggregate lives in Domain, and EF Core/JWT/password hashing/current request implementations live in Infrastructure. No frontend paths are in scope.
+**Structure Decision**: Use the current Clean Architecture backend layout. Public HTTP DTOs live in Contracts, Minimal API routing and response shaping live in Api feature slices, orchestration and abstractions live in Application, the user aggregate lives in Domain, and EF Core/JWT/password hashing/current request implementations live in Infrastructure. No frontend paths are in scope.
 
 ## Phase 0: Research
 

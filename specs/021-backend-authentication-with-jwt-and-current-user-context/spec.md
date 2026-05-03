@@ -66,7 +66,7 @@ The backend currently exposes only scaffold-level API behavior and has no authen
 - Error responses for product auth endpoints MUST use ASP.NET Core `ProblemDetails` for common errors and `ValidationProblemDetails` for validation errors.
 - OpenAPI metadata and `SmartMovieCatalog.Api.http` MUST be updated for the new endpoints.
 - The WeatherForecast scaffold MAY be removed once these real product endpoints are introduced.
-- Initial local user provisioning MUST be limited to explicit Development/Test seeding; Production MUST rely on operational/manual insertion outside application startup and migrations.
+- Non-test API startup MAY apply EF Core migrations and seed an optional admin user only when admin seed credentials are supplied from non-versioned configuration.
 - User roles MUST be persisted as part of user state and emitted as JWT role claims; the initial role vocabulary is `Admin` and `User`.
 - JWT configuration MUST use `Jwt:Issuer`, `Jwt:Audience`, `Jwt:SigningKey`, and `Jwt:AccessTokenLifetimeMinutes`; the initial access token lifetime is 60 minutes.
 - Removed users MUST be represented by persisted soft delete using `RemovedAtUtc`; authentication and current-user lookup MUST reject users where `RemovedAtUtc` is set.
@@ -112,7 +112,7 @@ None identified.
 
 - PostgreSQL is acceptable because `docker-compose.yml` already provides a PostgreSQL service and `ConnectionStrings__DefaultConnection` for the API container.
 - JWT secrets and database credentials will be supplied through environment variables or user-secrets.
-- Development/Test user seed data will use non-secret local values or secret values supplied outside versioned files; Production will not auto-seed users.
+- Admin seed credentials will be supplied only through non-versioned configuration and will not be committed to source files, Dockerfiles, migrations, or documentation.
 - Role assignment is part of persisted user state; authorization remains limited to basic role claims until a later feature adds policies.
 - Removed user state is represented by a nullable `RemovedAtUtc` timestamp.
 - EF Core and Npgsql are allowed by accepted ADR 0003.
@@ -132,7 +132,7 @@ None identified.
 ## Risks
 
 - Authentication and persistence are material architecture additions; implementing them before ADRs are accepted would violate repository governance.
-- Production user provisioning depends on an operational/manual process outside this feature; missing operational data will prevent real production logins.
+- Production user provisioning depends on operational/manual insertion or the optional admin seed applied after migrations from non-versioned configuration; missing provisioning data will prevent real production logins.
 - Poor JWT configuration validation could lead to insecure deployments or runtime failures.
 - API tests may require additional dependencies and test-host setup not currently present in backend test projects.
 - Introducing persistence without migration discipline may create unstable local and deployment behavior.

@@ -34,7 +34,7 @@ Apply the authentication migration after implementation adds EF Core migrations:
 dotnet ef database update --project backend/src/SmartMovieCatalog.Infrastructure --startup-project backend/src/SmartMovieCatalog.Api
 ```
 
-Development/Test seed users are allowed only in Development/Test. Production user provisioning is operational/manual outside application startup and migrations.
+Non-test API startup applies EF Core migrations and can seed an optional admin user by supplying `AdminSeedUser:Email` and `AdminSeedUser:Password` from non-versioned configuration. Leave both values empty to disable admin seeding.
 
 ## Run The API
 

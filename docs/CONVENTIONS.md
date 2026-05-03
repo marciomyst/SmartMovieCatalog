@@ -16,7 +16,11 @@
 - Keep nullable reference types respected.
 - Prefer explicit types where they improve readability.
 - Use `var` only where the type is obvious, anonymous, or clearer because of a long generic type.
-- Keep controllers thin once behavior becomes non-trivial.
+- Keep Minimal API endpoint handlers thin; move orchestration and business behavior into Application/Domain.
+- Group product HTTP endpoints by feature under `SmartMovieCatalog.Api/Features`.
+- Use feature-local FluentValidation validators for HTTP request shape validation.
+- Use Wolverine command/query handlers in Application for backend use case dispatch.
+- Return `Result<TValue, TError>` from Application command/query handlers when a use case has expected success/failure outcomes.
 - Do not introduce persistence or infrastructure packages without an architecture decision.
 
 ## Angular / TypeScript
