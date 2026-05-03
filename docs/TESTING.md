@@ -46,6 +46,7 @@ Do not introduce TestContainers or database-backed tests until a separate testin
 - Keep component tests focused on behavior, rendering, and user-observable state.
 - Avoid testing Angular internals.
 - Mock API boundaries instead of coupling UI tests to backend runtime behavior.
+- Auth frontend tests cover login form rendering, validation messages, backend validation-error mapping, password visibility toggling, API authentication calls, current-user lookup, bearer header behavior, in-memory session storage, and generic unauthorized errors.
 
 ## Verification Scope
 - Run the narrowest command that validates the change.

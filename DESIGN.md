@@ -1,6 +1,6 @@
 # Design
 
-This file defines the root-level product design policy for AI Flix / SmartMovieCatalog.
+This file defines the root-level product design policy for Smart Movie Catalog / SmartMovieCatalog.
 
 For implementation-level frontend tokens and component rules, read:
 
@@ -32,7 +32,7 @@ If these documents conflict, prefer the most specific document:
 
 ## Visual Rules
 - Use dark mode as the default and only supported visual mode unless a light theme is explicitly added.
-- Follow the Tailwind-based palette and token rules in `frontend/DESIGN.md`.
+- Follow the Tailwind-inspired palette and token rules in `frontend/DESIGN.md`. The current Angular project uses local CSS for those tokens until Tailwind is added as a project dependency.
 - Do not introduce a separate color palette, component library, or visual framework without approval.
 - Prefer real movie/media imagery or durable product assets over abstract decorative graphics.
 - Avoid visual clutter, excessive gradients, nested cards, and ornamental backgrounds.

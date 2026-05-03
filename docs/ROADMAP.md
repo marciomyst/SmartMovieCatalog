@@ -9,11 +9,12 @@ This roadmap is a planning document, not an implementation promise.
 - Backend test framework added for authentication behavior.
 - Backend HTTP endpoints now use Minimal API feature slices under `SmartMovieCatalog.Api/Features`.
 - Backend use cases now dispatch through Wolverine as an in-process CQRS mediator.
+- Angular authentication screen added and integrated with the backend auth API using an in-memory session store.
 
 ## Phase 1 - Product Foundation
 - Define core movie catalog use cases.
 - Define initial API contracts for movie search, movie details, and catalog browsing.
-- Create durable frontend navigation and layout based on `DESIGN.md`.
+- Create durable authenticated frontend navigation, route guards, and post-login layout based on `DESIGN.md`.
 - Establish shared request/response models or generated client strategy if API growth justifies it.
 
 ## Phase 2 - Domain And Persistence
@@ -37,3 +38,4 @@ This roadmap is a planning document, not an implementation promise.
 ## Open Decisions
 - API versioning strategy.
 - AI provider and data retention policy.
+- Refresh-token and persistent frontend session strategy.

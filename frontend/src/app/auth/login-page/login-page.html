@@ -1,0 +1,65 @@
+<main class="login-page">
+  <div class="cinematic-layer" aria-hidden="true"></div>
+
+  <section class="login-shell" aria-labelledby="login-title">
+    <header class="brand">
+      <p class="brand-kicker">Brazilian Cinema Intelligence</p>
+      <h1 id="login-title">Smart Movie Catalog</h1>
+      <p class="brand-copy">Acesse seu workspace de catalogacao e descoberta com IA.</p>
+    </header>
+
+    <form class="login-card" [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+      <div class="field">
+        <label for="email">E-mail</label>
+        <div class="input-shell" [class.input-invalid]="emailErrorMessage()">
+          <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            placeholder="nome@exemplo.com"
+            formControlName="email"
+            [attr.aria-invalid]="emailErrorMessage() ? 'true' : 'false'"
+            (input)="clearFieldServerError('email')"
+            aria-describedby="email-error">
+        </div>
+        <p id="email-error" class="field-error" *ngIf="emailErrorMessage() as message">{{ message }}</p>
+      </div>
+
+      <div class="field">
+        <label for="password">Senha</label>
+        <div class="input-shell" [class.input-invalid]="passwordErrorMessage()">
+          <span class="material-symbols-outlined" aria-hidden="true">lock</span>
+          <input
+            id="password"
+            [type]="passwordInputType()"
+            autocomplete="current-password"
+            placeholder="Digite sua senha"
+            formControlName="password"
+            [attr.aria-invalid]="passwordErrorMessage() ? 'true' : 'false'"
+            (input)="clearFieldServerError('password')"
+            aria-describedby="password-error">
+          <button class="icon-button" type="button" (click)="togglePasswordVisibility()" [attr.aria-label]="passwordVisible() ? 'Ocultar senha' : 'Mostrar senha'">
+            <span class="material-symbols-outlined" aria-hidden="true">{{ passwordIcon() }}</span>
+          </button>
+        </div>
+        <p id="password-error" class="field-error" *ngIf="passwordErrorMessage() as message">{{ message }}</p>
+      </div>
+
+      <button class="submit-button" type="submit" [disabled]="isSubmitting()">
+        <span>{{ isSubmitting() ? 'Entrando' : 'Entrar' }}</span>
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+      </button>
+
+      <p class="auth-message auth-message-error" *ngIf="authErrorMessage() as message" role="alert">{{ message }}</p>
+      <p class="auth-message auth-message-success" *ngIf="authSuccessMessage() as message" role="status">{{ message }}</p>
+    </form>
+
+    <footer class="system-footer">
+      <div class="system-chip">
+        <span class="material-symbols-outlined" aria-hidden="true">movie</span>
+        <span>.NET API</span>
+      </div>
+    </footer>
+  </section>
+</main>

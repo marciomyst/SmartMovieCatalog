@@ -1,0 +1,144 @@
+{
+  "workflow": "speckit",
+  "specName": "023-authentication-login-screen",
+  "branch": "023-authentication-login-screen",
+  "selectedAt": "2026-05-03T19:50:44.675Z",
+  "currentStep": "tasks",
+  "status": "planned",
+  "stepHistory": {
+    "plan": {
+      "startedAt": "2026-05-03T20:06:04.619Z",
+      "completedAt": "2026-05-03T20:13:54.024Z"
+    },
+    "tasks": {
+      "startedAt": "2026-05-03T19:55:43.460Z",
+      "completedAt": "2026-05-03T20:02:47.632Z"
+    },
+    "implement": {
+      "startedAt": "2026-05-03T20:02:47.634Z",
+      "completedAt": null
+    }
+  },
+  "transitions": [
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T19:51:11.129Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "specify",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T19:51:11.132Z"
+    },
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T19:53:48.974Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T19:53:48.976Z"
+    },
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T19:55:43.458Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T19:55:43.460Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "ai",
+      "at": "2026-05-03T19:58:54.540Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T20:00:16.938Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "from": {
+        "step": "implement",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T20:00:16.941Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T20:02:47.632Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "from": {
+        "step": "implement",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T20:02:47.634Z"
+    },
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "implement",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T20:06:04.619Z"
+    }
+  ]
+}

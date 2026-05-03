@@ -6,7 +6,7 @@ Accepted
 ## Context
 Issue #21 introduced a backend-only authentication foundation for product API endpoints using local email/password credentials and JWT bearer access tokens.
 
-The current feature scope is backend API only. Angular login/session UI, refresh tokens, registration, password recovery, external identity providers, tenancy, and granular authorization policies are out of scope for the initial implementation.
+The initial feature scope was backend API only. Angular login/session UI was added later and is covered by `docs/adr/0008-frontend-auth-session.md`. Refresh tokens, registration, password recovery, external identity providers, tenancy, and granular authorization policies remain out of scope for this backend authentication decision.
 
 Authentication depends on persisted local users as accepted in `docs/adr/0003-database-strategy.md`.
 
@@ -36,12 +36,14 @@ Authorization is limited to authentication and basic role claims for this decisi
 
 Frontend token storage and session behavior are intentionally not selected by this ADR because issue #21 excludes frontend work.
 
+Frontend auth session behavior is later selected by `docs/adr/0008-frontend-auth-session.md`.
+
 ## Consequences
 - Backend implementation may add ASP.NET Core JWT bearer authentication packages and configuration.
 - Backend implementation may add application abstractions and infrastructure services for password hashing, JWT generation, and current-user access.
 - API endpoints must return generic authentication failures for invalid credentials, nonexistent users, inactive users, and removed users to avoid account enumeration.
 - Logs must not include passwords, password hashes, access tokens, signing keys, or raw authorization headers.
-- Refresh tokens, registration, password recovery, external identity providers, tenancy, and frontend auth/session code remain out of scope until separate decisions or feature requests introduce them.
+- Refresh tokens, registration, password recovery, external identity providers, and tenancy remain out of scope until separate decisions or feature requests introduce them. Frontend auth/session code is covered by `docs/adr/0008-frontend-auth-session.md`.
 
 ## Implementation Notes
 

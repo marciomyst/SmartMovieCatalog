@@ -1,6 +1,6 @@
-# AI Flix / SmartMovieCatalog
+# Smart Movie Catalog / SmartMovieCatalog
 
-AI Flix is an early-stage movie catalog application with an ASP.NET Core backend and an Angular frontend.
+Smart Movie Catalog is an early-stage movie catalog application with an ASP.NET Core backend and an Angular frontend.
 
 ## Stack
 - Backend: ASP.NET Core 10 / C# in `backend/src/SmartMovieCatalog.Api`.
@@ -8,7 +8,7 @@ AI Flix is an early-stage movie catalog application with an ASP.NET Core backend
 - SPA integration: ASP.NET Core SpaProxy.
 - Solution: `SmartMovieCatalog.slnx`.
 
-Do not assume persistence, CQRS, DDD layers, messaging, authentication, or AI-provider integration until those choices are implemented or documented through an architecture decision.
+Persistence, local JWT authentication, Clean Architecture layers, and Wolverine-based in-process CQRS are implemented and documented. Do not assume external messaging, refresh tokens, registration, password recovery, or AI-provider integration until those choices are implemented or documented through an architecture decision.
 
 ## Repository Layout
 ```text
@@ -93,6 +93,8 @@ The backend auth endpoints are:
 - `POST /api/auth/authenticate`
 - `GET /api/auth/me`
 
+The Angular login screen is available at the SPA root. It calls `POST /api/auth/authenticate`, then `GET /api/auth/me`, through same-origin `/api` routes. In local frontend development, `frontend/src/proxy.conf.js` proxies `/api` to the backend.
+
 Health check:
 
 ```bash
@@ -103,7 +105,7 @@ From `frontend`:
 
 ```bash
 npm run build
-npm test
+npm test -- --watch=false
 npm start
 ```
 
@@ -156,6 +158,7 @@ docker compose up -d --force-recreate api
 - Backend HTTP endpoints: Minimal API feature slices under `backend/src/SmartMovieCatalog.Api/Features`.
 - Auth endpoint mapping: `backend/src/SmartMovieCatalog.Api/Features/Auth`.
 - Frontend application: `frontend/src/app`.
+- Frontend auth module: `frontend/src/app/auth`.
 - Frontend visual system: `frontend/DESIGN.md`.
 - Root design policy: `DESIGN.md`.
 

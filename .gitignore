@@ -2,10 +2,12 @@
 bin/
 obj/
 dist/
+build/
 out/
 .artifacts/
 .dotnet-cli-home/
 restore*.log
+*.log
 
 # .NET
 *.user
