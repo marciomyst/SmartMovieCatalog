@@ -10,6 +10,8 @@
     "**/.husky": true,
     "**/.agents": true,
     "**/.github": true,
+    "**/.artifacts": true,
+    "**/.dotnet-cli-home": true,
   },
   
   "search.exclude": {

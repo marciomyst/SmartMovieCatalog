@@ -3,6 +3,9 @@ bin/
 obj/
 dist/
 out/
+.artifacts/
+.dotnet-cli-home/
+restore*.log
 
 # .NET
 *.user

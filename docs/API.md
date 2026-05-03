@@ -2,22 +2,69 @@
 
 ## Current State
 The backend is an ASP.NET Core Web API project in `backend/src/SmartMovieCatalog.Api`.
+HTTP endpoints are implemented as Minimal API feature slices under `backend/src/SmartMovieCatalog.Api/Features`.
+Endpoint handlers dispatch backend use cases through Wolverine `IMessageBus` and keep HTTP-only concerns in the Api layer.
 
-Current scaffold files include:
+Current backend endpoints include:
 
-- `Program.cs`
-- `Controllers/WeatherForecastController.cs`
-- `WeatherForecast.cs`
-- `SmartMovieCatalog.Api.http`
+- `POST /api/auth/authenticate`
+- `GET /api/auth/me`
 
-The current API surface is scaffold-level and should not be treated as final product API design.
+The WeatherForecast scaffold endpoint has been removed.
+
+## Authentication Endpoints
+
+### `POST /api/auth/authenticate`
+
+Accepts:
+
+```json
+{
+  "email": "user@example.com",
+  "password": "Password123!"
+}
+```
+
+Returns `200 OK` with:
+
+```json
+{
+  "userId": "00000000-0000-0000-0000-000000000000",
+  "email": "user@example.com",
+  "accessToken": "<jwt>",
+  "accessTokenExpiresAtUtc": "2026-05-03T02:00:00Z"
+}
+```
+
+Invalid request shape returns `400 Bad Request` as `ValidationProblemDetails`.
+Invalid credentials, nonexistent users, inactive users, and removed users return a generic `401 Unauthorized` as `ProblemDetails`.
+
+### `GET /api/auth/me`
+
+Requires `Authorization: Bearer <jwt>`.
+
+Returns `200 OK` with:
+
+```json
+{
+  "userId": "00000000-0000-0000-0000-000000000000",
+  "email": "user@example.com",
+  "name": "Example User",
+  "roles": ["User"],
+  "mustChangePasswordOnFirstLogin": false
+}
+```
+
+Missing, malformed, expired, incorrectly signed, missing-user, inactive-user, and removed-user tokens return `401 Unauthorized` as `ProblemDetails`.
 
 ## API Design Rules
 - Keep endpoint contracts explicit and stable.
 - Use request and response DTOs for public API contracts when behavior grows beyond scaffold examples.
 - Return consistent error responses.
-- Validate input at the boundary.
-- Keep business rules out of controllers when they become non-trivial.
+- Validate request input at the API boundary with feature-local FluentValidation validators.
+- Keep business rules out of HTTP endpoints; endpoints should handle routing, binding, validation, authorization metadata, status codes, and response shaping.
+- Group API endpoints by feature under `SmartMovieCatalog.Api/Features/<Feature>/<UseCase>` when adding product endpoints.
+- Dispatch Application commands and queries through Wolverine instead of invoking use case services directly from HTTP endpoints.
 - Avoid leaking persistence models, configuration objects, or AI provider payloads directly through HTTP responses.
 
 ## Routing

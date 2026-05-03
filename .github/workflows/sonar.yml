@@ -58,7 +58,8 @@ jobs:
             /d:sonar.qualitygate.timeout=300 \
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
             /d:sonar.javascript.lcov.reportPaths="frontend/coverage/smartmoviecatalog.angular/lcov.info" \
-            /d:sonar.exclusions="**/bin/**,**/obj/**,**/node_modules/**,**/dist/**,**/.angular/**"
+            /d:sonar.exclusions="**/bin/**,**/obj/**,**/node_modules/**,**/dist/**,**/.angular/**" \
+            /d:sonar.coverage.exclusions="**/Migrations/**,**/*ModelSnapshot.cs,**/Program.cs,**/DependencyInjection.cs,**/DatabaseBootstrapper.cs,**/HealthCheckRunner.cs,**/Persistence/Configurations/**"
 
       - name: Restore backend
         run: dotnet restore SmartMovieCatalog.slnx

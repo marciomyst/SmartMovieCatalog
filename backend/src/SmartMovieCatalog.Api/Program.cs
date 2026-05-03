@@ -1,18 +1,26 @@
-
+using FluentValidation;
+using SmartMovieCatalog.Api.Common;
+using SmartMovieCatalog.Api.Features.Auth;
+using SmartMovieCatalog.Api.Features.Auth.Authenticate;
 using SmartMovieCatalog.Application;
+using SmartMovieCatalog.Contracts.Auth;
 using SmartMovieCatalog.Infrastructure;
+using SmartMovieCatalog.Infrastructure.Persistence;
+using Wolverine;
 
 namespace SmartMovieCatalog.Api
 {
-    public static class Program
+    public class Program
     {
-        private static readonly Uri HealthCheckUri = BuildHealthCheckUri();
+        protected Program()
+        {
+        }
 
         public static int Main(string[] args)
         {
             if (args is ["--healthcheck"])
             {
-                return RunHealthCheck();
+                return HealthCheckRunner.Run();
             }
 
             var builder = WebApplication.CreateBuilder(args);
@@ -20,16 +28,33 @@ namespace SmartMovieCatalog.Api
             // Add services to the container.
 
             builder.Services.AddApplication();
-            builder.Services.AddInfrastructure();
-            builder.Services.AddControllers();
+            builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddScoped<IValidator<AuthenticateRequest>, AuthenticateRequestValidator>();
             builder.Services.AddHealthChecks();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
             builder.Services.AddOpenApi();
+
+            builder.AddAuthConfiguration();
+            builder.Host.UseWolverine(options =>
+            {
+                options.EnableRemoteInvocation = false;
+                options.Discovery.IncludeAssembly(ApplicationReference.Assembly);
+            });
 
             var app = builder.Build();
 
-            app.UseDefaultFiles();
-            app.MapStaticAssets();
+            if (!app.Environment.IsEnvironment("Testing"))
+            {
+                using IServiceScope scope = app.Services.CreateScope();
+                DatabaseBootstrapper databaseBootstrapper = scope.ServiceProvider.GetRequiredService<DatabaseBootstrapper>();
+                databaseBootstrapper.BootstrapAsync(CancellationToken.None).GetAwaiter().GetResult();
+            }
+
+            if (!app.Environment.IsEnvironment("Testing"))
+            {
+                app.UseDefaultFiles();
+                app.MapStaticAssets();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -39,51 +64,22 @@ namespace SmartMovieCatalog.Api
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
-            app.MapControllers();
+            app.MapAuthEndpoints();
 
             app.MapHealthChecks("/health");
 
-            app.MapFallbackToFile("/index.html");
+            if (!app.Environment.IsEnvironment("Testing"))
+            {
+                app.MapFallbackToFile("/index.html");
+            }
 
             app.Run();
 
             return 0;
-        }
-
-        private static int RunHealthCheck()
-        {
-            using var httpClient = new HttpClient
-            {
-                Timeout = TimeSpan.FromSeconds(2)
-            };
-
-            try
-            {
-                using var response = httpClient.GetAsync(HealthCheckUri).GetAwaiter().GetResult();
-                return response.IsSuccessStatusCode ? 0 : 1;
-            }
-            catch (HttpRequestException)
-            {
-                return 1;
-            }
-            catch (TaskCanceledException)
-            {
-                return 1;
-            }
-        }
-
-        private static Uri BuildHealthCheckUri()
-        {
-            return new UriBuilder
-            {
-                Scheme = Uri.UriSchemeHttp,
-                Host = "127.0.0.1",
-                Port = 8080,
-                Path = "health"
-            }.Uri;
         }
     }
 }

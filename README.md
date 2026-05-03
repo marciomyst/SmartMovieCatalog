@@ -86,9 +86,12 @@ This starts:
 - ASP.NET Core API on `http://localhost:5048`.
 - PostgreSQL on `localhost:5432`.
 
-The API container receives `ConnectionStrings__DefaultConnection` through environment variables. The current scaffold does not use persistence yet.
+The API container receives `ConnectionStrings__DefaultConnection` and JWT settings through environment variables. Set `JWT_SIGNING_KEY` in `.env` or your shell before starting the API; do not commit real signing keys or database credentials.
 
-The current runnable vertical slice is still the scaffold `/weatherforecast` endpoint consumed by the Angular app.
+The backend auth endpoints are:
+
+- `POST /api/auth/authenticate`
+- `GET /api/auth/me`
 
 Health check:
 
@@ -119,9 +122,39 @@ docker compose exec postgres pg_isready -U smartmovie -d smart_movie_catalog
 docker compose exec postgres psql -U smartmovie -d smart_movie_catalog -c "select version();"
 ```
 
+Apply EF Core migrations after configuring the local connection string:
+
+```bash
+dotnet ef database update --project backend/src/SmartMovieCatalog.Infrastructure --startup-project backend/src/SmartMovieCatalog.Api
+```
+
+On API startup, non-test environments apply EF Core migrations and can seed an optional admin user by supplying non-versioned configuration:
+
+- `ADMIN_SEED_EMAIL`
+- `ADMIN_SEED_PASSWORD`
+- `ADMIN_SEED_NAME`
+
+These `.env` keys are mapped by the local scripts and Docker Compose to `AdminSeedUser:*` configuration. Leave `ADMIN_SEED_EMAIL` and `ADMIN_SEED_PASSWORD` empty to disable the seed. Never commit real admin credentials.
+
+Example local admin seed:
+
+```env
+ADMIN_SEED_EMAIL=admin@example.com
+ADMIN_SEED_PASSWORD=Password123!
+ADMIN_SEED_NAME=Admin
+```
+
+The seed runs only during API startup. After changing `.env`, restart the API process or recreate the Docker Compose API container:
+
+```powershell
+.\scripts\run-local.ps1
+docker compose up -d --force-recreate api
+```
+
 ## Development Notes
 - Backend entry point: `backend/src/SmartMovieCatalog.Api/Program.cs`.
-- Backend API scaffold: `backend/src/SmartMovieCatalog.Api/Controllers`.
+- Backend HTTP endpoints: Minimal API feature slices under `backend/src/SmartMovieCatalog.Api/Features`.
+- Auth endpoint mapping: `backend/src/SmartMovieCatalog.Api/Features/Auth`.
 - Frontend application: `frontend/src/app`.
 - Frontend visual system: `frontend/DESIGN.md`.
 - Root design policy: `DESIGN.md`.

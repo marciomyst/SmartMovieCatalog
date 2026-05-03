@@ -4,7 +4,7 @@
 Superseded by the current Clean Architecture project split.
 
 ## Context
-The repository originally contained a single ASP.NET Core API project and an Angular SPA. The backend has now been split into Clean Architecture projects while keeping infrastructure choices unselected.
+The repository originally contained a single ASP.NET Core API project and an Angular SPA. The backend has now been split into Clean Architecture projects. Early infrastructure choices were intentionally deferred to later ADRs.
 
 ## Decision
 Use the current Clean Architecture structure:
@@ -17,7 +17,7 @@ Use the current Clean Architecture structure:
 - Frontend: `frontend`
 - Documentation: `docs`
 
-Infrastructure choices such as authentication, persistence, messaging, CQRS, and external services remain unselected until accepted by separate ADRs.
+Infrastructure choices such as authentication, persistence, and CQRS dispatch are selected by later ADRs. External services remain unselected until accepted by separate ADRs.
 
 ## Consequences
 - The project has explicit architectural boundaries before product behavior grows.

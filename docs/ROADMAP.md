@@ -4,9 +4,11 @@ This roadmap is a planning document, not an implementation promise.
 
 ## Phase 0 - Stabilize Scaffold
 - Keep repository documentation aligned with the actual project structure.
-- Remove or replace scaffold WeatherForecast API when the first real product endpoint is introduced.
-- Confirm frontend build and test commands.
-- Add a real backend test framework when the first non-trivial backend behavior lands.
+- WeatherForecast API scaffold removed when backend auth endpoints were introduced.
+- Frontend build command confirmed.
+- Backend test framework added for authentication behavior.
+- Backend HTTP endpoints now use Minimal API feature slices under `SmartMovieCatalog.Api/Features`.
+- Backend use cases now dispatch through Wolverine as an in-process CQRS mediator.
 
 ## Phase 1 - Product Foundation
 - Define core movie catalog use cases.
@@ -15,9 +17,9 @@ This roadmap is a planning document, not an implementation promise.
 - Establish shared request/response models or generated client strategy if API growth justifies it.
 
 ## Phase 2 - Domain And Persistence
-- Decide persistence provider and document it with an ADR.
+- Persistence provider decided as EF Core with PostgreSQL and documented with an ADR.
 - Define movie identity, metadata ownership, and uniqueness rules.
-- Introduce persistence behind clear application boundaries if needed.
+- Extend persistence behind clear application boundaries as movie catalog behavior is introduced.
 - Add integration tests for persistence-backed endpoints.
 
 ## Phase 3 - AI Features
@@ -27,15 +29,11 @@ This roadmap is a planning document, not an implementation promise.
 - Add safeguards against prompt/data leakage.
 
 ## Phase 4 - Security And Operations
-- Define authentication and authorization model.
-- Add production configuration validation.
+- Authentication model defined as local email/password with JWT bearer access tokens.
+- Production JWT and database configuration validation added.
 - Establish deployment topology.
 - Add observability for API errors, AI provider failures, and frontend runtime issues.
 
 ## Open Decisions
-- Database provider.
-- Authentication model.
 - API versioning strategy.
 - AI provider and data retention policy.
-- Backend layering strategy.
-- Test framework for backend.
