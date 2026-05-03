@@ -35,6 +35,9 @@ Prefer the narrowest verification command that covers the change. Run broader bu
 - `docs/SECURITY.md` - security and secret-handling rules.
 - `docs/CONVENTIONS.md` - coding and commit conventions.
 - `docs/ROADMAP.md` - planned direction and open decisions.
+- `.specify/memory/constitution.md` - repository-wide Spec Kit governance.
+- `.specify/memory/constitution-backend.md` - backend-specific Spec Kit governance when backend files are in scope.
+- `.specify/memory/constitution-frontend.md` - frontend-specific Spec Kit governance when frontend files are in scope.
 - `frontend/DESIGN.md` - required UI and visual rules for frontend work.
 - `backend/src/SmartMovieCatalog.Api/Program.cs` - backend entry point and runtime configuration.
 - `backend/src/SmartMovieCatalog.Domain/` - domain model, invariants, value objects, and domain events.
@@ -122,3 +125,15 @@ Do not read, modify, or base analysis on generated/vendor output unless explicit
   - `docs:`
   - `refactor:`
   - `test:`
+
+<!-- SPECKIT START -->
+Before using Spec Kit skills, read `.specify/memory/constitution.md`.
+If the spec, plan, or implementation touches backend, API, contracts, domain,
+application, infrastructure, security, persistence, or server runtime behavior,
+also read `.specify/memory/constitution-backend.md`.
+If the spec, plan, or implementation touches frontend, Angular, TypeScript, UI,
+styling, assets, browser behavior, or frontend tests, also read
+`.specify/memory/constitution-frontend.md`.
+For full-stack features, read all three constitution files and keep backend API
+contracts, frontend API services/models, tests, and docs synchronized.
+<!-- SPECKIT END -->
