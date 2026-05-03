@@ -7,7 +7,7 @@ public sealed class UserRole : ValueObject
     public const string Admin = "Admin";
     public const string User = "User";
 
-    private static readonly IReadOnlySet<string> AllowedRoles = new HashSet<string>(StringComparer.Ordinal)
+    private static readonly HashSet<string> AllowedRoles = new(StringComparer.Ordinal)
     {
         Admin,
         User
