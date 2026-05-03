@@ -11,7 +11,7 @@ public sealed class User : AggregateRoot
         Email = EmailAddress.Create("placeholder@example.com");
         NormalizedEmail = Email.NormalizedValue;
         Name = "Placeholder";
-        PasswordHash = "placeholder";
+        PasswordHash = "not-set";
         CreatedAtUtc = DateTimeOffset.UnixEpoch;
     }
 

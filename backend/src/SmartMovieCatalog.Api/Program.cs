@@ -12,6 +12,10 @@ namespace SmartMovieCatalog.Api
 {
     public class Program
     {
+        protected Program()
+        {
+        }
+
         public static int Main(string[] args)
         {
             if (args is ["--healthcheck"])

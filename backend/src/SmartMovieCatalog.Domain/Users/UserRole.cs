@@ -7,7 +7,7 @@ public sealed class UserRole : ValueObject
     public const string Admin = "Admin";
     public const string User = "User";
 
-    private static readonly HashSet<string> AllowedRoles = new(StringComparer.Ordinal)
+    private static readonly IReadOnlySet<string> AllowedRoles = new HashSet<string>(StringComparer.Ordinal)
     {
         Admin,
         User
@@ -37,7 +37,7 @@ public sealed class UserRole : ValueObject
         return new UserRole(role);
     }
 
-    public static IReadOnlyCollection<string> Allowed => AllowedRoles.ToArray();
+    public static IReadOnlySet<string> Allowed => AllowedRoles;
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
