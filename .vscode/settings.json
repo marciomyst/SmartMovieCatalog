@@ -6,7 +6,10 @@
     "**/node_modules": true,
     "**/bin": true,
     "**/obj": true,
-    "**/.angular": true
+    "**/.angular": true,
+    "**/.husky": true,
+    "**/.agents": true,
+    "**/.github": true,
   },
   
   "search.exclude": {
