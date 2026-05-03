@@ -203,31 +203,34 @@ If no hooks are registered or `.specify/extensions.yml` does not exist, skip sil
 
    Do not fail if optional documentation files are missing.
 
-4. **Determine feature identity**: Derive a short, kebab-case feature name from the issue title. Prefer a name that reflects the user/business outcome, not the technical implementation.
+4. **Determine feature identity**: Derive a short, kebab-case slug from the issue title. Prefer a slug that reflects the user/business outcome, not the technical implementation.
 
    Example:
 
    ```text
+   Issue number: 11
    Issue title: Add movie registration flow
-   Feature name: movie-registration
+   Short title slug: add-movie-registration
+   issueContextName: 11-add-movie-registration.md
+   featureDirectoryName: 011-add-movie-registration
    ```
 
-5. **Create or locate feature directory**: Use the repository's Spec Kit convention for feature specs.
+5. **Create or locate feature directory**: Use the issue-based Spec Kit convention for feature specs.
 
    Prefer:
 
    ```text
-   specs/<feature-name>/
+   specs/<issue-number-padded-3-digits>-<short-title-slug>/
    ```
 
-   If the repository already uses numbered feature folders, follow the existing convention.
+   The GitHub issue context file uses the raw issue number, but the spec directory uses a three-digit issue number prefix for compatibility with the bundled Spec Kit scripts.
 
    Examples:
 
    ```text
-   specs/001-project-bootstrap/
-   specs/002-core-movie-catalog/
-   specs/movie-registration/
+   .specify/inputs/github-issues/11-create-movie.md
+   specs/011-create-movie/
+   specs/123-add-movie-registration/
    ```
 
 6. **Generate feature specification**: Create a feature specification from the GitHub issue context and project context.
@@ -359,7 +362,7 @@ If no hooks are registered or `.specify/extensions.yml` does not exist, skip sil
    - issue could not be read;
    - a security concern requires user action.
 
-**Output**: `.specify/inputs/github-issues/<owner>-<repository>-issue-<number>.md`
+**Output**: `.specify/inputs/github-issues/<issue-number>-<short-title-slug>.md`
 
 ---
 
@@ -550,9 +553,9 @@ After completing the flow, respond with:
 
 - Issue: <issue-url>
 - Repository: <owner>/<repository>
-- Context file: `.specify/inputs/github-issues/<file>.md`
-- Spec file: `<path>`
-- Plan file: `<path>`
+- Context file: `.specify/inputs/github-issues/<issue-number>-<short-title-slug>.md`
+- Spec file: `specs/<issue-number-padded-3-digits>-<short-title-slug>/spec.md`
+- Plan file: `specs/<issue-number-padded-3-digits>-<short-title-slug>/plan.md`
 
 ## Summary
 

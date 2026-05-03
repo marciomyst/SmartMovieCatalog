@@ -101,13 +101,23 @@ function ConvertTo-MarkdownList {
     return ($Items | ForEach-Object { "- $(& $Selector $_)" }) -join "`n"
 }
 
-function ConvertTo-SafeFileName {
+function ConvertTo-ShortSlug {
     param(
         [Parameter(Mandatory = $true)]
         [string] $Value
     )
 
-    return ($Value -replace "[^a-zA-Z0-9._-]", "-").ToLowerInvariant()
+    $slug = ($Value.ToLowerInvariant() -replace "[^a-z0-9]+", "-").Trim("-")
+
+    if ([string]::IsNullOrWhiteSpace($slug)) {
+        return "issue"
+    }
+
+    if ($slug.Length -le 60) {
+        return $slug
+    }
+
+    return $slug.Substring(0, 60).Trim("-")
 }
 
 function Redact-SensitiveContent {
@@ -260,8 +270,8 @@ $issue = $issueJsonText | ConvertFrom-Json
 
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 
-$repositorySlug = ConvertTo-SafeFileName -Value "$owner-$repo"
-$baseOutputPath = Join-Path $OutputDirectory "$repositorySlug-issue-$number.md"
+$titleSlug = ConvertTo-ShortSlug -Value $issue.title
+$baseOutputPath = Join-Path $OutputDirectory "$number-$titleSlug.md"
 $outputPath = Get-UniqueOutputPath -BasePath $baseOutputPath -ForceOverwrite ([bool]$Force)
 
 $labelsMarkdown = ConvertTo-MarkdownList `
