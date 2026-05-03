@@ -128,6 +128,29 @@ describe('LoginPage', () => {
     expect(authSessionStore.setSession).toHaveBeenCalledWith(authenticateResponse, currentUser);
   });
 
+  it('should not store a trusted session when current user lookup fails', () => {
+    authApi.getCurrentUser.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 401 })));
+    fixture.detectChanges();
+
+    const email = fixture.nativeElement.querySelector('#email') as HTMLInputElement;
+    const password = fixture.nativeElement.querySelector('#password') as HTMLInputElement;
+    email.value = 'admin@example.com';
+    email.dispatchEvent(new Event('input'));
+    password.value = 'Password123!';
+    password.dispatchEvent(new Event('input'));
+
+    const form = fixture.nativeElement.querySelector('form') as HTMLFormElement;
+    form.dispatchEvent(new Event('submit'));
+    fixture.detectChanges();
+
+    expect(authApi.authenticate).toHaveBeenCalledWith({
+      email: 'admin@example.com',
+      password: 'Password123!'
+    });
+    expect(authApi.getCurrentUser).toHaveBeenCalledWith('access-token');
+    expect(authSessionStore.setSession).not.toHaveBeenCalled();
+  });
+
   it('should show a generic authentication error for unauthorized responses', () => {
     authApi.authenticate.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 401 })));
     fixture.detectChanges();
