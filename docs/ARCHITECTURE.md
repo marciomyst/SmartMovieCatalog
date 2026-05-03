@@ -50,3 +50,4 @@ Current ADRs:
 - `docs/adr/0002-authentication-strategy.md`
 - `docs/adr/0003-database-strategy.md`
 - `docs/adr/0004-api-error-contract.md`
+- `docs/adr/0005-spec-kit-workflow.md`

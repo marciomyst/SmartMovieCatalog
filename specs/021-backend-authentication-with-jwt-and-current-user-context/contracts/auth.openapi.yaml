@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: SmartMovieCatalog Authentication API
+  version: 0.1.0
+paths:
+  /api/auth/authenticate:
+    post:
+      operationId: authenticate
+      summary: Authenticate with local credentials.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticateRequest'
+            examples:
+              valid:
+                value:
+                  email: user@example.com
+                  password: Password123!
+      responses:
+        '200':
+          description: Authentication succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateResponse'
+        '400':
+          description: Request validation failed.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Authentication failed. The response must not disclose whether the email exists, the password is wrong, or the user is inactive or removed.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/auth/me:
+    get:
+      operationId: getCurrentUser
+      summary: Get the authenticated user's current identity context.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current authenticated user context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserResponse'
+        '401':
+          description: Missing, invalid, expired, rejected, or no-longer-valid bearer token.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthenticateRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 320
+        password:
+          type: string
+          minLength: 1
+          writeOnly: true
+    AuthenticateResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - userId
+        - email
+        - accessToken
+        - accessTokenExpiresAtUtc
+      properties:
+        userId:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        accessToken:
+          type: string
+          description: JWT bearer access token.
+        accessTokenExpiresAtUtc:
+          type: string
+          format: date-time
+    CurrentUserResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - userId
+        - email
+        - name
+        - roles
+        - mustChangePasswordOnFirstLogin
+      properties:
+        userId:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+          minLength: 1
+        roles:
+          type: array
+          items:
+            type: string
+            enum:
+              - Admin
+              - User
+        mustChangePasswordOnFirstLogin:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: true
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+    ValidationProblemDetails:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          additionalProperties: true
+          properties:
+            errors:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
