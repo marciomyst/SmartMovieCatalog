@@ -11,7 +11,8 @@ if (env.ASPNETCORE_HTTPS_PORT) {
 const PROXY_CONFIG = [
   {
     context: [
-      "/weatherforecast",
+      "/api",
+      "/health",
     ],
     target,
     secure: false

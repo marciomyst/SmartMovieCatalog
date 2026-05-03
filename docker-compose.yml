@@ -29,6 +29,10 @@ services:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
       ASPNETCORE_HTTP_PORTS: ${ASPNETCORE_HTTP_PORTS:-8080}
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=${POSTGRES_DB:-smart_movie_catalog};Username=${POSTGRES_USER:-smartmovie};Password=${POSTGRES_PASSWORD:-smartmovie_dev_password}
+      Jwt__Issuer: ${JWT_ISSUER:-SmartMovieCatalog}
+      Jwt__Audience: ${JWT_AUDIENCE:-SmartMovieCatalog.Api}
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:?Set JWT_SIGNING_KEY in .env or environment}
+      Jwt__AccessTokenLifetimeMinutes: ${JWT_ACCESS_TOKEN_LIFETIME_MINUTES:-60}
     ports:
       - "${API_HTTP_PORT:-5048}:8080"
 

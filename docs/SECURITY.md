@@ -17,6 +17,20 @@
 - Use consistent authorization checks once authenticated features exist.
 - Avoid returning data that belongs to another user or tenant.
 
+## Backend Authentication
+- Local users authenticate with email/password through `POST /api/auth/authenticate`.
+- Passwords are persisted only as opaque PBKDF2-SHA256 hashes with per-password salts; plaintext passwords must never be stored, logged, returned, or placed in configuration.
+- JWT settings must be supplied through environment variables, user-secrets, or another non-versioned provider:
+  - `Jwt:Issuer`
+  - `Jwt:Audience`
+  - `Jwt:SigningKey`
+  - `Jwt:AccessTokenLifetimeMinutes`
+- `Jwt:SigningKey` must not be committed and must be at least 32 bytes.
+- Database connection strings must use `ConnectionStrings:DefaultConnection` from environment variables or user-secrets.
+- Authentication failures intentionally return generic `401 Unauthorized` responses and must not disclose whether an email exists, a password is wrong, or a user is inactive or removed.
+- Authentication logs must not contain passwords, password hashes, bearer tokens, signing keys, raw authorization headers, or account-enumeration details.
+- Development/Test seed users may be provisioned only from non-versioned configuration. Production users are provisioned operationally outside application startup and migrations.
+
 ## Frontend Security
 - Do not store long-lived secrets in browser storage.
 - Treat all data from APIs, URLs, and user input as untrusted.

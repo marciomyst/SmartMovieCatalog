@@ -86,9 +86,12 @@ This starts:
 - ASP.NET Core API on `http://localhost:5048`.
 - PostgreSQL on `localhost:5432`.
 
-The API container receives `ConnectionStrings__DefaultConnection` through environment variables. The current scaffold does not use persistence yet.
+The API container receives `ConnectionStrings__DefaultConnection` and JWT settings through environment variables. Set `JWT_SIGNING_KEY` in `.env` or your shell before starting the API; do not commit real signing keys or database credentials.
 
-The current runnable vertical slice is still the scaffold `/weatherforecast` endpoint consumed by the Angular app.
+The backend auth endpoints are:
+
+- `POST /api/auth/authenticate`
+- `GET /api/auth/me`
 
 Health check:
 
@@ -118,6 +121,14 @@ Useful PostgreSQL checks:
 docker compose exec postgres pg_isready -U smartmovie -d smart_movie_catalog
 docker compose exec postgres psql -U smartmovie -d smart_movie_catalog -c "select version();"
 ```
+
+Apply EF Core migrations after configuring the local connection string:
+
+```bash
+dotnet ef database update --project backend/src/SmartMovieCatalog.Infrastructure --startup-project backend/src/SmartMovieCatalog.Api
+```
+
+Development/Test seed users are supplied through non-versioned configuration under `DevelopmentSeedUser:*`. Production user provisioning is operational/manual outside application startup.
 
 ## Development Notes
 - Backend entry point: `backend/src/SmartMovieCatalog.Api/Program.cs`.

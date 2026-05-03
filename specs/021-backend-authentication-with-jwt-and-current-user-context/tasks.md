@@ -25,12 +25,12 @@
 
 **Purpose**: Add deliberate package references and test scaffolding authorized by ADR 0002, ADR 0003, and ADR 0004.
 
-- [ ] T001 Add JWT bearer and EF Core design-time package references in `backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj`
-- [ ] T002 Add EF Core, Npgsql provider, and password hashing package references in `backend/src/SmartMovieCatalog.Infrastructure/SmartMovieCatalog.Infrastructure.csproj`
-- [ ] T003 Add application test framework, assertions, and project references in `backend/tests/SmartMovieCatalog.Application.Tests/SmartMovieCatalog.Application.Tests.csproj`
-- [ ] T004 Add API test framework, assertions, `Microsoft.AspNetCore.Mvc.Testing`, and project references in `backend/tests/SmartMovieCatalog.Api.Tests/SmartMovieCatalog.Api.Tests.csproj`
-- [ ] T005 [P] Add infrastructure test framework references in `backend/tests/SmartMovieCatalog.Infrastructure.Tests/SmartMovieCatalog.Infrastructure.Tests.csproj`
-- [ ] T006 [P] Update backend test tooling notes for the selected packages in `docs/TESTING.md`
+- [X] T001 Add JWT bearer and EF Core design-time package references in `backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj`
+- [X] T002 Add EF Core, Npgsql provider, and password hashing package references in `backend/src/SmartMovieCatalog.Infrastructure/SmartMovieCatalog.Infrastructure.csproj`
+- [X] T003 Add application test framework, assertions, and project references in `backend/tests/SmartMovieCatalog.Application.Tests/SmartMovieCatalog.Application.Tests.csproj`
+- [X] T004 Add API test framework, assertions, `Microsoft.AspNetCore.Mvc.Testing`, and project references in `backend/tests/SmartMovieCatalog.Api.Tests/SmartMovieCatalog.Api.Tests.csproj`
+- [X] T005 [P] Add infrastructure test framework references in `backend/tests/SmartMovieCatalog.Infrastructure.Tests/SmartMovieCatalog.Infrastructure.Tests.csproj`
+- [X] T006 [P] Update backend test tooling notes for the selected packages in `docs/TESTING.md`
 
 ---
 
@@ -40,23 +40,23 @@
 
 **Checkpoint**: No user story implementation should begin until this phase is complete.
 
-- [ ] T007 [P] Add public auth DTOs in `backend/src/SmartMovieCatalog.Contracts/Auth/AuthenticateRequest.cs`, `backend/src/SmartMovieCatalog.Contracts/Auth/AuthenticateResponse.cs`, and `backend/src/SmartMovieCatalog.Contracts/Auth/CurrentUserResponse.cs`
-- [ ] T008 [P] Add the framework-free user aggregate and user id value object in `backend/src/SmartMovieCatalog.Domain/Users/User.cs` and `backend/src/SmartMovieCatalog.Domain/Users/UserId.cs`
-- [ ] T009 [P] Add email and role value objects in `backend/src/SmartMovieCatalog.Domain/Users/EmailAddress.cs` and `backend/src/SmartMovieCatalog.Domain/Users/UserRole.cs`
-- [ ] T010 [P] Add authentication result models in `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticationResult.cs`, `backend/src/SmartMovieCatalog.Application/Features/Auth/CurrentUserResult.cs`, and `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticationFailure.cs`
-- [ ] T011 Add application authentication abstractions in `backend/src/SmartMovieCatalog.Application/Abstractions/Authentication/IPasswordHasher.cs`, `backend/src/SmartMovieCatalog.Application/Abstractions/Authentication/IAccessTokenService.cs`, and `backend/src/SmartMovieCatalog.Application/Abstractions/Authentication/ICurrentUserPrincipalAccessor.cs`
-- [ ] T012 Add persistence and time abstractions in `backend/src/SmartMovieCatalog.Application/Abstractions/Persistence/IUserRepository.cs` and `backend/src/SmartMovieCatalog.Application/Abstractions/Time/IClock.cs`
-- [ ] T013 Add JWT and database option models with validation in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/JwtOptions.cs` and `backend/src/SmartMovieCatalog.Infrastructure/Persistence/DatabaseOptions.cs`
-- [ ] T014 Add EF Core DbContext and design-time factory in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/SmartMovieCatalogDbContext.cs` and `backend/src/SmartMovieCatalog.Infrastructure/Persistence/SmartMovieCatalogDbContextFactory.cs`
-- [ ] T015 Add user persistence mapping in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/Configurations/UserConfiguration.cs`
-- [ ] T016 Add the initial user and role EF Core migration in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/Migrations/`
-- [ ] T017 Add development/test-only user seeding support in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/DevelopmentUserSeeder.cs`
-- [ ] T018 Wire EF Core, repository, password hasher, JWT service, current-user accessor, and clock registrations in `backend/src/SmartMovieCatalog.Infrastructure/DependencyInjection.cs`
-- [ ] T019 Register application auth use cases in `backend/src/SmartMovieCatalog.Application/DependencyInjection.cs`
-- [ ] T020 Configure JWT authentication, authorization, option validation, `UseAuthentication()`, and middleware ordering in `backend/src/SmartMovieCatalog.Api/Program.cs`
-- [ ] T021 Add product auth error helpers using `ProblemDetails` and `ValidationProblemDetails` in `backend/src/SmartMovieCatalog.Api/Common/AuthProblemDetails.cs`
-- [ ] T022 Add reusable application test doubles in `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakeUserRepository.cs`, `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakePasswordHasher.cs`, `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakeAccessTokenService.cs`, and `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakeClock.cs`
-- [ ] T023 Add reusable API test host and auth fixtures in `backend/tests/SmartMovieCatalog.Api.Tests/TestSupport/SmartMovieCatalogApiFactory.cs`, `backend/tests/SmartMovieCatalog.Api.Tests/TestSupport/AuthApiFixture.cs`, and `backend/tests/SmartMovieCatalog.Api.Tests/TestSupport/TestJwtOptions.cs`
+- [X] T007 [P] Add public auth DTOs in `backend/src/SmartMovieCatalog.Contracts/Auth/AuthenticateRequest.cs`, `backend/src/SmartMovieCatalog.Contracts/Auth/AuthenticateResponse.cs`, and `backend/src/SmartMovieCatalog.Contracts/Auth/CurrentUserResponse.cs`
+- [X] T008 [P] Add the framework-free user aggregate and user id value object in `backend/src/SmartMovieCatalog.Domain/Users/User.cs` and `backend/src/SmartMovieCatalog.Domain/Users/UserId.cs`
+- [X] T009 [P] Add email and role value objects in `backend/src/SmartMovieCatalog.Domain/Users/EmailAddress.cs` and `backend/src/SmartMovieCatalog.Domain/Users/UserRole.cs`
+- [X] T010 [P] Add authentication result models in `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticationResult.cs`, `backend/src/SmartMovieCatalog.Application/Features/Auth/CurrentUserResult.cs`, and `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticationFailure.cs`
+- [X] T011 Add application authentication abstractions in `backend/src/SmartMovieCatalog.Application/Abstractions/Authentication/IPasswordHasher.cs`, `backend/src/SmartMovieCatalog.Application/Abstractions/Authentication/IAccessTokenService.cs`, and `backend/src/SmartMovieCatalog.Application/Abstractions/Authentication/ICurrentUserPrincipalAccessor.cs`
+- [X] T012 Add persistence and time abstractions in `backend/src/SmartMovieCatalog.Application/Abstractions/Persistence/IUserRepository.cs` and `backend/src/SmartMovieCatalog.Application/Abstractions/Time/IClock.cs`
+- [X] T013 Add JWT and database option models with validation in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/JwtOptions.cs` and `backend/src/SmartMovieCatalog.Infrastructure/Persistence/DatabaseOptions.cs`
+- [X] T014 Add EF Core DbContext and design-time factory in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/SmartMovieCatalogDbContext.cs` and `backend/src/SmartMovieCatalog.Infrastructure/Persistence/SmartMovieCatalogDbContextFactory.cs`
+- [X] T015 Add user persistence mapping in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/Configurations/UserConfiguration.cs`
+- [X] T016 Add the initial user and role EF Core migration in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/Migrations/`
+- [X] T017 Add development/test-only user seeding support in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/DevelopmentUserSeeder.cs`
+- [X] T018 Wire EF Core, repository, password hasher, JWT service, current-user accessor, and clock registrations in `backend/src/SmartMovieCatalog.Infrastructure/DependencyInjection.cs`
+- [X] T019 Register application auth use cases in `backend/src/SmartMovieCatalog.Application/DependencyInjection.cs`
+- [X] T020 Configure JWT authentication, authorization, option validation, `UseAuthentication()`, and middleware ordering in `backend/src/SmartMovieCatalog.Api/Program.cs`
+- [X] T021 Add product auth error helpers using `ProblemDetails` and `ValidationProblemDetails` in `backend/src/SmartMovieCatalog.Api/Common/AuthProblemDetails.cs`
+- [X] T022 Add reusable application test doubles in `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakeUserRepository.cs`, `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakePasswordHasher.cs`, `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakeAccessTokenService.cs`, and `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakeClock.cs`
+- [X] T023 Add reusable API test host and auth fixtures in `backend/tests/SmartMovieCatalog.Api.Tests/TestSupport/SmartMovieCatalogApiFactory.cs`, `backend/tests/SmartMovieCatalog.Api.Tests/TestSupport/AuthApiFixture.cs`, and `backend/tests/SmartMovieCatalog.Api.Tests/TestSupport/TestJwtOptions.cs`
 
 ---
 
@@ -68,17 +68,17 @@
 
 ### Tests For User Story 1
 
-- [ ] T024 [P] [US1] Add application tests for successful authentication in `backend/tests/SmartMovieCatalog.Application.Tests/Auth/AuthenticateUserTests.cs`
-- [ ] T025 [P] [US1] Add API tests for successful `POST /api/auth/authenticate` in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/AuthenticateEndpointTests.cs`
+- [X] T024 [P] [US1] Add application tests for successful authentication in `backend/tests/SmartMovieCatalog.Application.Tests/Auth/AuthenticateUserTests.cs`
+- [X] T025 [P] [US1] Add API tests for successful `POST /api/auth/authenticate` in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/AuthenticateEndpointTests.cs`
 
 ### Implementation For User Story 1
 
-- [ ] T026 [US1] Implement the authentication use case in `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticateUser.cs`
-- [ ] T027 [US1] Implement normalized-email user lookup and active-user persistence behavior in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/EfUserRepository.cs`
-- [ ] T028 [US1] Implement secure framework-backed password hashing and verification in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/PasswordHasher.cs`
-- [ ] T029 [US1] Implement JWT access token creation with subject and role claims in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/JwtAccessTokenService.cs`
-- [ ] T030 [US1] Add `POST /api/auth/authenticate` endpoint handling in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
-- [ ] T031 [US1] Update the login request example in `backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.http`
+- [X] T026 [US1] Implement the authentication use case in `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticateUser.cs`
+- [X] T027 [US1] Implement normalized-email user lookup and active-user persistence behavior in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/EfUserRepository.cs`
+- [X] T028 [US1] Implement secure framework-backed password hashing and verification in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/PasswordHasher.cs`
+- [X] T029 [US1] Implement JWT access token creation with subject and role claims in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/JwtAccessTokenService.cs`
+- [X] T030 [US1] Add `POST /api/auth/authenticate` endpoint handling in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T031 [US1] Update the login request example in `backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.http`
 
 **Checkpoint**: US1 is complete when valid credentials return a token and all US1 tests pass independently.
 
@@ -92,15 +92,15 @@
 
 ### Tests For User Story 2
 
-- [ ] T032 [P] [US2] Add application tests for invalid password, nonexistent user, inactive user, and removed user in `backend/tests/SmartMovieCatalog.Application.Tests/Auth/AuthenticateUserFailureTests.cs`
-- [ ] T033 [P] [US2] Add API tests for `400 Bad Request` and generic `401 Unauthorized` authentication failures in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/AuthenticateEndpointFailureTests.cs`
+- [X] T032 [P] [US2] Add application tests for invalid password, nonexistent user, inactive user, and removed user in `backend/tests/SmartMovieCatalog.Application.Tests/Auth/AuthenticateUserFailureTests.cs`
+- [X] T033 [P] [US2] Add API tests for `400 Bad Request` and generic `401 Unauthorized` authentication failures in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/AuthenticateEndpointFailureTests.cs`
 
 ### Implementation For User Story 2
 
-- [ ] T034 [US2] Add authentication request validation without echoing passwords in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
-- [ ] T035 [US2] Map authentication failures to generic `ProblemDetails` in `backend/src/SmartMovieCatalog.Api/Common/AuthProblemDetails.cs`
-- [ ] T036 [US2] Reject inactive and removed users in `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticateUser.cs`
-- [ ] T037 [US2] Add safe authentication failure logging without passwords, hashes, tokens, or enumeration details in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T034 [US2] Add authentication request validation without echoing passwords in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T035 [US2] Map authentication failures to generic `ProblemDetails` in `backend/src/SmartMovieCatalog.Api/Common/AuthProblemDetails.cs`
+- [X] T036 [US2] Reject inactive and removed users in `backend/src/SmartMovieCatalog.Application/Features/Auth/AuthenticateUser.cs`
+- [X] T037 [US2] Add safe authentication failure logging without passwords, hashes, tokens, or enumeration details in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
 
 **Checkpoint**: US2 is complete when invalid auth attempts fail with the accepted error contract and no account-enumeration detail.
 
@@ -114,15 +114,15 @@
 
 ### Tests For User Story 3
 
-- [ ] T038 [P] [US3] Add application tests for successful current-user lookup in `backend/tests/SmartMovieCatalog.Application.Tests/Auth/GetCurrentUserTests.cs`
-- [ ] T039 [P] [US3] Add API tests for successful `GET /api/auth/me` with a valid token in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/CurrentUserEndpointTests.cs`
+- [X] T038 [P] [US3] Add application tests for successful current-user lookup in `backend/tests/SmartMovieCatalog.Application.Tests/Auth/GetCurrentUserTests.cs`
+- [X] T039 [P] [US3] Add API tests for successful `GET /api/auth/me` with a valid token in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/CurrentUserEndpointTests.cs`
 
 ### Implementation For User Story 3
 
-- [ ] T040 [US3] Implement current principal extraction from bearer claims in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/HttpCurrentUserPrincipalAccessor.cs`
-- [ ] T041 [US3] Implement the current-user use case in `backend/src/SmartMovieCatalog.Application/Features/Auth/GetCurrentUser.cs`
-- [ ] T042 [US3] Add authorized `GET /api/auth/me` endpoint handling in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
-- [ ] T043 [US3] Update the current-user request example in `backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.http`
+- [X] T040 [US3] Implement current principal extraction from bearer claims in `backend/src/SmartMovieCatalog.Infrastructure/Authentication/HttpCurrentUserPrincipalAccessor.cs`
+- [X] T041 [US3] Implement the current-user use case in `backend/src/SmartMovieCatalog.Application/Features/Auth/GetCurrentUser.cs`
+- [X] T042 [US3] Add authorized `GET /api/auth/me` endpoint handling in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T043 [US3] Update the current-user request example in `backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.http`
 
 **Checkpoint**: US3 is complete when authenticated current-user lookup returns the expected identity contract.
 
@@ -136,12 +136,12 @@
 
 ### Tests For User Story 4
 
-- [ ] T044 [P] [US4] Add API tests for missing, malformed, expired, and incorrectly signed bearer tokens in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/CurrentUserUnauthorizedTests.cs`
+- [X] T044 [P] [US4] Add API tests for missing, malformed, expired, and incorrectly signed bearer tokens in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/CurrentUserUnauthorizedTests.cs`
 
 ### Implementation For User Story 4
 
-- [ ] T045 [US4] Ensure `GET /api/auth/me` requires authorization metadata in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
-- [ ] T046 [US4] Configure JWT bearer challenge behavior for accepted `ProblemDetails` responses in `backend/src/SmartMovieCatalog.Api/Program.cs`
+- [X] T045 [US4] Ensure `GET /api/auth/me` requires authorization metadata in `backend/src/SmartMovieCatalog.Api/Controllers/AuthController.cs`
+- [X] T046 [US4] Configure JWT bearer challenge behavior for accepted `ProblemDetails` responses in `backend/src/SmartMovieCatalog.Api/Program.cs`
 
 **Checkpoint**: US4 is complete when unauthenticated current-user requests consistently return `401 Unauthorized`.
 
@@ -155,13 +155,13 @@
 
 ### Tests For User Story 5
 
-- [ ] T047 [P] [US5] Add application tests for missing, inactive, and removed persisted users in `backend/tests/SmartMovieCatalog.Application.Tests/Auth/GetCurrentUserFailureTests.cs`
-- [ ] T048 [P] [US5] Add API tests for stale-token current-user rejection in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/CurrentUserStaleTokenTests.cs`
+- [X] T047 [P] [US5] Add application tests for missing, inactive, and removed persisted users in `backend/tests/SmartMovieCatalog.Application.Tests/Auth/GetCurrentUserFailureTests.cs`
+- [X] T048 [P] [US5] Add API tests for stale-token current-user rejection in `backend/tests/SmartMovieCatalog.Api.Tests/Auth/CurrentUserStaleTokenTests.cs`
 
 ### Implementation For User Story 5
 
-- [ ] T049 [US5] Reject missing, inactive, and removed persisted users in `backend/src/SmartMovieCatalog.Application/Features/Auth/GetCurrentUser.cs`
-- [ ] T050 [US5] Map stale-token current-user failures to `401 Unauthorized` in `backend/src/SmartMovieCatalog.Api/Common/AuthProblemDetails.cs`
+- [X] T049 [US5] Reject missing, inactive, and removed persisted users in `backend/src/SmartMovieCatalog.Application/Features/Auth/GetCurrentUser.cs`
+- [X] T050 [US5] Map stale-token current-user failures to `401 Unauthorized` in `backend/src/SmartMovieCatalog.Api/Common/AuthProblemDetails.cs`
 
 **Checkpoint**: US5 is complete when current-user lookup validates persisted user state on every request.
 
@@ -171,13 +171,13 @@
 
 **Purpose**: Documentation, examples, scaffold cleanup, and final verification across all stories.
 
-- [ ] T051 [P] Update backend API documentation for auth endpoints and accepted error responses in `docs/API.md`
-- [ ] T052 [P] Update security documentation for password hashing, JWT configuration, secret handling, user provisioning, and auth logging in `docs/SECURITY.md`
-- [ ] T053 [P] Update local setup and user provisioning notes in `README.md`
-- [ ] T054 [P] Add safe JWT and database environment variable placeholders without secret values in `docker-compose.yml`
-- [ ] T055 Remove WeatherForecast scaffold endpoint and model in `backend/src/SmartMovieCatalog.Api/Controllers/WeatherForecastController.cs` and `backend/src/SmartMovieCatalog.Api/WeatherForecast.cs`
-- [ ] T056 Run backend auth tests for `backend/tests/SmartMovieCatalog.Application.Tests/SmartMovieCatalog.Application.Tests.csproj` and `backend/tests/SmartMovieCatalog.Api.Tests/SmartMovieCatalog.Api.Tests.csproj`
-- [ ] T057 Run final solution verification for `SmartMovieCatalog.slnx`
+- [X] T051 [P] Update backend API documentation for auth endpoints and accepted error responses in `docs/API.md`
+- [X] T052 [P] Update security documentation for password hashing, JWT configuration, secret handling, user provisioning, and auth logging in `docs/SECURITY.md`
+- [X] T053 [P] Update local setup and user provisioning notes in `README.md`
+- [X] T054 [P] Add safe JWT and database environment variable placeholders without secret values in `docker-compose.yml`
+- [X] T055 Remove WeatherForecast scaffold endpoint and model in `backend/src/SmartMovieCatalog.Api/Controllers/WeatherForecastController.cs` and `backend/src/SmartMovieCatalog.Api/WeatherForecast.cs`
+- [X] T056 Run backend auth tests for `backend/tests/SmartMovieCatalog.Application.Tests/SmartMovieCatalog.Application.Tests.csproj` and `backend/tests/SmartMovieCatalog.Api.Tests/SmartMovieCatalog.Api.Tests.csproj`
+- [X] T057 Run final solution verification for `SmartMovieCatalog.slnx`
 
 ---
 

@@ -1,10 +1,15 @@
-
+using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using SmartMovieCatalog.Api.Common;
 using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Infrastructure;
+using SmartMovieCatalog.Infrastructure.Authentication;
 
 namespace SmartMovieCatalog.Api
 {
-    public static class Program
+    public class Program
     {
         private static readonly Uri HealthCheckUri = BuildHealthCheckUri();
 
@@ -20,16 +25,50 @@ namespace SmartMovieCatalog.Api
             // Add services to the container.
 
             builder.Services.AddApplication();
-            builder.Services.AddInfrastructure();
+            builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddControllers();
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             builder.Services.AddHealthChecks();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    JwtOptions jwtOptions = builder.Configuration
+                        .GetSection(JwtOptions.SectionName)
+                        .Get<JwtOptions>() ?? new JwtOptions();
+
+                    options.TokenValidationParameters = jwtOptions.CreateTokenValidationParameters();
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnChallenge = async context =>
+                        {
+                            if (context.Response.HasStarted)
+                            {
+                                return;
+                            }
+
+                            context.HandleResponse();
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            context.Response.ContentType = "application/problem+json";
+
+                            ProblemDetails problemDetails = AuthProblemDetails.Unauthorized(context.HttpContext);
+                            await context.Response.WriteAsync(JsonSerializer.Serialize(problemDetails), context.HttpContext.RequestAborted);
+                        }
+                    };
+                });
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
-            app.UseDefaultFiles();
-            app.MapStaticAssets();
+            if (!app.Environment.IsEnvironment("Testing"))
+            {
+                app.UseDefaultFiles();
+                app.MapStaticAssets();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -39,6 +78,7 @@ namespace SmartMovieCatalog.Api
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
@@ -46,7 +86,10 @@ namespace SmartMovieCatalog.Api
 
             app.MapHealthChecks("/health");
 
-            app.MapFallbackToFile("/index.html");
+            if (!app.Environment.IsEnvironment("Testing"))
+            {
+                app.MapFallbackToFile("/index.html");
+            }
 
             app.Run();
 

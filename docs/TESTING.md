@@ -32,7 +32,15 @@ Recommended test types:
 - Integration tests for HTTP endpoints and dependency injection wiring.
 - Contract-style tests for API request and response shape.
 
-The current backend test projects are compile-only scaffolds without a test framework package. Do not introduce xUnit, TestContainers, EF Core, or database-backed tests until the backend behavior or user direction requires them.
+Backend authentication tests use xUnit and `Microsoft.AspNetCore.Mvc.Testing`.
+
+Current auth coverage:
+
+- Application tests cover successful authentication, generic authentication failures, current-user lookup, and stale-user rejection.
+- API tests cover `POST /api/auth/authenticate` success, validation failure, generic unauthorized failures, `GET /api/auth/me` success, missing/malformed/expired/incorrectly signed tokens, and stale persisted users.
+- API tests use in-memory fakes for user persistence and password verification. They do not require TestContainers or a real database.
+
+Do not introduce TestContainers or database-backed tests until a separate testing decision accepts that cost.
 
 ## Frontend Testing Direction
 - Keep component tests focused on behavior, rendering, and user-observable state.

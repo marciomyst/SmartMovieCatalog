@@ -3,14 +3,57 @@
 ## Current State
 The backend is an ASP.NET Core Web API project in `backend/src/SmartMovieCatalog.Api`.
 
-Current scaffold files include:
+Current product endpoints include:
 
-- `Program.cs`
-- `Controllers/WeatherForecastController.cs`
-- `WeatherForecast.cs`
-- `SmartMovieCatalog.Api.http`
+- `POST /api/auth/authenticate`
+- `GET /api/auth/me`
 
-The current API surface is scaffold-level and should not be treated as final product API design.
+The WeatherForecast scaffold endpoint has been removed.
+
+## Authentication Endpoints
+
+### `POST /api/auth/authenticate`
+
+Accepts:
+
+```json
+{
+  "email": "user@example.com",
+  "password": "Password123!"
+}
+```
+
+Returns `200 OK` with:
+
+```json
+{
+  "userId": "00000000-0000-0000-0000-000000000000",
+  "email": "user@example.com",
+  "accessToken": "<jwt>",
+  "accessTokenExpiresAtUtc": "2026-05-03T02:00:00Z"
+}
+```
+
+Invalid request shape returns `400 Bad Request` as `ValidationProblemDetails`.
+Invalid credentials, nonexistent users, inactive users, and removed users return a generic `401 Unauthorized` as `ProblemDetails`.
+
+### `GET /api/auth/me`
+
+Requires `Authorization: Bearer <jwt>`.
+
+Returns `200 OK` with:
+
+```json
+{
+  "userId": "00000000-0000-0000-0000-000000000000",
+  "email": "user@example.com",
+  "name": "Example User",
+  "roles": ["User"],
+  "mustChangePasswordOnFirstLogin": false
+}
+```
+
+Missing, malformed, expired, incorrectly signed, missing-user, inactive-user, and removed-user tokens return `401 Unauthorized` as `ProblemDetails`.
 
 ## API Design Rules
 - Keep endpoint contracts explicit and stable.
