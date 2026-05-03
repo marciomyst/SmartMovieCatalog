@@ -1,13 +1,13 @@
-# AI Flix Design System
+# Smart Movie Catalog Design System
 
 ## Core Identity
 - **Theme:** Dark Mode Only. Cinematic, premium, AI-focused.
-- **Framework:** Tailwind CSS (Native Utility Classes). Do NOT generate custom color palettes or Material Design tokens in the config.
+- **Implementation:** Tailwind-inspired token vocabulary. Tailwind is not currently installed in the Angular project, so components use local CSS that maps to these tokens. Do NOT add custom Material Design token dumps or a separate palette.
 - **Iconography:** Material Symbols Outlined (Rounded/Light weight preferred).
 
 ## Design Tokens
 
-### Colors (Strict Tailwind Palette)
+### Colors (Tailwind Token Palette)
 - `bg-background`: `bg-zinc-950` (`#09090B`) - Main app background.
 - `bg-surface`: `bg-zinc-900` (`#18181B`) - Default cards, standard panels.
 - `bg-surface-elevated`: `bg-zinc-800` (`#27272A`) - Hover states, flipped cards, toasts.
@@ -25,8 +25,8 @@
 ### Typography
 - **Primary Font (Headings):** `Plus Jakarta Sans`, sans-serif. Used for high-impact display.
 - **Secondary Font (Body/UI):** `Inter`, sans-serif. Used for readability.
-- **H1 (Hero):** `font-['Plus_Jakarta_Sans'] text-5xl font-extrabold tracking-tighter text-zinc-50`
-- **H2 (Section):** `font-['Plus_Jakarta_Sans'] text-2xl font-bold tracking-tight text-zinc-50`
+- **H1 (Hero):** `Plus Jakarta Sans`, large responsive size, `font-weight: 800`, `letter-spacing: 0`, `color: #fafafa` or the approved logo gradient.
+- **H2 (Section):** `Plus Jakarta Sans`, 24px, bold, `letter-spacing: 0`, `color: #fafafa`.
 - **Card Title:** `font-['Plus_Jakarta_Sans'] text-lg font-bold leading-tight`
 - **Body:** `font-['Inter'] text-base font-normal text-zinc-300 leading-relaxed`
 - **Small/Meta/Badge:** `font-['Inter'] text-xs font-semibold uppercase tracking-wider`
@@ -44,9 +44,9 @@
 ## Component Specifications
 
 ### 1. Top Navbar
-- **Style:** Fixed to top, `z-50`, uses Glassmorphism.
-- **Logo:** "AI Flix" using `font-black tracking-tighter text-transparent bg-clip-text accent-ai-gradient`.
-- **Links:** `text-zinc-400 hover:text-zinc-50 transition-colors`. Active links get a `border-b-2 border-violet-500`.
+- **Style:** Fixed to top, uses Glassmorphism.
+- **Logo:** "Smart Movie Catalog" using the approved indigo-to-purple gradient.
+- **Links:** zinc secondary text with zinc primary hover. Active links get a violet bottom border.
 
 ### 2. RAG Search Bar (Header/Nav)
 - **Container:** Rounded full, embedded in nav.

@@ -127,7 +127,7 @@ Do not read, modify, or base analysis on generated/vendor output unless explicit
   - `test:`
 
 <!-- SPECKIT START -->
-Current Spec Kit plan: `specs/021-backend-authentication-with-jwt-and-current-user-context/plan.md`.
+Current Spec Kit plan: `specs/023-authentication-login-screen/plan.md`.
 
 Before using Spec Kit skills, read `.specify/memory/constitution.md`.
 If the spec, plan, or implementation touches backend, API, contracts, domain,

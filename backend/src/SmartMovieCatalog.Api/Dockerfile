@@ -35,6 +35,9 @@ COPY ["frontend/Smartmoviecatalog.Angular.esproj", "frontend/"]
 COPY ["frontend/package.json", "frontend/"]
 COPY ["frontend/package-lock.json", "frontend/"]
 
+COPY ["Directory.Packages.props", "."]
+COPY ["Directory.Build.props", "."]
+
 RUN dotnet restore "./backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj" --disable-parallel
 COPY . .
 

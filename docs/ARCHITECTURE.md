@@ -1,13 +1,13 @@
 # Architecture
 
 ## Current State
-AI Flix / SmartMovieCatalog is a small monorepo with two runtime surfaces:
+Smart Movie Catalog / SmartMovieCatalog is a small monorepo with two runtime surfaces:
 
 - Backend: ASP.NET Core 10 in `backend/src/SmartMovieCatalog.Api`.
 - Frontend: Angular 21 in `frontend`.
 
 The backend uses a Clean Architecture project split and integrates the Angular SPA through ASP.NET Core SpaProxy.
-Authentication and persistence are implemented: local email/password authentication issues JWT bearer access tokens, local users are stored with EF Core/PostgreSQL, and backend use cases are dispatched through Wolverine as an in-process CQRS mediator.
+Authentication and persistence are implemented: local email/password authentication issues JWT bearer access tokens, local users are stored with EF Core/PostgreSQL, and backend use cases are dispatched through Wolverine as an in-process CQRS mediator. The Angular SPA includes a login screen that consumes the auth API and keeps the current bearer token in memory.
 
 ## Source Of Truth
 - Solution: `SmartMovieCatalog.slnx`
@@ -18,6 +18,7 @@ Authentication and persistence are implemented: local email/password authenticat
 - Contracts project: `backend/src/SmartMovieCatalog.Contracts/SmartMovieCatalog.Contracts.csproj`
 - Backend entry point: `backend/src/SmartMovieCatalog.Api/Program.cs`
 - Backend HTTP features: `backend/src/SmartMovieCatalog.Api/Features`
+- Frontend auth module: `frontend/src/app/auth`
 - Frontend package manifest: `frontend/package.json`
 - Frontend visual rules: `frontend/DESIGN.md`
 
@@ -29,6 +30,7 @@ Authentication and persistence are implemented: local email/password authenticat
 
 ## Architectural Constraints
 - EF Core/PostgreSQL, JWT authentication, and Wolverine in-process CQRS are accepted for the implemented backend foundation.
+- Frontend authentication uses same-origin `/api` calls, Angular `HttpClient`, and an in-memory session store. It does not currently implement refresh tokens, persistent sessions, registration, password recovery, or route guards.
 - Do not assume Wolverine transports, background workers, distributed messaging infrastructure, external AI providers, or additional persistence stores until they exist in the codebase or are explicitly requested as an architecture change.
 - Do not introduce new persistence providers, external services, or cross-process infrastructure without documenting the decision and validating its impact.
 - Keep layer boundaries useful: add behavior to the layer that owns the responsibility, not to whichever project is convenient.
@@ -56,3 +58,4 @@ Current ADRs:
 - `docs/adr/0005-spec-kit-workflow.md`
 - `docs/adr/0006-domain-aggregate-organization.md`
 - `docs/adr/0007-wolverine-cqrs-mediator.md`
+- `docs/adr/0008-frontend-auth-session.md`

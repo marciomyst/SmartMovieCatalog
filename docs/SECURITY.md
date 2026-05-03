@@ -33,6 +33,9 @@
 
 ## Frontend Security
 - Do not store long-lived secrets in browser storage.
+- Do not persist bearer access tokens in `localStorage` or `sessionStorage`. The Angular auth module keeps the current access token in memory only.
+- A browser refresh clears the current frontend session until persistent session or refresh-token behavior is explicitly designed.
+- Frontend authentication errors must stay generic for `401 Unauthorized` responses and must not reveal whether the email exists.
 - Treat all data from APIs, URLs, and user input as untrusted.
 - Avoid direct DOM injection. If HTML rendering is required, document sanitization.
 - Do not expose AI provider prompts, credentials, or sensitive internal policies in the client.

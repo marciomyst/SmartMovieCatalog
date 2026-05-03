@@ -57,6 +57,12 @@ Returns `200 OK` with:
 
 Missing, malformed, expired, incorrectly signed, missing-user, inactive-user, and removed-user tokens return `401 Unauthorized` as `ProblemDetails`.
 
+## Frontend Consumption
+- The Angular login module calls `POST /api/auth/authenticate` with `email` and `password`.
+- On successful authentication, it calls `GET /api/auth/me` using the returned bearer token.
+- The frontend relies on same-origin `/api` paths. During local `ng serve`, `frontend/src/proxy.conf.js` forwards `/api` to the backend.
+- The frontend maps `400 ValidationProblemDetails` to field-level validation and keeps `401 ProblemDetails` generic to avoid account enumeration.
+
 ## API Design Rules
 - Keep endpoint contracts explicit and stable.
 - Use request and response DTOs for public API contracts when behavior grows beyond scaffold examples.

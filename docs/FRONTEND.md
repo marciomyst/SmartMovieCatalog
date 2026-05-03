@@ -1,7 +1,7 @@
 # Frontend
 
 ## Current State
-The frontend is an Angular 21 SPA in `frontend`.
+The frontend is an Angular 21 SPA in `frontend`. The current first screen is the authentication login page.
 
 Primary references:
 
@@ -17,7 +17,7 @@ The current visual direction is:
 
 - Dark mode only.
 - Cinematic, premium, AI-focused interface.
-- Tailwind utility-first conventions as documented in `DESIGN.md`.
+- Tailwind-inspired token conventions as documented in `DESIGN.md`. Tailwind is not installed in the Angular project today, so current components use local CSS aligned with those tokens.
 - Material Symbols Outlined for iconography.
 
 Do not introduce another design system, component library, custom palette, or visual language without explicit approval.
@@ -29,8 +29,18 @@ Do not introduce another design system, component library, custom palette, or vi
 - Prefer strongly typed models for API responses.
 - Do not introduce global mutable state unless there is a clear product need.
 
+## Authentication UI
+- The login screen lives under `frontend/src/app/auth/login-page`.
+- Auth HTTP calls are isolated in `frontend/src/app/auth/auth-api.ts`; components must not call `HttpClient` directly.
+- `frontend/src/app/auth/auth-session-store.ts` owns the in-memory authenticated session.
+- Auth contracts are mirrored as TypeScript interfaces in `frontend/src/app/auth/auth.models.ts` and must stay aligned with `SmartMovieCatalog.Contracts.Auth`.
+- The Angular dev server proxies `/api` to the backend through `frontend/src/proxy.conf.js`; production uses same-origin `/api` when the SPA is served by ASP.NET Core.
+- The access token returned by `POST /api/auth/authenticate` is kept in memory through `AuthSessionStore`. Do not persist bearer tokens in `localStorage` or `sessionStorage`.
+- The login flow calls `POST /api/auth/authenticate` first, then calls `GET /api/auth/me` with the returned bearer token before storing the session.
+- Registration, password recovery, refresh tokens, persistent sessions, and route guards are not implemented.
+
 ## Styling Rules
-- Prefer the documented Tailwind utility classes and tokens from `DESIGN.md`.
+- Prefer the documented Tailwind-inspired tokens from `DESIGN.md` and `frontend/DESIGN.md`; implement them with local CSS while Tailwind is not installed.
 - Avoid ad hoc colors and one-off spacing systems.
 - Keep responsive behavior explicit.
 - Do not modify generated build output in `dist`.

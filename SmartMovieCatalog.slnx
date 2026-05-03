@@ -1,15 +1,19 @@
 <Solution>
-  <Project Path="frontend/Smartmoviecatalog.Angular.esproj">
-    <Build />
-    <Deploy />
-  </Project>
-  <Project Path="backend/src/SmartMovieCatalog.Application/SmartMovieCatalog.Application.csproj" />
-  <Project Path="backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj" />
-  <Project Path="backend/src/SmartMovieCatalog.Contracts/SmartMovieCatalog.Contracts.csproj" />
-  <Project Path="backend/src/SmartMovieCatalog.Domain/SmartMovieCatalog.Domain.csproj" />
-  <Project Path="backend/src/SmartMovieCatalog.Infrastructure/SmartMovieCatalog.Infrastructure.csproj" />
-  <Project Path="backend/tests/SmartMovieCatalog.Api.Tests/SmartMovieCatalog.Api.Tests.csproj" />
-  <Project Path="backend/tests/SmartMovieCatalog.Application.Tests/SmartMovieCatalog.Application.Tests.csproj" />
-  <Project Path="backend/tests/SmartMovieCatalog.Domain.Tests/SmartMovieCatalog.Domain.Tests.csproj" />
-  <Project Path="backend/tests/SmartMovieCatalog.Infrastructure.Tests/SmartMovieCatalog.Infrastructure.Tests.csproj" />
+  <Folder Name="/src/">
+    <Project Path="backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj" />
+    <Project Path="backend/src/SmartMovieCatalog.Application/SmartMovieCatalog.Application.csproj" />
+    <Project Path="backend/src/SmartMovieCatalog.Contracts/SmartMovieCatalog.Contracts.csproj" />
+    <Project Path="backend/src/SmartMovieCatalog.Domain/SmartMovieCatalog.Domain.csproj" />
+    <Project Path="backend/src/SmartMovieCatalog.Infrastructure/SmartMovieCatalog.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="backend/tests/SmartMovieCatalog.Api.Tests/SmartMovieCatalog.Api.Tests.csproj" />
+    <Project Path="backend/tests/SmartMovieCatalog.Application.Tests/SmartMovieCatalog.Application.Tests.csproj" />
+    <Project Path="backend/tests/SmartMovieCatalog.Domain.Tests/SmartMovieCatalog.Domain.Tests.csproj" />
+    <Project Path="backend/tests/SmartMovieCatalog.Infrastructure.Tests/SmartMovieCatalog.Infrastructure.Tests.csproj" />
+    <Project Path="frontend/Smartmoviecatalog.Angular.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+  </Folder>
 </Solution>
