@@ -34,6 +34,7 @@ public static class DependencyInjection
 
         services.AddHttpContextAccessor();
         services.AddScoped<IUserRepository, EfUserRepository>();
+        services.AddScoped<IMovieRepository, EfMovieRepository>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IAccessTokenService, JwtAccessTokenService>();
         services.AddScoped<ICurrentUserPrincipalAccessor, HttpCurrentUserPrincipalAccessor>();

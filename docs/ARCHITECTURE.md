@@ -7,7 +7,7 @@ Smart Movie Catalog / SmartMovieCatalog is a small monorepo with two runtime sur
 - Frontend: Angular 21 in `frontend`.
 
 The backend uses a Clean Architecture project split and integrates the Angular SPA through ASP.NET Core SpaProxy.
-Authentication and persistence are implemented: local email/password authentication issues JWT bearer access tokens, local users are stored with EF Core/PostgreSQL, and backend use cases are dispatched through Wolverine as an in-process CQRS mediator. The Angular SPA includes a login screen that consumes the auth API and keeps the current bearer token in memory.
+Authentication, movie creation, and persistence are implemented: local email/password authentication issues JWT bearer access tokens, local users and movies are stored with EF Core/PostgreSQL, and backend use cases are dispatched through Wolverine as an in-process CQRS mediator. The Angular SPA includes a login screen that consumes the auth API and keeps the current bearer token in memory.
 
 ## Source Of Truth
 - Solution: `SmartMovieCatalog.slnx`
@@ -18,6 +18,7 @@ Authentication and persistence are implemented: local email/password authenticat
 - Contracts project: `backend/src/SmartMovieCatalog.Contracts/SmartMovieCatalog.Contracts.csproj`
 - Backend entry point: `backend/src/SmartMovieCatalog.Api/Program.cs`
 - Backend HTTP features: `backend/src/SmartMovieCatalog.Api/Features`
+- Movie domain model: `backend/src/SmartMovieCatalog.Domain/Movies`
 - Frontend auth module: `frontend/src/app/auth`
 - Frontend package manifest: `frontend/package.json`
 - Frontend visual rules: `frontend/DESIGN.md`

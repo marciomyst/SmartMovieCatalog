@@ -2,8 +2,11 @@ using FluentValidation;
 using SmartMovieCatalog.Api.Common;
 using SmartMovieCatalog.Api.Features.Auth;
 using SmartMovieCatalog.Api.Features.Auth.Authenticate;
+using SmartMovieCatalog.Api.Features.Movies;
+using SmartMovieCatalog.Api.Features.Movies.CreateMovie;
 using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Contracts.Auth;
+using SmartMovieCatalog.Contracts.Movies;
 using SmartMovieCatalog.Infrastructure;
 using SmartMovieCatalog.Infrastructure.Persistence;
 using Wolverine;
@@ -30,6 +33,7 @@ namespace SmartMovieCatalog.Api
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddScoped<IValidator<AuthenticateRequest>, AuthenticateRequestValidator>();
+            builder.Services.AddScoped<IValidator<CreateMovieRequest>, CreateMovieRequestValidator>();
             builder.Services.AddHealthChecks();
 
             builder.Services.AddOpenApi();
@@ -69,6 +73,7 @@ namespace SmartMovieCatalog.Api
 
 
             app.MapAuthEndpoints();
+            app.MapMovieEndpoints();
 
             app.MapHealthChecks("/health");
 

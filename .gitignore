@@ -5,11 +5,13 @@ dist/
 build/
 out/
 .artifacts/
+artifacts/
 .dotnet-cli-home/
 restore*.log
 *.log
 
 # .NET
+packages/
 *.user
 *.rsuser
 *.suo
@@ -50,3 +52,5 @@ docker-compose.override.local.yml
 Thumbs.db
 Desktop.ini
 .DS_Store
+*.tmp
+*.swp

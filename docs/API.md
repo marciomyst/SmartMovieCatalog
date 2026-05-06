@@ -9,6 +9,7 @@ Current backend endpoints include:
 
 - `POST /api/auth/authenticate`
 - `GET /api/auth/me`
+- `POST /api/movies`
 
 The WeatherForecast scaffold endpoint has been removed.
 
@@ -57,11 +58,73 @@ Returns `200 OK` with:
 
 Missing, malformed, expired, incorrectly signed, missing-user, inactive-user, and removed-user tokens return `401 Unauthorized` as `ProblemDetails`.
 
+## Movie Endpoints
+
+### `POST /api/movies`
+
+Does not require authentication in the first movie catalog slice.
+
+Accepts:
+
+```json
+{
+  "title": "Central do Brasil",
+  "originalTitle": "Central do Brasil",
+  "releaseYear": 1998,
+  "countryCode": "BR",
+  "originalLanguage": "pt-BR",
+  "genres": ["Drama"],
+  "director": "Walter Salles",
+  "synopsis": "A retired teacher and a young boy travel through Brazil in search of his father.",
+  "durationMinutes": 110,
+  "ageRating": "12"
+}
+```
+
+Required fields:
+
+- `title`: non-blank after trimming.
+- `releaseYear`: between `1888` and the next calendar year.
+- `countryCode`: exactly two letters after trimming; normalized to uppercase in the response.
+- `originalLanguage`: non-blank after trimming.
+
+Optional fields:
+
+- `originalTitle`
+- `genres`
+- `director`
+- `synopsis`
+- `durationMinutes`: positive when supplied.
+- `ageRating`
+
+Returns `201 Created` with `Location: /api/movies/{id}` and:
+
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "title": "Central do Brasil",
+  "originalTitle": "Central do Brasil",
+  "releaseYear": 1998,
+  "countryCode": "BR",
+  "originalLanguage": "pt-BR",
+  "genres": ["Drama"],
+  "director": "Walter Salles",
+  "synopsis": "A retired teacher and a young boy travel through Brazil in search of his father.",
+  "durationMinutes": 110,
+  "ageRating": "12"
+}
+```
+
+Invalid request shape and validation failures return `400 Bad Request` as `ValidationProblemDetails`.
+
+`GET /api/movies/{id}` is not implemented in this slice; the `Location` header reserves the future resource URI.
+
 ## Frontend Consumption
 - The Angular login module calls `POST /api/auth/authenticate` with `email` and `password`.
 - On successful authentication, it calls `GET /api/auth/me` using the returned bearer token.
 - The frontend relies on same-origin `/api` paths. During local `ng serve`, `frontend/src/proxy.conf.js` forwards `/api` to the backend.
 - The frontend maps `400 ValidationProblemDetails` to field-level validation and keeps `401 ProblemDetails` generic to avoid account enumeration.
+- No Angular movie creation flow exists yet.
 
 ## API Design Rules
 - Keep endpoint contracts explicit and stable.

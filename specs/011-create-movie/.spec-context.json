@@ -1,0 +1,40 @@
+{
+  "workflow": "speckit",
+  "specName": "011-create-movie",
+  "branch": "011-create-movie",
+  "selectedAt": "2026-05-03T23:49:02.489Z",
+  "currentStep": "implement",
+  "status": "implementing",
+  "stepHistory": {
+    "tasks": {
+      "startedAt": "2026-05-03T23:56:02.182Z",
+      "completedAt": "2026-05-03T23:56:02.182Z"
+    },
+    "implement": {
+      "startedAt": "2026-05-03T23:56:02.185Z",
+      "completedAt": null
+    }
+  },
+  "transitions": [
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T23:56:02.182Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "from": {
+        "step": "specify",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-03T23:56:02.185Z"
+    }
+  ]
+}

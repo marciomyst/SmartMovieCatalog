@@ -1,0 +1,161 @@
+openapi: 3.0.3
+info:
+  title: SmartMovieCatalog Movies API
+  version: 0.1.0
+paths:
+  /api/movies:
+    post:
+      summary: Create a movie
+      operationId: createMovie
+      tags:
+        - Movies
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieRequest'
+            example:
+              title: Central do Brasil
+              originalTitle: Central do Brasil
+              releaseYear: 1998
+              countryCode: BR
+              originalLanguage: pt-BR
+              genres:
+                - Drama
+              director: Walter Salles
+              synopsis: A retired teacher and a young boy travel through Brazil in search of his father.
+              durationMinutes: 110
+              ageRating: "12"
+      responses:
+        "201":
+          description: Movie created
+          headers:
+            Location:
+              description: Future resource URI for the created movie. The read endpoint is deferred.
+              schema:
+                type: string
+                example: /api/movies/4fd71095-2507-4f92-99c4-06c5d761eb6d
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieResponse'
+        "400":
+          description: Validation failure
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+components:
+  schemas:
+    CreateMovieRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+        - releaseYear
+        - countryCode
+        - originalLanguage
+      properties:
+        title:
+          type: string
+          minLength: 1
+        originalTitle:
+          type: string
+          nullable: true
+        releaseYear:
+          type: integer
+          minimum: 1888
+          description: Must be no later than the next calendar year.
+        countryCode:
+          type: string
+          minLength: 2
+          maxLength: 2
+          pattern: "^[A-Za-z]{2}$"
+          description: Trimmed and normalized to uppercase in responses.
+        originalLanguage:
+          type: string
+          minLength: 1
+          description: Trimmed language tag string.
+        genres:
+          type: array
+          nullable: true
+          items:
+            type: string
+            minLength: 1
+        director:
+          type: string
+          nullable: true
+        synopsis:
+          type: string
+          nullable: true
+        durationMinutes:
+          type: integer
+          nullable: true
+          minimum: 1
+        ageRating:
+          type: string
+          nullable: true
+    MovieResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - releaseYear
+        - countryCode
+        - originalLanguage
+        - genres
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        originalTitle:
+          type: string
+          nullable: true
+        releaseYear:
+          type: integer
+        countryCode:
+          type: string
+          minLength: 2
+          maxLength: 2
+        originalLanguage:
+          type: string
+        genres:
+          type: array
+          items:
+            type: string
+        director:
+          type: string
+          nullable: true
+        synopsis:
+          type: string
+          nullable: true
+        durationMinutes:
+          type: integer
+          nullable: true
+        ageRating:
+          type: string
+          nullable: true
+    ValidationProblemDetails:
+      type: object
+      additionalProperties: true
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+          example: 400
+        traceId:
+          type: string
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
