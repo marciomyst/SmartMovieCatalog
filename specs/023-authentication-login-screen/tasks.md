@@ -1,4 +1,4 @@
-# Tasks: Authentication Login Screen
+# Tasks: Authentication Login Screen 
 
 **Input**: Design documents from `G:\new-work\SmartMovieCatalog\specs\023-authentication-login-screen`
 **Prerequisites**: `plan.md`, `spec.md`, `research.md`, `data-model.md`, `contracts/auth-api.md`, `quickstart.md`

@@ -3,7 +3,7 @@
 **Branch**: `023-authentication-login-screen` | **Date**: 2026-05-03 | **Spec**: `specs/023-authentication-login-screen/spec.md`
 **Input**: Feature specification from `specs/023-authentication-login-screen/spec.md`
 
-## Summary
+## Summary 
 
 Document and validate the already implemented Angular authentication login screen as the current SPA entry surface. The feature records the existing local email/password sign-in flow, backend auth API dependencies, frontend validation/error behavior, and in-memory-only bearer-token session boundary. No new runtime capability is introduced by this planning slice.
 
