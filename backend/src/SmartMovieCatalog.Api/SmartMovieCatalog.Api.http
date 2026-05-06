@@ -16,3 +16,22 @@ Authorization: Bearer {{access_token}}
 Accept: application/json
 
 ###
+
+POST {{SmartMovieCatalog.Api_HostAddress}}/api/movies
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Central do Brasil",
+  "originalTitle": "Central do Brasil",
+  "releaseYear": 1998,
+  "countryCode": "br",
+  "originalLanguage": "pt-BR",
+  "genres": ["Drama"],
+  "director": "Walter Salles",
+  "synopsis": "A retired teacher and a young boy travel through Brazil in search of his father.",
+  "durationMinutes": 110,
+  "ageRating": "12"
+}
+
+###

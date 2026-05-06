@@ -13,6 +13,8 @@ public sealed class SmartMovieCatalogApiFactory : WebApplicationFactory<Program>
 {
     public FakeUserRepository Users { get; } = new();
 
+    public FakeMovieRepository Movies { get; } = new();
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Testing");
@@ -38,8 +40,10 @@ public sealed class SmartMovieCatalogApiFactory : WebApplicationFactory<Program>
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<IUserRepository>();
+            services.RemoveAll<IMovieRepository>();
             services.RemoveAll<IPasswordHasher>();
             services.AddSingleton<IUserRepository>(Users);
+            services.AddSingleton<IMovieRepository>(Movies);
             services.AddSingleton<IPasswordHasher, TestPasswordHasher>();
         });
     }

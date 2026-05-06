@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SmartMovieCatalog.Domain.Movies;
 using SmartMovieCatalog.Domain.Users;
 
 namespace SmartMovieCatalog.Infrastructure.Persistence;
@@ -11,6 +12,8 @@ public sealed class SmartMovieCatalogDbContext : DbContext
     }
 
     public DbSet<User> Users => Set<User>();
+
+    public DbSet<Movie> Movies => Set<Movie>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
