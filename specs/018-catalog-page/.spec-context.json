@@ -1,0 +1,80 @@
+{
+  "workflow": "speckit",
+  "specName": "018-catalog-page",
+  "branch": "018-catalog-page",
+  "selectedAt": "2026-05-06T23:18:50.585Z",
+  "currentStep": "tasks",
+  "status": "tasking",
+  "stepHistory": {
+    "plan": {
+      "startedAt": "2026-05-06T23:18:54.968Z",
+      "completedAt": "2026-05-06T23:19:28.941Z"
+    },
+    "tasks": {
+      "startedAt": "2026-05-06T23:19:28.944Z",
+      "completedAt": null
+    }
+  },
+  "transitions": [
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-06T23:18:54.968Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "specify",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-06T23:18:54.970Z"
+    },
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-06T23:18:57.186Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-06T23:18:57.188Z"
+    },
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-06T23:19:28.941Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-06T23:19:28.944Z"
+    }
+  ]
+}

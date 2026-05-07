@@ -1,1 +1,12 @@
-<app-login-page />
+<div class="app-shell">
+  <header class="top-nav">
+    <a class="brand-link" routerLink="/">Smart Movie Catalog</a>
+    <nav aria-label="Primary navigation">
+      <a routerLink="/catalog" routerLinkActive="active-link">Catalog</a>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <router-outlet />
+  </main>
+</div>
