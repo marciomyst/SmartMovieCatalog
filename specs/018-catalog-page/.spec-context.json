@@ -4,7 +4,7 @@
   "branch": "018-catalog-page",
   "selectedAt": "2026-05-06T23:18:50.585Z",
   "currentStep": "tasks",
-  "status": "tasking",
+  "status": "completed",
   "stepHistory": {
     "plan": {
       "startedAt": "2026-05-06T23:18:54.968Z",
@@ -75,6 +75,16 @@
       },
       "by": "extension",
       "at": "2026-05-06T23:19:28.944Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-07T21:19:14.947Z"
     }
   ]
 }

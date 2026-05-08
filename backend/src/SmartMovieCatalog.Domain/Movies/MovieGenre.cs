@@ -6,27 +6,39 @@ public sealed class MovieGenre : ValueObject
 {
     private MovieGenre()
     {
-        Name = "Unknown";
+        Genre = null!;
     }
 
-    private MovieGenre(string name)
+    private MovieGenre(Guid movieId, Genre genre)
     {
-        Name = name;
+        MovieId = movieId;
+        GenreId = genre.Id;
+        Genre = genre;
     }
 
-    public string Name { get; private set; }
+    public Guid MovieId { get; private set; }
 
-    public static MovieGenre Create(string? name)
+    public Guid GenreId { get; private set; }
+
+    public Genre Genre { get; private set; }
+
+    public static MovieGenre Create(Guid movieId, Genre genre)
     {
-        string normalizedName = Guard.AgainstNullOrWhiteSpace(name, nameof(name)).Trim();
+        ArgumentNullException.ThrowIfNull(genre);
 
-        return new MovieGenre(normalizedName);
+        if (movieId == Guid.Empty)
+        {
+            throw new ArgumentException("Movie id cannot be empty.", nameof(movieId));
+        }
+
+        return new MovieGenre(movieId, genre);
     }
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
-        yield return Name;
+        yield return MovieId;
+        yield return GenreId;
     }
 
-    public override string ToString() => Name;
+    public override string ToString() => Genre.Name;
 }

@@ -1,0 +1,50 @@
+{
+  "workflow": "speckit",
+  "specName": "024-movie-external-image",
+  "branch": "024-movie-external-image",
+  "selectedAt": "2026-05-07T21:43:06.931Z",
+  "currentStep": "tasks",
+  "status": "completed",
+  "stepHistory": {
+    "plan": {
+      "startedAt": "2026-05-07T21:51:33.458Z",
+      "completedAt": "2026-05-07T21:51:33.458Z"
+    },
+    "tasks": {
+      "startedAt": "2026-05-07T21:51:33.461Z",
+      "completedAt": null
+    }
+  },
+  "transitions": [
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-07T21:51:33.458Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "specify",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-07T21:51:33.461Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-07T22:18:57.624Z"
+    }
+  ]
+}

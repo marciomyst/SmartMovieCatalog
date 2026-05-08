@@ -37,7 +37,9 @@ public static class CreateMovieEndpoint
                 request.Director,
                 request.Synopsis,
                 request.DurationMinutes,
-                request.AgeRating),
+                request.AgeRating,
+                request.ExternalId,
+                request.Image),
             cancellationToken);
 
         MovieResponse response = new(
@@ -51,7 +53,9 @@ public static class CreateMovieEndpoint
             createdMovie.Director,
             createdMovie.Synopsis,
             createdMovie.DurationMinutes,
-            createdMovie.AgeRating);
+            createdMovie.AgeRating,
+            createdMovie.ExternalId,
+            createdMovie.Image);
 
         return Results.Created($"/api/movies/{response.Id}", response);
     }

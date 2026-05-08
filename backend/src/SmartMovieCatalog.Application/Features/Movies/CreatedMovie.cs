@@ -11,4 +11,6 @@ public sealed record CreatedMovie(
     string? Director,
     string? Synopsis,
     int? DurationMinutes,
-    string? AgeRating);
+    string? AgeRating,
+    int? ExternalId,
+    string? Image);

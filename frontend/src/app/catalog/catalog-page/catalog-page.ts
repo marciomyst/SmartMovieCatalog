@@ -19,6 +19,9 @@ interface CatalogLoadResult {
   failed: boolean;
 }
 
+const tmdbImageSize = 'w342';
+const tmdbImageBaseUrl = `https://image.tmdb.org/t/p/${tmdbImageSize}`;
+
 @Component({
   selector: 'app-catalog-page',
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
@@ -98,6 +101,14 @@ export class CatalogPage implements OnInit {
 
   protected detailsLink(movie: MovieSummary): string[] {
     return ['/movies', movie.id];
+  }
+
+  protected posterImageUrl(posterPath: string): string {
+    if (posterPath.startsWith('http://') || posterPath.startsWith('https://')) {
+      return posterPath;
+    }
+
+    return `${tmdbImageBaseUrl}${posterPath.startsWith('/') ? posterPath : `/${posterPath}`}`;
   }
 
   protected trackByMovieId(_index: number, movie: MovieSummary): string {

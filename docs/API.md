@@ -9,6 +9,7 @@ Current backend endpoints include:
 
 - `POST /api/auth/authenticate`
 - `GET /api/auth/me`
+- `GET /api/movies`
 - `POST /api/movies`
 
 The WeatherForecast scaffold endpoint has been removed.
@@ -60,6 +61,43 @@ Missing, malformed, expired, incorrectly signed, missing-user, inactive-user, an
 
 ## Movie Endpoints
 
+### `GET /api/movies`
+
+Does not require authentication in the first movie catalog slice.
+
+Accepts query parameters:
+
+- `query`: optional basic title search.
+- `page`: positive integer; defaults to `1` when omitted.
+- `pageSize`: positive integer; defaults to `12` when omitted.
+
+Returns `200 OK` with:
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "title": "Central do Brasil",
+      "releaseYear": 1998,
+      "countryCode": "BR",
+      "genres": ["Drama"],
+      "director": "Walter Salles",
+      "posterUrl": "/p/example-card.jpg",
+      "createdAt": "2026-05-04T12:00:00+00:00"
+    }
+  ],
+  "page": 1,
+  "pageSize": 12,
+  "totalCount": 1,
+  "totalPages": 1,
+  "hasPreviousPage": false,
+  "hasNextPage": false
+}
+```
+
+Invalid pagination parameters return `400 Bad Request` as `ValidationProblemDetails`.
+
 ### `POST /api/movies`
 
 Does not require authentication in the first movie catalog slice.
@@ -77,7 +115,9 @@ Accepts:
   "director": "Walter Salles",
   "synopsis": "A retired teacher and a young boy travel through Brazil in search of his father.",
   "durationMinutes": 110,
-  "ageRating": "12"
+  "ageRating": "12",
+  "externalId": 666,
+  "image": "/p/example-card.jpg"
 }
 ```
 
@@ -91,11 +131,13 @@ Required fields:
 Optional fields:
 
 - `originalTitle`
-- `genres`
+- `genres`: collection of genre names; each supplied value must be non-blank after trimming. Genre identifiers and genre external identifiers are not part of the public movie contract.
 - `director`
 - `synopsis`
 - `durationMinutes`: positive when supplied.
 - `ageRating`
+- `externalId`: positive TMDB movie ID when supplied.
+- `image`: relative card image path when supplied, for example `/p/example-card.jpg`; blank values are normalized to `null`, and absolute URLs are rejected.
 
 Returns `201 Created` with `Location: /api/movies/{id}` and:
 
@@ -111,13 +153,17 @@ Returns `201 Created` with `Location: /api/movies/{id}` and:
   "director": "Walter Salles",
   "synopsis": "A retired teacher and a young boy travel through Brazil in search of his father.",
   "durationMinutes": 110,
-  "ageRating": "12"
+  "ageRating": "12",
+  "externalId": 666,
+  "image": "/p/example-card.jpg"
 }
 ```
 
 Invalid request shape and validation failures return `400 Bad Request` as `ValidationProblemDetails`.
 
 `GET /api/movies/{id}` is not implemented in this slice; the `Location` header reserves the future resource URI.
+
+Genre names in movie requests and responses remain public strings. The backend stores genres as reusable catalog records internally, but `POST /api/movies` does not accept or return genre IDs or TMDB genre IDs.
 
 ## Frontend Consumption
 - The Angular login module calls `POST /api/auth/authenticate` with `email` and `password`.

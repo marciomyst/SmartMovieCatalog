@@ -23,7 +23,7 @@ describe('CatalogPage', () => {
         countryCode: 'BR',
         genres: ['Drama'],
         director: 'Walter Salles',
-        posterUrl: null,
+        posterUrl: '/p/central.jpg',
         createdAt: '2026-05-02T00:00:00Z'
       }
     ],
@@ -91,6 +91,14 @@ describe('CatalogPage', () => {
     expect(moviesApi.listMovies).toHaveBeenCalledWith({ page: 1, pageSize: 12, query: undefined });
     expect(compiled.textContent).toContain('Central do Brasil');
     expect(compiled.textContent).toContain('Walter Salles');
+  });
+
+  it('should render TMDB poster image URLs for poster paths', () => {
+    createComponent();
+
+    const image = fixture.nativeElement.querySelector('.poster-frame img') as HTMLImageElement;
+    expect(image.src).toBe('https://image.tmdb.org/t/p/w342/p/central.jpg');
+    expect(image.alt).toBe('Central do Brasil poster');
   });
 
   it('should use MoviesApi as the catalog API boundary', () => {

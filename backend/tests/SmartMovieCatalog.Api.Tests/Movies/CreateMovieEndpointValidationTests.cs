@@ -16,6 +16,7 @@ public sealed class CreateMovieEndpointValidationTests : IClassFixture<SmartMovi
         _factory = factory;
         _factory.Users.Clear();
         _factory.Movies.Clear();
+        _factory.Genres.Clear();
     }
 
     [Fact]

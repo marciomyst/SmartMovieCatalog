@@ -22,11 +22,13 @@ public sealed class Movie : AggregateRoot
         int releaseYear,
         string countryCode,
         string originalLanguage,
-        IEnumerable<MovieGenre> genres,
+        IEnumerable<Genre> genres,
         string? director,
         string? synopsis,
         int? durationMinutes,
         string? ageRating,
+        int? externalId,
+        string? image,
         DateTimeOffset createdAtUtc)
     {
         Id = id.Value;
@@ -39,6 +41,8 @@ public sealed class Movie : AggregateRoot
         Synopsis = NormalizeOptional(synopsis);
         DurationMinutes = ValidateDuration(durationMinutes);
         AgeRating = NormalizeOptional(ageRating);
+        ExternalId = ValidateExternalId(externalId);
+        Image = NormalizeImage(image);
         CreatedAtUtc = createdAtUtc;
         ReplaceGenres(genres);
     }
@@ -63,6 +67,10 @@ public sealed class Movie : AggregateRoot
 
     public string? AgeRating { get; private set; }
 
+    public int? ExternalId { get; private set; }
+
+    public string? Image { get; private set; }
+
     public DateTimeOffset CreatedAtUtc { get; private set; }
 
     public static Movie Create(
@@ -72,11 +80,13 @@ public sealed class Movie : AggregateRoot
         int releaseYear,
         string countryCode,
         string originalLanguage,
-        IEnumerable<MovieGenre>? genres,
+        IEnumerable<Genre>? genres,
         string? director,
         string? synopsis,
         int? durationMinutes,
         string? ageRating,
+        int? externalId,
+        string? image,
         DateTimeOffset createdAtUtc)
     {
         return new Movie(
@@ -91,6 +101,8 @@ public sealed class Movie : AggregateRoot
             synopsis,
             durationMinutes,
             ageRating,
+            externalId,
+            image,
             createdAtUtc);
     }
 
@@ -144,10 +156,47 @@ public sealed class Movie : AggregateRoot
         return durationMinutes;
     }
 
-    private void ReplaceGenres(IEnumerable<MovieGenre> genres)
+    private static int? ValidateExternalId(int? externalId)
+    {
+        if (externalId <= 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(externalId),
+                externalId,
+                "External ID must be positive when supplied.");
+        }
+
+        return externalId;
+    }
+
+    private static string? NormalizeImage(string? image)
+    {
+        string? normalizedImage = NormalizeOptional(image);
+        if (normalizedImage is null)
+        {
+            return null;
+        }
+
+        if (!IsRelativeImagePath(normalizedImage))
+        {
+            throw new ArgumentException("Image must be a relative path.", nameof(image));
+        }
+
+        return normalizedImage;
+    }
+
+    private static bool IsRelativeImagePath(string image)
+    {
+        return image.StartsWith("/", StringComparison.Ordinal) &&
+            !image.StartsWith("//", StringComparison.Ordinal) &&
+            !Uri.TryCreate(image, UriKind.Absolute, out _);
+    }
+
+    private void ReplaceGenres(IEnumerable<Genre> genres)
     {
         MovieGenre[] distinctGenres = genres
-            .Distinct()
+            .DistinctBy(genre => genre.NormalizedName)
+            .Select(genre => MovieGenre.Create(Id, genre))
             .ToArray();
 
         _genres.Clear();

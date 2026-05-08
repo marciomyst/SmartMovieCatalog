@@ -56,7 +56,7 @@
         [routerLink]="detailsLink(movie)"
         [attr.aria-label]="'Open details for ' + movie.title">
         <div class="poster-frame">
-          <img *ngIf="movie.posterUrl; else posterPlaceholder" [src]="movie.posterUrl" [alt]="movie.title + ' poster'">
+          <img *ngIf="movie.posterUrl; else posterPlaceholder" [src]="posterImageUrl(movie.posterUrl)" [alt]="movie.title + ' poster'">
           <ng-template #posterPlaceholder>
             <div class="poster-placeholder" aria-hidden="true">
               <span class="material-symbols-outlined">movie</span>

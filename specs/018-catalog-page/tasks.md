@@ -11,7 +11,7 @@
 - **[Story]**: Maps to the user stories in `spec.md`.
 - Every task includes an exact repository path.
 
----
+--- 
 
 ## Phase 1: Setup (Shared Context)
 

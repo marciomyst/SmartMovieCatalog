@@ -25,6 +25,24 @@ public sealed class CreateMovieRequestValidatorTests
     }
 
     [Fact]
+    public async Task Validate_WithValidExternalIdAndImage_Passes()
+    {
+        CreateMovieRequest request = new()
+        {
+            Title = "Central do Brasil",
+            ReleaseYear = 1998,
+            CountryCode = "BR",
+            OriginalLanguage = "pt-BR",
+            ExternalId = 666,
+            Image = "/p/example-card.jpg"
+        };
+
+        TestValidationResult<CreateMovieRequest> result = await _validator.TestValidateAsync(request);
+
+        result.ShouldNotHaveAnyValidationErrors();
+    }
+
+    [Fact]
     public async Task Validate_WithInvalidFields_ReturnsValidationErrors()
     {
         CreateMovieRequest request = new()
@@ -34,7 +52,9 @@ public sealed class CreateMovieRequestValidatorTests
             CountryCode = "BRA",
             OriginalLanguage = " ",
             Genres = ["Drama", " "],
-            DurationMinutes = 0
+            DurationMinutes = 0,
+            ExternalId = 0,
+            Image = "https://image.tmdb.org/t/p/w500/example.jpg"
         };
 
         TestValidationResult<CreateMovieRequest> result = await _validator.TestValidateAsync(request);
@@ -45,6 +65,8 @@ public sealed class CreateMovieRequestValidatorTests
         result.ShouldHaveValidationErrorFor(movie => movie.OriginalLanguage);
         result.ShouldHaveValidationErrorFor("Genres[1]");
         result.ShouldHaveValidationErrorFor(movie => movie.DurationMinutes);
+        result.ShouldHaveValidationErrorFor(movie => movie.ExternalId);
+        result.ShouldHaveValidationErrorFor(movie => movie.Image);
     }
 
     [Fact]

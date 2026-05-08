@@ -15,6 +15,7 @@ public sealed class CreateMovieEndpointContractTests : IClassFixture<SmartMovieC
         _factory = factory;
         _factory.Users.Clear();
         _factory.Movies.Clear();
+        _factory.Genres.Clear();
     }
 
     [Fact]
@@ -29,7 +30,9 @@ public sealed class CreateMovieEndpointContractTests : IClassFixture<SmartMovieC
                 Title = "Central do Brasil",
                 ReleaseYear = 1998,
                 CountryCode = "BR",
-                OriginalLanguage = "pt-BR"
+                OriginalLanguage = "pt-BR",
+                ExternalId = 666,
+                Image = "/p/example-card.jpg"
             });
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -47,6 +50,8 @@ public sealed class CreateMovieEndpointContractTests : IClassFixture<SmartMovieC
         Assert.Equal(JsonValueKind.Null, root.GetProperty("synopsis").ValueKind);
         Assert.Equal(JsonValueKind.Null, root.GetProperty("durationMinutes").ValueKind);
         Assert.Equal(JsonValueKind.Null, root.GetProperty("ageRating").ValueKind);
+        Assert.Equal(666, root.GetProperty("externalId").GetInt32());
+        Assert.Equal("/p/example-card.jpg", root.GetProperty("image").GetString());
     }
 
     [Fact]
@@ -64,5 +69,27 @@ public sealed class CreateMovieEndpointContractTests : IClassFixture<SmartMovieC
 
         HttpResponseMessage readResponse = await client.GetAsync($"/api/movies/{body.Id}");
         Assert.Equal(HttpStatusCode.NotFound, readResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task CreateMovie_WhenExternalMetadataOmitted_ReturnsNullExternalMetadata()
+    {
+        HttpClient client = _factory.CreateClient();
+
+        HttpResponseMessage response = await client.PostAsJsonAsync(
+            "/api/movies",
+            new CreateMovieRequest
+            {
+                Title = "Central do Brasil",
+                ReleaseYear = 1998,
+                CountryCode = "BR",
+                OriginalLanguage = "pt-BR"
+            });
+
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        using JsonDocument document = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        JsonElement root = document.RootElement;
+        Assert.Equal(JsonValueKind.Null, root.GetProperty("externalId").ValueKind);
+        Assert.Equal(JsonValueKind.Null, root.GetProperty("image").ValueKind);
     }
 }

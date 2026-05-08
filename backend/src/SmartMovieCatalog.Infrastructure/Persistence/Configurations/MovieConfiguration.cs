@@ -45,21 +45,13 @@ public sealed class MovieConfiguration : IEntityTypeConfiguration<Movie>
         builder.Property(movie => movie.AgeRating)
             .HasMaxLength(32);
 
+        builder.Property(movie => movie.ExternalId);
+
+        builder.Property(movie => movie.Image)
+            .HasMaxLength(500);
+
         builder.Property(movie => movie.CreatedAtUtc)
             .IsRequired();
-
-        builder.OwnsMany(
-            movie => movie.Genres,
-            genres =>
-            {
-                genres.ToTable("MovieGenres");
-                genres.WithOwner().HasForeignKey("MovieId");
-                genres.Property<Guid>("MovieId");
-                genres.Property(genre => genre.Name)
-                    .HasMaxLength(100)
-                    .IsRequired();
-                genres.HasKey("MovieId", nameof(MovieGenre.Name));
-            });
 
         builder.Navigation(movie => movie.Genres)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
