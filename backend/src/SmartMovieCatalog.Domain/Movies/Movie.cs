@@ -189,7 +189,7 @@ public sealed class Movie : AggregateRoot
     {
         return image.StartsWith("/", StringComparison.Ordinal) &&
             !image.StartsWith("//", StringComparison.Ordinal) &&
-            !Uri.TryCreate(image, UriKind.Absolute, out _);
+            !image.Contains('\\', StringComparison.Ordinal);
     }
 
     private void ReplaceGenres(IEnumerable<Genre> genres)

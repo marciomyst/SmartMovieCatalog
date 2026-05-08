@@ -44,9 +44,15 @@ public sealed class CreateMovieRequestValidator : AbstractValidator<CreateMovieR
 
     private static bool IsRelativeImagePath(string? image)
     {
-        return image is not null &&
-            image.Trim().StartsWith("/", StringComparison.Ordinal) &&
-            !image.Trim().StartsWith("//", StringComparison.Ordinal) &&
-            !Uri.TryCreate(image.Trim(), UriKind.Absolute, out _);
+        if (image is null)
+        {
+            return false;
+        }
+
+        string trimmedImage = image.Trim();
+
+        return trimmedImage.StartsWith("/", StringComparison.Ordinal) &&
+            !trimmedImage.StartsWith("//", StringComparison.Ordinal) &&
+            !trimmedImage.Contains('\\', StringComparison.Ordinal);
     }
 }
