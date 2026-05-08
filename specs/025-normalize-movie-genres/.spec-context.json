@@ -1,0 +1,10 @@
+{
+  "workflow": "speckit",
+  "specName": "025-normalize-movie-genres",
+  "branch": "025-normalize-movie-genres",
+  "selectedAt": "2026-05-07T22:22:29.451Z",
+  "currentStep": "specify",
+  "status": "draft",
+  "stepHistory": {},
+  "transitions": []
+}

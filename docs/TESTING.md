@@ -7,6 +7,8 @@ Known commands:
 
 - Solution build: `dotnet build SmartMovieCatalog.slnx`
 - Backend build: `dotnet build backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj`
+- Backend tests: `dotnet test SmartMovieCatalog.slnx --no-build`
+- Backend coverage: `dotnet test SmartMovieCatalog.slnx --settings backend/tests/coverage.runsettings --collect:"XPlat Code Coverage" --results-directory backend/tests/TestResults/coverage`
 - Frontend build: run `npm run build` from `frontend`
 - Frontend tests: run `npm test -- --watch=false` from `frontend`
 - Backend test project build: `dotnet build backend/tests/SmartMovieCatalog.Domain.Tests/SmartMovieCatalog.Domain.Tests.csproj`
@@ -25,6 +27,8 @@ PowerShell helpers:
 
 ## Backend Testing Direction
 Backend test projects live under `backend/tests`.
+
+Backend coverage uses `backend/tests/coverage.runsettings` so coverage reports focus on product code and exclude generated files, EF migrations, design-time factories, and marker reference classes. Do not compare raw coverage runs that include `obj/` output or migrations against the configured coverage number.
 
 Recommended test types:
 

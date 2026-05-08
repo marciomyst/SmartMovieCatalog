@@ -1,0 +1,91 @@
+<section class="catalog-page" aria-labelledby="catalog-title">
+  <header class="catalog-header">
+    <div>
+      <p class="catalog-kicker">Movie Catalog</p>
+      <h1 id="catalog-title">Catalog</h1>
+    </div>
+
+    <form class="search-form" (ngSubmit)="submitSearch()" role="search">
+      <label class="search-label" for="movie-search">Title search</label>
+      <div class="search-shell">
+        <span class="material-symbols-outlined" aria-hidden="true">search</span>
+        <input
+          id="movie-search"
+          type="search"
+          autocomplete="off"
+          placeholder="Search by title"
+          [formControl]="searchControl">
+        <button type="submit">Search</button>
+      </div>
+    </form>
+  </header>
+
+  <div class="catalog-state" *ngIf="loadState() === 'loading'" role="status">
+    <span class="material-symbols-outlined" aria-hidden="true">hourglass_top</span>
+    <p>Loading catalog</p>
+  </div>
+
+  <div class="catalog-state" *ngIf="loadState() === 'emptyCatalog'">
+    <span class="material-symbols-outlined" aria-hidden="true">movie</span>
+    <h2>No movies yet</h2>
+    <p>The catalog is ready for the first movie.</p>
+  </div>
+
+  <div class="catalog-state" *ngIf="loadState() === 'noResults'">
+    <span class="material-symbols-outlined" aria-hidden="true">search_off</span>
+    <h2>No results</h2>
+    <p>No movies match this title search.</p>
+  </div>
+
+  <div class="catalog-state catalog-state-error" *ngIf="loadState() === 'error'" role="alert">
+    <span class="material-symbols-outlined" aria-hidden="true">error</span>
+    <h2>Catalog unavailable</h2>
+    <p>Try again in a moment.</p>
+  </div>
+
+  <ng-container *ngIf="loadState() === 'success' && response() as page">
+    <div class="catalog-toolbar">
+      <p>{{ resultSummary() }}</p>
+      <p>Page {{ page.page }} of {{ page.totalPages }}</p>
+    </div>
+
+    <div class="movie-grid">
+      <a
+        class="movie-card"
+        *ngFor="let movie of movies(); trackBy: trackByMovieId"
+        [routerLink]="detailsLink(movie)"
+        [attr.aria-label]="'Open details for ' + movie.title">
+        <div class="poster-frame">
+          <img *ngIf="movie.posterUrl; else posterPlaceholder" [src]="posterImageUrl(movie.posterUrl)" [alt]="movie.title + ' poster'">
+          <ng-template #posterPlaceholder>
+            <div class="poster-placeholder" aria-hidden="true">
+              <span class="material-symbols-outlined">movie</span>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="movie-card-content">
+          <h2>{{ movie.title }}</h2>
+          <p class="movie-meta">
+            <span>{{ movie.releaseYear }}</span>
+            <span>{{ movie.countryCode }}</span>
+          </p>
+          <p class="movie-director" *ngIf="movie.director">{{ movie.director }}</p>
+          <p class="movie-genres" *ngIf="movie.genres.length > 0">{{ movie.genres.join(' / ') }}</p>
+        </div>
+      </a>
+    </div>
+
+    <nav class="pagination" aria-label="Catalog pagination">
+      <button type="button" (click)="previousPage()" [disabled]="!page.hasPreviousPage">
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+        <span>Previous</span>
+      </button>
+      <span>Page {{ page.page }} of {{ page.totalPages }}</span>
+      <button type="button" (click)="nextPage()" [disabled]="!page.hasNextPage">
+        <span>Next</span>
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+      </button>
+    </nav>
+  </ng-container>
+</section>

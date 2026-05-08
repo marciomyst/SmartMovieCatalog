@@ -31,5 +31,28 @@ public sealed class CreateMovieRequestValidator : AbstractValidator<CreateMovieR
         RuleFor(request => request.DurationMinutes)
             .GreaterThan(0)
             .When(request => request.DurationMinutes.HasValue);
+
+        RuleFor(request => request.ExternalId)
+            .GreaterThan(0)
+            .When(request => request.ExternalId.HasValue);
+
+        RuleFor(request => request.Image)
+            .Must(IsRelativeImagePath)
+            .WithMessage("Image must be a relative path.")
+            .When(request => !string.IsNullOrWhiteSpace(request.Image));
+    }
+
+    private static bool IsRelativeImagePath(string? image)
+    {
+        if (image is null)
+        {
+            return false;
+        }
+
+        string trimmedImage = image.Trim();
+
+        return trimmedImage.StartsWith("/", StringComparison.Ordinal) &&
+            !trimmedImage.StartsWith("//", StringComparison.Ordinal) &&
+            !trimmedImage.Contains('\\', StringComparison.Ordinal);
     }
 }

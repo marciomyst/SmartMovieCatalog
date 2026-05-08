@@ -15,6 +15,8 @@ public sealed class SmartMovieCatalogDbContext : DbContext
 
     public DbSet<Movie> Movies => Set<Movie>();
 
+    public DbSet<Genre> Genres => Set<Genre>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SmartMovieCatalogDbContext).Assembly);

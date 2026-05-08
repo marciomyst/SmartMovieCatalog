@@ -4,6 +4,7 @@ using SmartMovieCatalog.Api.Features.Auth;
 using SmartMovieCatalog.Api.Features.Auth.Authenticate;
 using SmartMovieCatalog.Api.Features.Movies;
 using SmartMovieCatalog.Api.Features.Movies.CreateMovie;
+using SmartMovieCatalog.Api.Features.Movies.ListMovies;
 using SmartMovieCatalog.Application;
 using SmartMovieCatalog.Contracts.Auth;
 using SmartMovieCatalog.Contracts.Movies;
@@ -34,6 +35,7 @@ namespace SmartMovieCatalog.Api
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddScoped<IValidator<AuthenticateRequest>, AuthenticateRequestValidator>();
             builder.Services.AddScoped<IValidator<CreateMovieRequest>, CreateMovieRequestValidator>();
+            builder.Services.AddScoped<IValidator<ListMoviesRequest>, ListMoviesRequestValidator>();
             builder.Services.AddHealthChecks();
 
             builder.Services.AddOpenApi();

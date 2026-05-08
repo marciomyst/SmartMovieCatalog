@@ -16,11 +16,13 @@ public sealed class MovieTests
             1998,
             " br ",
             " pt-BR ",
-            [MovieGenre.Create(" Drama "), MovieGenre.Create("Drama")],
+            [Genre.Create(GenreId.New(), " Drama ", externalId: null), Genre.Create(GenreId.New(), "Drama", externalId: null)],
             " Walter Salles ",
             " A retired teacher and a young boy travel through Brazil. ",
             110,
             " 12 ",
+            externalId: null,
+            image: null,
             createdAtUtc);
 
         Assert.NotEqual(Guid.Empty, movie.Id);
@@ -30,7 +32,7 @@ public sealed class MovieTests
         Assert.Equal("BR", movie.CountryCode);
         Assert.Equal("pt-BR", movie.OriginalLanguage);
         Assert.Single(movie.Genres);
-        Assert.Contains(movie.Genres, genre => genre.Name == "Drama");
+        Assert.Contains(movie.Genres, movieGenre => movieGenre.Genre.Name == "Drama");
         Assert.Equal("Walter Salles", movie.Director);
         Assert.Equal("A retired teacher and a young boy travel through Brazil.", movie.Synopsis);
         Assert.Equal(110, movie.DurationMinutes);
@@ -53,6 +55,8 @@ public sealed class MovieTests
             synopsis: null,
             durationMinutes: null,
             ageRating: null,
+            externalId: null,
+            image: null,
             DateTimeOffset.UtcNow);
 
         Assert.Null(movie.OriginalTitle);
@@ -61,5 +65,7 @@ public sealed class MovieTests
         Assert.Null(movie.Synopsis);
         Assert.Null(movie.DurationMinutes);
         Assert.Null(movie.AgeRating);
+        Assert.Null(movie.ExternalId);
+        Assert.Null(movie.Image);
     }
 }

@@ -22,6 +22,151 @@ namespace SmartMovieCatalog.Infrastructure.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("SmartMovieCatalog.Domain.Movies.Genre", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("ExternalId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExternalId")
+                        .IsUnique();
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique();
+
+                    b.ToTable("Genres", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8130f6e7-0b55-4383-ab8a-2419a4a0bf84"),
+                            Name = "Ação",
+                            NormalizedName = "AÇÃO"
+                        },
+                        new
+                        {
+                            Id = new Guid("2ee73bcc-9d10-4881-8046-363802db5b61"),
+                            Name = "Aventura",
+                            NormalizedName = "AVENTURA"
+                        },
+                        new
+                        {
+                            Id = new Guid("9f2d4781-975e-4b86-887a-eae96a06e93e"),
+                            Name = "Animação",
+                            NormalizedName = "ANIMAÇÃO"
+                        },
+                        new
+                        {
+                            Id = new Guid("d0d2a285-d64c-4926-bb6e-bee246cb2066"),
+                            Name = "Comédia",
+                            NormalizedName = "COMÉDIA"
+                        },
+                        new
+                        {
+                            Id = new Guid("91ebc5ab-6a87-45fe-bcf4-e98d1f1c1c47"),
+                            Name = "Crime",
+                            NormalizedName = "CRIME"
+                        },
+                        new
+                        {
+                            Id = new Guid("cc60b818-3fe0-4a4c-904c-e6ff7c6bb14e"),
+                            Name = "Documentário",
+                            NormalizedName = "DOCUMENTÁRIO"
+                        },
+                        new
+                        {
+                            Id = new Guid("671a6527-8d6a-4773-8755-0702cce3859b"),
+                            Name = "Drama",
+                            NormalizedName = "DRAMA"
+                        },
+                        new
+                        {
+                            Id = new Guid("3dbe3e7c-b3a5-48d9-8539-c63f3263ca62"),
+                            Name = "Família",
+                            NormalizedName = "FAMÍLIA"
+                        },
+                        new
+                        {
+                            Id = new Guid("c5016fec-223b-4245-9619-4ebd9ed61616"),
+                            Name = "Fantasia",
+                            NormalizedName = "FANTASIA"
+                        },
+                        new
+                        {
+                            Id = new Guid("0bdb1338-15b8-4388-a600-4d6c1da3c9ac"),
+                            Name = "História",
+                            NormalizedName = "HISTÓRIA"
+                        },
+                        new
+                        {
+                            Id = new Guid("63186b3c-7ee8-4e27-b04e-93d38213b18f"),
+                            Name = "Terror",
+                            NormalizedName = "TERROR"
+                        },
+                        new
+                        {
+                            Id = new Guid("40d64d12-8dad-495d-9c8c-be79913a64a1"),
+                            Name = "Música",
+                            NormalizedName = "MÚSICA"
+                        },
+                        new
+                        {
+                            Id = new Guid("93685229-5cbb-4d6b-8583-320faff48c3a"),
+                            Name = "Mistério",
+                            NormalizedName = "MISTÉRIO"
+                        },
+                        new
+                        {
+                            Id = new Guid("b202ae42-19a0-4919-8531-4bd16535ba07"),
+                            Name = "Romance",
+                            NormalizedName = "ROMANCE"
+                        },
+                        new
+                        {
+                            Id = new Guid("65836d3b-9de2-4652-80d8-9f0a17da74e4"),
+                            Name = "Ficção científica",
+                            NormalizedName = "FICÇÃO CIENTÍFICA"
+                        },
+                        new
+                        {
+                            Id = new Guid("1b3b0c5c-b8a4-4a99-8ed3-c7829b1e04ba"),
+                            Name = "Cinema TV",
+                            NormalizedName = "CINEMA TV"
+                        },
+                        new
+                        {
+                            Id = new Guid("4a46f05d-370f-4a50-82e2-3d2160597c13"),
+                            Name = "Thriller",
+                            NormalizedName = "THRILLER"
+                        },
+                        new
+                        {
+                            Id = new Guid("ccfbe9c3-be3b-4a83-8d25-0788a19490e6"),
+                            Name = "Guerra",
+                            NormalizedName = "GUERRA"
+                        },
+                        new
+                        {
+                            Id = new Guid("ea89b466-98bd-4761-b883-a33f0effac99"),
+                            Name = "Faroeste",
+                            NormalizedName = "FAROESTE"
+                        });
+                });
+
             modelBuilder.Entity("SmartMovieCatalog.Domain.Movies.Movie", b =>
                 {
                     b.Property<Guid>("Id")
@@ -45,6 +190,13 @@ namespace SmartMovieCatalog.Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("DurationMinutes")
                         .HasColumnType("integer");
+
+                    b.Property<int?>("ExternalId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("OriginalLanguage")
                         .IsRequired()
@@ -70,6 +222,21 @@ namespace SmartMovieCatalog.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies", (string)null);
+                });
+
+            modelBuilder.Entity("SmartMovieCatalog.Domain.Movies.MovieGenre", b =>
+                {
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("GenreId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("MovieId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("MovieGenres", (string)null);
                 });
 
             modelBuilder.Entity("SmartMovieCatalog.Domain.Users.User", b =>
@@ -120,26 +287,21 @@ namespace SmartMovieCatalog.Infrastructure.Persistence.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("SmartMovieCatalog.Domain.Movies.Movie", b =>
+            modelBuilder.Entity("SmartMovieCatalog.Domain.Movies.MovieGenre", b =>
                 {
-                    b.OwnsMany("SmartMovieCatalog.Domain.Movies.MovieGenre", "Genres", b1 =>
-                        {
-                            b1.Property<Guid>("MovieId")
-                                .HasColumnType("uuid");
+                    b.HasOne("SmartMovieCatalog.Domain.Movies.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                            b1.Property<string>("Name")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)");
+                    b.HasOne("SmartMovieCatalog.Domain.Movies.Movie", null)
+                        .WithMany("Genres")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                            b1.HasKey("MovieId", "Name");
-
-                            b1.ToTable("MovieGenres", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("MovieId");
-                        });
-
-                    b.Navigation("Genres");
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("SmartMovieCatalog.Domain.Users.User", b =>
@@ -163,6 +325,11 @@ namespace SmartMovieCatalog.Infrastructure.Persistence.Migrations
                         });
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("SmartMovieCatalog.Domain.Movies.Movie", b =>
+                {
+                    b.Navigation("Genres");
                 });
 #pragma warning restore 612, 618
         }

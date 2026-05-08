@@ -21,4 +21,8 @@ public sealed record CreateMovieRequest
     public int? DurationMinutes { get; init; }
 
     public string? AgeRating { get; init; }
+
+    public int? ExternalId { get; init; }
+
+    public string? Image { get; init; }
 }

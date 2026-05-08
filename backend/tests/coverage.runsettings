@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <Include>[SmartMovieCatalog.*]*</Include>
+          <Exclude>[*.Tests]*,[*.Test]*,[*Tests]*,[*Test]*,[*.Specs]*,[*.Testing]*,[Microsoft.AspNetCore.OpenApi.Generated]*</Exclude>
+          <ExcludeByFile>**/Migrations/*.cs,**/obj/**/*.cs,**/*Reference.cs,**/SmartMovieCatalogDbContextFactory.cs</ExcludeByFile>
+          <SkipAutoProps>true</SkipAutoProps>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

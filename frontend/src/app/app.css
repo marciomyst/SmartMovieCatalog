@@ -1,4 +1,69 @@
 :host {
   display: block;
   min-height: 100vh;
+  background: #09090b;
+  color: #fafafa;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: #09090b;
+}
+
+.top-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4.5rem;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(9 9 11 / 0.82);
+  backdrop-filter: blur(1rem);
+}
+
+.brand-link {
+  max-width: min(70vw, 24rem);
+  overflow: hidden;
+  color: transparent;
+  background: linear-gradient(90deg, #818cf8, #c084fc);
+  background-clip: text;
+  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  border-bottom: 2px solid transparent;
+  color: #a1a1aa;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+nav a:hover,
+nav a.active-link {
+  border-bottom-color: #8b5cf6;
+  color: #fafafa;
+}
+
+.app-main {
+  min-height: 100vh;
 }
