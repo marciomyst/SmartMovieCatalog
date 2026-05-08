@@ -10,6 +10,6 @@ public sealed class ListMoviesRequestValidator : AbstractValidator<ListMoviesReq
             .GreaterThanOrEqualTo(1);
 
         RuleFor(request => request.PageSize)
-            .GreaterThanOrEqualTo(1);
+            .InclusiveBetween(1, 100);
     }
 }

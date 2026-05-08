@@ -46,7 +46,7 @@ Expected behavior:
 - Search updates the URL query string and resets `page` to `1`.
 - Pagination updates the URL query string.
 - `pageSize` defaults to `12` when absent.
-- A valid URL `pageSize` is honored.
+- A valid URL `pageSize` in the range `1..100` is honored.
 - No page-size selector appears in the V1 UI.
 - Catalog item links target the movie details route.
 

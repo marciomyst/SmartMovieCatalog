@@ -13,7 +13,7 @@ Rules:
 - No frontend authentication guard is required for this route.
 - `query` is optional and represents basic title search.
 - `page` is optional, defaults to `1`, and must be normalized to a positive integer before API calls.
-- `pageSize` is optional, defaults to `12`, and must be normalized to a positive integer before API calls.
+- `pageSize` is optional, defaults to `12`, and must be normalized to an integer in the range `1..100` before API calls.
 - The UI must not expose a page-size selector in V1.
 
 ## Frontend API Service Contract

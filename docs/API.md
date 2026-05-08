@@ -69,7 +69,7 @@ Accepts query parameters:
 
 - `query`: optional basic title search.
 - `page`: positive integer; defaults to `1` when omitted.
-- `pageSize`: positive integer; defaults to `12` when omitted.
+- `pageSize`: integer from `1` to `100`; defaults to `12` when omitted.
 
 Returns `200 OK` with:
 

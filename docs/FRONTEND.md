@@ -14,7 +14,7 @@ Primary references:
 - `/` displays the authentication login page.
 - `/catalog` displays the public V1 catalog page.
 - `/catalog` reads `query`, `page`, and `pageSize` from URL query parameters.
-- Catalog `pageSize` defaults to `12` when omitted or invalid. A valid URL `pageSize` is honored, but V1 does not show a page-size selector.
+- Catalog `pageSize` defaults to `12` when omitted or invalid. A valid URL `pageSize` in the range `1..100` is honored, but V1 does not show a page-size selector.
 - Catalog item links target the movie details route pattern `/movies/{id}` established by the movie details feature.
 
 ## Design System

@@ -117,7 +117,7 @@ Post-design constitution check: pass. The design does not add dependencies, back
 4. Parse URL query parameters into normalized catalog state:
    - `query`: trimmed string, omitted when blank.
    - `page`: positive integer, default `1` when absent or invalid.
-   - `pageSize`: positive integer, default `12` when absent or invalid.
+- `pageSize`: integer in the range `1..100`, default `12` when absent or invalid.
 5. Synchronize search and pagination changes back to URL query parameters.
 6. Load movies from `MoviesApi` and render loading, empty catalog, no-result, error, results, and pagination states.
 7. Link catalog items to the movie details route.

@@ -220,7 +220,7 @@ describe('CatalogPage', () => {
   it('should normalize invalid URL page and pageSize before API calls', () => {
     queryParamMap.next(convertToParamMap({
       page: 'zero',
-      pageSize: '-2'
+      pageSize: '101'
     }));
     createComponent();
 

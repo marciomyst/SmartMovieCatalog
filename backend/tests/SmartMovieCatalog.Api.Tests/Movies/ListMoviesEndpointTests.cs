@@ -81,12 +81,22 @@ public sealed class ListMoviesEndpointTests : IClassFixture<SmartMovieCatalogApi
     {
         HttpClient client = _factory.CreateClient();
 
-        HttpResponseMessage response = await client.GetAsync("/api/movies?page=0&pageSize=0");
+        HttpResponseMessage response = await client.GetAsync("/api/movies?page=0&pageSize=101");
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         ValidationProblemDetails? problem = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
         Assert.NotNull(problem);
         Assert.True(problem.Errors.ContainsKey(nameof(ListMoviesRequest.Page)));
         Assert.True(problem.Errors.ContainsKey(nameof(ListMoviesRequest.PageSize)));
+    }
+
+    [Fact]
+    public async Task ListMovies_WithMaxPageSize_ReturnsPagedMovieSummaries()
+    {
+        HttpClient client = _factory.CreateClient();
+
+        HttpResponseMessage response = await client.GetAsync("/api/movies?page=1&pageSize=100");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }

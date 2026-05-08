@@ -173,7 +173,7 @@ export class CatalogPage implements OnInit {
     }
 
     const parsed = Number(value);
-    return Number.isInteger(parsed) && parsed >= 1 ? parsed : fallback;
+    return Number.isInteger(parsed) && parsed >= 1 && parsed <= 100 ? parsed : fallback;
   }
 
   private sameViewState(left: CatalogViewState, right: CatalogViewState): boolean {
