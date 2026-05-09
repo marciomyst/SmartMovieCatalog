@@ -2,7 +2,9 @@
   <header class="top-nav">
     <a class="brand-link" routerLink="/">Smart Movie Catalog</a>
     <nav aria-label="Primary navigation">
+      <a routerLink="/" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-link">Home</a>
       <a routerLink="/catalog" routerLinkActive="active-link">Catalog</a>
+      <a routerLink="/login" routerLinkActive="active-link">Login</a>
     </nav>
   </header>
 

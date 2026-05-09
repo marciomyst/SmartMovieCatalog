@@ -82,6 +82,16 @@
   color: #cbd5e1;
 }
 
+.state-title {
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+}
+
+.state-message {
+  color: #cbd5e1;
+}
 .hero-actions,
 .genre-tags {
   display: flex;
@@ -90,8 +100,8 @@
 }
 
 .genre-tags span {
-  background: #6366f124;
-  color: #e0e7ff;
+  background: #312e81;
+  color: #f8fafc;
   padding: .38rem .7rem;
   font-size: .75rem;
 }
@@ -125,7 +135,10 @@
 .hero-synopsis {
   border: 1px solid #ffffff14;
   background: #17181db8;
-  backdrop-filter: blur(12px);
+  border-radius: .75rem;
+  max-width: 48rem;
+  margin-top: 1.25rem;
+  padding: 1.15rem 1.25rem;
 }
 
 .details-layout {
@@ -146,16 +159,9 @@
   min-width: 0;
 }
 
-.hero-synopsis,
 .insight-panel,
 .meta-grid div {
   border-radius: .75rem;
-}
-
-.hero-synopsis {
-  max-width: 48rem;
-  margin-top: 1.25rem;
-  padding: 1.15rem 1.25rem;
 }
 
 .hero-synopsis h2,
@@ -257,7 +263,7 @@
   text-transform: uppercase;
 }
 
-.info-badge-country { border-color: #22c55e40; background: #22c55e24; color: #22c55e; }
+.info-badge-country { border-color: #22c55e66; background: #14532d; color: #bbf7d0; }
 
 @media (min-width: 760px) {
   .meta-grid {

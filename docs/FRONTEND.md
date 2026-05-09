@@ -1,7 +1,7 @@
 # Frontend
 
 ## Current State
-The frontend is an Angular 21 SPA in `frontend`. The root route renders the authentication login page, and `/catalog` renders the public movie catalog browsing page.
+The frontend is an Angular 21 SPA in `frontend`. The root route renders the public home page movie section, `/login` renders the authentication login page, and `/catalog` renders the public movie catalog browsing page.
 
 Primary references:
 
@@ -11,7 +11,8 @@ Primary references:
 - `frontend/DESIGN.md`
 
 ## Routing
-- `/` displays the authentication login page.
+- `/` displays the public home page with movie cards.
+- `/login` displays the authentication login page.
 - `/catalog` displays the public V1 catalog page.
 - `/movies/:id` displays movie details for a single movie.
 - `/catalog` reads `query`, `page`, and `pageSize` from URL query parameters.

@@ -8,6 +8,7 @@ namespace SmartMovieCatalog.Api.Features.Movies.GetMovieById;
 
 public static class GetMovieByIdEndpoint
 {
+    private const string ProblemJsonContentType = "application/problem+json";
     public static void MapGetMovieById(this IEndpointRouteBuilder app)
     {
         app.MapGet("/api/movies/{id}", HandleAsync)
@@ -15,8 +16,8 @@ public static class GetMovieByIdEndpoint
             .WithTags("Movies")
             .AllowAnonymous()
             .Produces<MovieDetailsResponse>(StatusCodes.Status200OK)
-            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest, "application/problem+json")
-            .Produces<ProblemDetails>(StatusCodes.Status404NotFound, "application/problem+json");
+            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest, ProblemJsonContentType)
+            .Produces<ProblemDetails>(StatusCodes.Status404NotFound, ProblemJsonContentType);
     }
 
     private static async Task<IResult> HandleAsync(
@@ -30,7 +31,7 @@ public static class GetMovieByIdEndpoint
             return Results.Json(
                 CreateInvalidMovieIdProblem(httpContext),
                 statusCode: StatusCodes.Status400BadRequest,
-                contentType: "application/problem+json");
+                contentType: ProblemJsonContentType);
         }
 
         Result<MovieDetails, GetMovieByIdFailure> result =
@@ -57,7 +58,7 @@ public static class GetMovieByIdEndpoint
             _ => Results.Json(
                 CreateMovieNotFoundProblem(httpContext, id),
                 statusCode: StatusCodes.Status404NotFound,
-                contentType: "application/problem+json"));
+                contentType: ProblemJsonContentType));
     }
 
     private static ProblemDetails CreateInvalidMovieIdProblem(HttpContext httpContext)

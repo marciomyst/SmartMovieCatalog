@@ -26,4 +26,22 @@ public sealed class UserIdTests
 
         Assert.Equal(UserId.From(value), UserId.From(value));
     }
+
+    [Fact]
+    public void From_WithDifferentGuid_CreatesDifferentIds()
+    {
+        UserId first = UserId.From(Guid.NewGuid());
+        UserId second = UserId.From(Guid.NewGuid());
+
+        Assert.NotEqual(first, second);
+    }
+
+    [Fact]
+    public void Equals_WithNullOrDifferentType_ReturnsFalse()
+    {
+        UserId userId = UserId.New();
+
+        Assert.False(userId.Equals(null));
+        Assert.False(userId.Equals("not-a-user-id"));
+    }
 }

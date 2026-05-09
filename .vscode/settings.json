@@ -2,7 +2,7 @@
   "files.exclude": {
     "**/.vs":true,
     "**/.codex": true,
-    "**/.ai": true,
+    "**/.ai": false,
     "**/node_modules": true,
     "**/bin": true,
     "**/obj": true,
@@ -17,6 +17,10 @@
   "search.exclude": {
     "**/dist": true,
     "**/*.js.map": true
+  },
+  "sonarlint.connectedMode.project": {
+    "connectionId": "marciomyst",
+    "projectKey": "marciomyst_SmartMovieCatalog"
   }
 
 }

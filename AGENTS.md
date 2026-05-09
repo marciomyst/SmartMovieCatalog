@@ -127,7 +127,7 @@ Do not read, modify, or base analysis on generated/vendor output unless explicit
   - `test:`
 
 <!-- SPECKIT START -->
-Current Spec Kit plan: `specs/013-view-movie-details/plan.md`.
+Current Spec Kit plan: `specs/017-home-movie-cards/plan.md`.
 
 Before using Spec Kit skills, read `.specify/memory/constitution.md`.
 If the spec, plan, or implementation touches backend, API, contracts, domain,

@@ -86,7 +86,8 @@ export class MovieDetailsPage implements OnInit {
       return posterPath;
     }
 
-    return `${tmdbImageBaseUrl}${posterPath.startsWith('/') ? posterPath : `/${posterPath}`}`;
+    const normalizedPosterPath = posterPath.startsWith('/') ? posterPath : '/' + posterPath;
+    return tmdbImageBaseUrl + normalizedPosterPath;
   }
 
   protected heroBackgroundStyle(posterPath: string | null): string | null {
