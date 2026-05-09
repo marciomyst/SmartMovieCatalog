@@ -5,6 +5,7 @@ import { provideRouter } from '@angular/router';
 import { App } from './app/app';
 import { LoginPage } from './app/auth/login-page/login-page';
 import { CatalogPage } from './app/catalog/catalog-page/catalog-page';
+import { MovieDetailsPage } from './app/movies/movie-details-page/movie-details-page';
 
 bootstrapApplication(App, {
   providers: [
@@ -12,7 +13,8 @@ bootstrapApplication(App, {
     provideHttpClient(),
     provideRouter([
       { path: '', component: LoginPage },
-      { path: 'catalog', component: CatalogPage }
+      { path: 'catalog', component: CatalogPage },
+      { path: 'movies/:id', component: MovieDetailsPage }
     ]),
   ]
 })

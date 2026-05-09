@@ -21,6 +21,12 @@ public sealed class FakeMovieRepository : IMovieRepository
         return Task.CompletedTask;
     }
 
+    public Task<Movie?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        Movie? movie = _movies.SingleOrDefault(currentMovie => currentMovie.Id == id);
+        return Task.FromResult(movie);
+    }
+
     public Task<PagedResult<Movie>> ListAsync(
         string? query,
         int page,

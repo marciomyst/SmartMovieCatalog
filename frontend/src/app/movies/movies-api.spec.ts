@@ -1,7 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { PagedMovieSummaryResponse } from './movie.models';
+import { MovieDetails, PagedMovieSummaryResponse } from './movie.models';
 import { MoviesApi } from './movies-api';
 
 describe('MoviesApi', () => {
@@ -27,6 +27,23 @@ describe('MoviesApi', () => {
     totalPages: 4,
     hasPreviousPage: true,
     hasNextPage: true
+  };
+
+  const detailsResponse: MovieDetails = {
+    id: 'movie-1',
+    title: 'Central do Brasil',
+    originalTitle: 'Central Station',
+    releaseYear: 1998,
+    countryCode: 'BR',
+    originalLanguage: 'pt-BR',
+    genres: ['Drama'],
+    director: 'Walter Salles',
+    synopsis: 'A retired teacher and a young boy travel through Brazil in search of his father.',
+    durationMinutes: 110,
+    ageRating: '12',
+    externalId: 666,
+    posterUrl: '/p/central.jpg',
+    createdAt: '2026-05-04T12:00:00Z'
   };
 
   beforeEach(() => {
@@ -101,5 +118,15 @@ describe('MoviesApi', () => {
     );
 
     request.flush(response);
+  });
+
+  it('should request movie details by id', () => {
+    moviesApi.getMovieById('movie-1').subscribe(result => {
+      expect(result).toEqual(detailsResponse);
+    });
+
+    const request = httpTestingController.expectOne('/api/movies/movie-1');
+    expect(request.request.method).toBe('GET');
+    request.flush(detailsResponse);
   });
 });

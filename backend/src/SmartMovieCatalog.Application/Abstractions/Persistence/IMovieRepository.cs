@@ -6,6 +6,8 @@ public interface IMovieRepository
 {
     Task AddAsync(Movie movie, CancellationToken cancellationToken);
 
+    Task<Movie?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+
     Task<PagedResult<Movie>> ListAsync(
         string? query,
         int page,

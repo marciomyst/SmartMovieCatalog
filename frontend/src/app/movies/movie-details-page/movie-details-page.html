@@ -1,0 +1,121 @@
+<section class="movie-details-page" aria-labelledby="movie-details-title">
+  <div class="state-panel" *ngIf="loadState() === 'loading'" role="status">
+    <span class="material-symbols-outlined" aria-hidden="true">hourglass_top</span>
+    <p>Loading movie details</p>
+  </div>
+
+  <div class="state-panel" *ngIf="loadState() === 'notFound'" role="status">
+    <span class="material-symbols-outlined" aria-hidden="true">movie</span>
+    <h1 id="movie-details-title">Movie not found</h1>
+    <p>We could not find this movie in the catalog.</p>
+    <a routerLink="/catalog">Back to catalog</a>
+  </div>
+
+  <div class="state-panel state-panel-error" *ngIf="loadState() === 'error'" role="alert">
+    <span class="material-symbols-outlined" aria-hidden="true">error</span>
+    <h1 id="movie-details-title">Details unavailable</h1>
+    <p>Try again in a moment.</p>
+    <a routerLink="/catalog">Back to catalog</a>
+  </div>
+
+  <article class="details-article" *ngIf="loadState() === 'success' && movie() as details">
+    <section class="hero-shell">
+      <div
+        class="hero-background"
+        [style.background-image]="heroBackgroundStyle(details.posterUrl)"
+        aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <div class="hero-poster">
+          <img
+            *ngIf="details.posterUrl; else noPoster"
+            [src]="posterImageUrl(details.posterUrl)"
+            [alt]="details.title + ' poster'">
+          <ng-template #noPoster>
+            <div class="poster-placeholder" aria-hidden="true">
+              <span class="material-symbols-outlined">movie</span>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="hero-info">
+          <h1 id="movie-details-title">{{ details.title }}</h1>
+          <p class="details-subtitle" *ngIf="details.originalTitle && details.originalTitle !== details.title">
+            {{ details.originalTitle }}
+          </p>
+
+          <div class="hero-actions">
+            <a class="primary-action" routerLink="/catalog">
+              <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+              <span>Back to catalog</span>
+            </a>
+            <span class="info-badge">Lancamento {{ details.releaseYear }}</span>
+            <span class="info-badge info-badge-country">{{ details.countryCode }}</span>
+          </div>
+
+          <section class="hero-synopsis">
+            <h2>
+              <span class="material-symbols-outlined" aria-hidden="true">description</span>
+              <span>Synopsis</span>
+            </h2>
+            <p>{{ valueOrFallback(details.synopsis) }}</p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-layout">
+      <div class="details-main">
+        <dl class="meta-grid">
+          <div>
+            <dt>Director</dt>
+            <dd>{{ valueOrFallback(details.director) }}</dd>
+          </div>
+          <div>
+            <dt>Duration</dt>
+            <dd>{{ details.durationMinutes ? details.durationMinutes + ' min' : 'Not informed' }}</dd>
+          </div>
+          <div>
+            <dt>Genres</dt>
+            <dd>{{ genresLabel() }}</dd>
+          </div>
+          <div>
+            <dt>Age Rating</dt>
+            <dd>{{ valueOrFallback(details.ageRating) }}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <aside class="details-side">
+        <section class="insight-panel">
+          <header>
+            <span class="material-symbols-outlined" aria-hidden="true">analytics</span>
+            <h2>Catalog Insight</h2>
+          </header>
+
+          <div class="insight-block">
+            <span class="insight-label">Genres</span>
+            <div class="genre-tags" *ngIf="details.genres.length > 0; else noGenres">
+              <span *ngFor="let genre of details.genres">{{ genre }}</span>
+            </div>
+            <ng-template #noGenres>
+              <p class="muted-line">Not informed</p>
+            </ng-template>
+          </div>
+
+          <div class="insight-block">
+            <div class="metric-row">
+              <span>Metadata completeness</span>
+              <strong>{{ metadataCompleteness() }}%</strong>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div [style.width]="progressWidth(metadataCompleteness())"></div>
+            </div>
+          </div>
+        </section>
+
+      </aside>
+    </section>
+  </article>
+</section>

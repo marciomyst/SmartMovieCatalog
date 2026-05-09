@@ -25,6 +25,23 @@ export interface MovieListQuery {
   pageSize: number;
 }
 
+export interface MovieDetails {
+  id: string;
+  title: string;
+  originalTitle: string | null;
+  releaseYear: number;
+  countryCode: string;
+  originalLanguage: string;
+  genres: string[];
+  director: string | null;
+  synopsis: string | null;
+  durationMinutes: number | null;
+  ageRating: string | null;
+  externalId: number | null;
+  posterUrl: string | null;
+  createdAt: string;
+}
+
 export interface CatalogViewState {
   query: string;
   page: number;
@@ -32,3 +49,5 @@ export interface CatalogViewState {
 }
 
 export type CatalogLoadState = 'loading' | 'success' | 'emptyCatalog' | 'noResults' | 'error';
+
+export type MovieDetailsLoadState = 'loading' | 'success' | 'notFound' | 'error';
