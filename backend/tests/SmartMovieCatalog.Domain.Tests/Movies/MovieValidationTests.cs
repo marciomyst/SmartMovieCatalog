@@ -109,9 +109,26 @@ public sealed class MovieValidationTests
     [InlineData("https://image.tmdb.org/t/p/w500/example.jpg")]
     [InlineData("//image.tmdb.org/t/p/w500/example.jpg")]
     [InlineData("p/example-card.jpg")]
+    [InlineData("/p\\example-card.jpg")]
     public void Create_WithNonRelativeImage_Throws(string image)
     {
         Assert.Throws<ArgumentException>(() => CreateMovie(image: image));
+    }
+
+    [Fact]
+    public void Create_WithRelativeImagePath_KeepsNormalizedPath()
+    {
+        Movie movie = CreateMovie(image: "/p/example-card.jpg");
+
+        Assert.Equal("/p/example-card.jpg", movie.Image);
+    }
+
+    [Fact]
+    public void Create_WithLowercaseCountryCode_NormalizesToUppercase()
+    {
+        Movie movie = CreateMovie(countryCode: "br");
+
+        Assert.Equal("BR", movie.CountryCode);
     }
 
     [Fact]

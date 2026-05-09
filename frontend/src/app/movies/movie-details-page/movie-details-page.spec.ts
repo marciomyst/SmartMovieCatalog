@@ -103,4 +103,48 @@ describe('MovieDetailsPage', () => {
     const image = fixture.nativeElement.querySelector('.hero-poster img') as HTMLImageElement;
     expect(image.src).toBe('https://image.tmdb.org/t/p/w500/p/central.jpg');
   });
+
+  it('should keep absolute poster URL unchanged', () => {
+    moviesApi.getMovieById.mockReturnValue(of({
+      ...details,
+      posterUrl: 'https://image.tmdb.org/t/p/w500/direct.jpg'
+    }));
+    createComponent();
+
+    const image = fixture.nativeElement.querySelector('.hero-poster img') as HTMLImageElement;
+    expect(image.src).toBe('https://image.tmdb.org/t/p/w500/direct.jpg');
+  });
+
+  it('should render not-found state when route id is empty', () => {
+    paramMap.next(convertToParamMap({ id: '   ' }));
+    createComponent();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Movie not found');
+  });
+
+  it('should expose fallback values for missing metadata helpers', () => {
+    moviesApi.getMovieById.mockReturnValue(of({
+      ...details,
+      originalTitle: null,
+      director: null,
+      synopsis: null,
+      durationMinutes: null,
+      ageRating: null,
+      externalId: null,
+      posterUrl: null,
+      genres: []
+    }));
+    createComponent();
+
+    const component = fixture.componentInstance as unknown as {
+      metadataCompleteness: () => number;
+      heroBackgroundStyle: (value: string | null) => string | null;
+      valueOrFallback: (value: string | number | null | undefined) => string | number;
+    };
+
+    expect(component.metadataCompleteness()).toBe(0);
+    expect(component.heroBackgroundStyle(null)).toBeNull();
+    expect(component.valueOrFallback('')).toBe('Not informed');
+  });
 });

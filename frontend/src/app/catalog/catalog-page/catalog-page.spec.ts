@@ -244,4 +244,61 @@ describe('CatalogPage', () => {
     const link = fixture.nativeElement.querySelector('.movie-card') as HTMLAnchorElement;
     expect(link.getAttribute('href')).toBe('/movies/movie-1');
   });
+
+  it('should render singular result summary when only one movie is available', () => {
+    moviesApi.listMovies.mockReturnValue(of({
+      ...movieResponse,
+      totalCount: 1
+    }));
+    createComponent();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('1 movie');
+  });
+
+  it('should not navigate to previous/next page when pagination is unavailable', () => {
+    moviesApi.listMovies.mockReturnValue(of({
+      ...movieResponse,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }));
+    createComponent();
+
+    const component = fixture.componentInstance as unknown as {
+      previousPage: () => void;
+      nextPage: () => void;
+    };
+
+    component.previousPage();
+    component.nextPage();
+
+    expect(router.navigate).not.toHaveBeenCalled();
+  });
+
+  it('should keep absolute poster URLs unchanged', () => {
+    moviesApi.listMovies.mockReturnValue(of({
+      ...movieResponse,
+      items: [{
+        ...movieResponse.items[0],
+        posterUrl: 'https://image.tmdb.org/t/p/w342/external.jpg'
+      }]
+    }));
+    createComponent();
+
+    const image = fixture.nativeElement.querySelector('.poster-frame img') as HTMLImageElement;
+    expect(image.src).toBe('https://image.tmdb.org/t/p/w342/external.jpg');
+  });
+
+  it('should avoid duplicate API calls when query state does not change', () => {
+    createComponent();
+    moviesApi.listMovies.mockClear();
+
+    queryParamMap.next(convertToParamMap({
+      query: '',
+      page: '1',
+      pageSize: '12'
+    }));
+
+    expect(moviesApi.listMovies).not.toHaveBeenCalled();
+  });
 });
