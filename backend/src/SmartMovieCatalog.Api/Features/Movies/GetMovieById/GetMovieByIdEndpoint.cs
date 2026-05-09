@@ -9,7 +9,6 @@ namespace SmartMovieCatalog.Api.Features.Movies.GetMovieById;
 public static class GetMovieByIdEndpoint
 {
     private const string ProblemJsonContentType = "application/problem+json";
-
     public static void MapGetMovieById(this IEndpointRouteBuilder app)
     {
         app.MapGet("/api/movies/{id}", HandleAsync)
