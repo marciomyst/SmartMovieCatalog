@@ -83,6 +83,23 @@ public sealed class EfMovieRepositoryTests
     }
 
     [Fact]
+    public async Task GetByIdAsync_WithExistingMovie_ReturnsMovieWithGenres()
+    {
+        await using SmartMovieCatalogDbContext dbContext = CreateDbContext();
+        EfMovieRepository repository = new(dbContext);
+        Genre genre = Genre.Create(GenreId.New(), "Drama", externalId: null);
+        Movie movie = CreateMovie("Central do Brasil", genre);
+        await repository.AddAsync(movie, CancellationToken.None);
+        await repository.SaveChangesAsync(CancellationToken.None);
+
+        Movie? result = await repository.GetByIdAsync(movie.Id, CancellationToken.None);
+
+        Assert.NotNull(result);
+        Assert.Equal(movie.Id, result.Id);
+        Assert.Contains(result.Genres, movieGenre => movieGenre.Genre.Name == "Drama");
+    }
+
+    [Fact]
     public void Model_MapsGenreExternalIdAsUniqueAndMovieGenresAsAssociation()
     {
         using SmartMovieCatalogDbContext dbContext = CreateDbContext();

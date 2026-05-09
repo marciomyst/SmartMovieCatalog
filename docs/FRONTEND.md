@@ -13,6 +13,7 @@ Primary references:
 ## Routing
 - `/` displays the authentication login page.
 - `/catalog` displays the public V1 catalog page.
+- `/movies/:id` displays movie details for a single movie.
 - `/catalog` reads `query`, `page`, and `pageSize` from URL query parameters.
 - Catalog `pageSize` defaults to `12` when omitted or invalid. A valid URL `pageSize` in the range `1..100` is honored, but V1 does not show a page-size selector.
 - Catalog item links target the movie details route pattern `/movies/{id}` established by the movie details feature.
@@ -38,9 +39,11 @@ Do not introduce another design system, component library, custom palette, or vi
 
 ## Movie Catalog UI
 - The catalog page lives under `frontend/src/app/catalog/catalog-page`.
+- The movie details page lives under `frontend/src/app/movies/movie-details-page`.
 - Movie catalog HTTP calls are isolated in `frontend/src/app/movies/movies-api.ts`.
 - Movie catalog contracts are mirrored as TypeScript interfaces in `frontend/src/app/movies/movie.models.ts` and must stay aligned with the movie listing/search API contracts.
 - Catalog components must not call `HttpClient` directly.
+- Movie details components must not call `HttpClient` directly and must use `MoviesApi.getMovieById`.
 - The V1 catalog route is public and does not require route guards or an authenticated frontend session.
 - Search is basic title search through `GET /api/movies?query=...`; do not show semantic search, vector search, RAG, CLIP, recommendation, or AI ranking terminology for this feature.
 

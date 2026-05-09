@@ -10,6 +10,7 @@ Current backend endpoints include:
 - `POST /api/auth/authenticate`
 - `GET /api/auth/me`
 - `GET /api/movies`
+- `GET /api/movies/{id}`
 - `POST /api/movies`
 
 The WeatherForecast scaffold endpoint has been removed.
@@ -98,6 +99,37 @@ Returns `200 OK` with:
 
 Invalid pagination parameters return `400 Bad Request` as `ValidationProblemDetails`.
 
+### `GET /api/movies/{id}`
+
+Does not require authentication in the current movie catalog slice.
+
+Returns `200 OK` with:
+
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "title": "Central do Brasil",
+  "originalTitle": "Central Station",
+  "releaseYear": 1998,
+  "countryCode": "BR",
+  "originalLanguage": "pt-BR",
+  "genres": ["Drama"],
+  "director": "Walter Salles",
+  "synopsis": "A retired teacher and a young boy travel through Brazil in search of his father.",
+  "durationMinutes": 110,
+  "ageRating": "12",
+  "externalId": 666,
+  "posterUrl": "/p/example-card.jpg",
+  "createdAt": "2026-05-04T12:00:00+00:00"
+}
+```
+
+Error behavior:
+
+- Invalid `{id}` (non-GUID) returns `400 Bad Request` as `ProblemDetails` (`application/problem+json`).
+- Valid GUID that does not exist returns `404 Not Found` as `ProblemDetails` (`application/problem+json`).
+- Problem responses include `type`, `title`, `status`, `detail`, and `instance`.
+
 ### `POST /api/movies`
 
 Does not require authentication in the first movie catalog slice.
@@ -161,13 +193,12 @@ Returns `201 Created` with `Location: /api/movies/{id}` and:
 
 Invalid request shape and validation failures return `400 Bad Request` as `ValidationProblemDetails`.
 
-`GET /api/movies/{id}` is not implemented in this slice; the `Location` header reserves the future resource URI.
-
 Genre names in movie requests and responses remain public strings. The backend stores genres as reusable catalog records internally, but `POST /api/movies` does not accept or return genre IDs or TMDB genre IDs.
 
 ## Frontend Consumption
 - The Angular login module calls `POST /api/auth/authenticate` with `email` and `password`.
 - On successful authentication, it calls `GET /api/auth/me` using the returned bearer token.
+- The Angular movie details page calls `GET /api/movies/{id}` through a typed movies API service.
 - The frontend relies on same-origin `/api` paths. During local `ng serve`, `frontend/src/proxy.conf.js` forwards `/api` to the backend.
 - The frontend maps `400 ValidationProblemDetails` to field-level validation and keeps `401 ProblemDetails` generic to avoid account enumeration.
 - No Angular movie creation flow exists yet.

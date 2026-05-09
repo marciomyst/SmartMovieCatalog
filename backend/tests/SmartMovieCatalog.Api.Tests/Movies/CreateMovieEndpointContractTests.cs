@@ -55,7 +55,7 @@ public sealed class CreateMovieEndpointContractTests : IClassFixture<SmartMovieC
     }
 
     [Fact]
-    public async Task CreateMovie_ReturnsFutureLocationWithoutReadEndpoint()
+    public async Task CreateMovie_LocationPointsToReadableResource()
     {
         HttpClient client = _factory.CreateClient();
 
@@ -68,7 +68,7 @@ public sealed class CreateMovieEndpointContractTests : IClassFixture<SmartMovieC
         Assert.Equal(new Uri($"/api/movies/{body.Id}", UriKind.Relative), createResponse.Headers.Location);
 
         HttpResponseMessage readResponse = await client.GetAsync($"/api/movies/{body.Id}");
-        Assert.Equal(HttpStatusCode.NotFound, readResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, readResponse.StatusCode);
     }
 
     [Fact]

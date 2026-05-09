@@ -4,7 +4,8 @@ import { of } from 'rxjs';
 import { App } from './app';
 import { LoginPage } from './auth/login-page/login-page';
 import { CatalogPage } from './catalog/catalog-page/catalog-page';
-import { PagedMovieSummaryResponse } from './movies/movie.models';
+import { MovieDetails, PagedMovieSummaryResponse } from './movies/movie.models';
+import { MovieDetailsPage } from './movies/movie-details-page/movie-details-page';
 import { MoviesApi } from './movies/movies-api';
 
 describe('App', () => {
@@ -22,18 +23,37 @@ describe('App', () => {
     hasNextPage: false
   };
 
+  const detailsResponse: MovieDetails = {
+    id: 'movie-1',
+    title: 'Central do Brasil',
+    originalTitle: 'Central Station',
+    releaseYear: 1998,
+    countryCode: 'BR',
+    originalLanguage: 'pt-BR',
+    genres: ['Drama'],
+    director: 'Walter Salles',
+    synopsis: 'A retired teacher and a young boy travel through Brazil in search of his father.',
+    durationMinutes: 110,
+    ageRating: '12',
+    externalId: 666,
+    posterUrl: '/p/central.jpg',
+    createdAt: '2026-05-04T12:00:00Z'
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [
         provideRouter([
           { path: '', component: LoginPage },
-          { path: 'catalog', component: CatalogPage }
+          { path: 'catalog', component: CatalogPage },
+          { path: 'movies/:id', component: MovieDetailsPage }
         ]),
         {
           provide: MoviesApi,
           useValue: {
-            listMovies: vi.fn(() => of(emptyResponse))
+            listMovies: vi.fn(() => of(emptyResponse)),
+            getMovieById: vi.fn(() => of(detailsResponse))
           }
         }
       ]
@@ -69,5 +89,18 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('app-catalog-page')).toBeTruthy();
     expect(compiled.textContent).toContain('Catalog');
+  });
+
+  it('should render the movie details route', async () => {
+    fixture.detectChanges();
+
+    await router.navigateByUrl('/movies/movie-1');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-movie-details-page')).toBeTruthy();
+    expect(compiled.textContent).toContain('Central do Brasil');
   });
 });

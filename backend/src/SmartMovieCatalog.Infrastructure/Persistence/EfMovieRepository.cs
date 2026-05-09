@@ -18,6 +18,15 @@ public sealed class EfMovieRepository : IMovieRepository
         await _dbContext.Movies.AddAsync(movie, cancellationToken);
     }
 
+    public Task<Movie?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return _dbContext.Movies
+            .AsNoTracking()
+            .Include(movie => movie.Genres)
+            .ThenInclude(movieGenre => movieGenre.Genre)
+            .SingleOrDefaultAsync(movie => movie.Id == id, cancellationToken);
+    }
+
     public async Task<PagedResult<Movie>> ListAsync(
         string? query,
         int page,

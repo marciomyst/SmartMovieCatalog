@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MovieListQuery, PagedMovieSummaryResponse } from './movie.models';
+import { MovieDetails, MovieListQuery, PagedMovieSummaryResponse } from './movie.models';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +20,9 @@ export class MoviesApi {
     }
 
     return this.http.get<PagedMovieSummaryResponse>('/api/movies', { params });
+  }
+
+  public getMovieById(id: string): Observable<MovieDetails> {
+    return this.http.get<MovieDetails>(`/api/movies/${id}`);
   }
 }
