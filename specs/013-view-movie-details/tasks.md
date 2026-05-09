@@ -21,7 +21,7 @@
 - [ ] T002 Create application get-by-id query/handler files under `backend/src/SmartMovieCatalog.Application/Features/Movies/`
 - [ ] T003 [P] Create API endpoint slice folder `backend/src/SmartMovieCatalog.Api/Features/Movies/GetMovieById/`
 - [ ] T004 [P] Create frontend details page folder `frontend/src/app/movies/movie-details-page/`
-
+ 
 ---
 
 ## Phase 2: Foundational (Blocking Prerequisites)

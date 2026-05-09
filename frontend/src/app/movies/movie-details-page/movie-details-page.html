@@ -1,20 +1,20 @@
-<section class="movie-details-page" aria-labelledby="movie-details-title">
-  <div class="state-panel" *ngIf="loadState() === 'loading'" role="status">
+<section class="movie-details-page" aria-label="Movie details">
+  <output class="state-panel" *ngIf="loadState() === 'loading'" aria-live="polite">
     <span class="material-symbols-outlined" aria-hidden="true">hourglass_top</span>
-    <p>Loading movie details</p>
-  </div>
+    <span class="state-message">Loading movie details</span>
+  </output>
 
-  <div class="state-panel" *ngIf="loadState() === 'notFound'" role="status">
+  <output class="state-panel" *ngIf="loadState() === 'notFound'" aria-live="polite">
     <span class="material-symbols-outlined" aria-hidden="true">movie</span>
-    <h1 id="movie-details-title">Movie not found</h1>
-    <p>We could not find this movie in the catalog.</p>
+    <span class="state-title">Movie not found</span>
+    <span class="state-message">We could not find this movie in the catalog.</span>
     <a routerLink="/catalog">Back to catalog</a>
-  </div>
+  </output>
 
   <div class="state-panel state-panel-error" *ngIf="loadState() === 'error'" role="alert">
     <span class="material-symbols-outlined" aria-hidden="true">error</span>
-    <h1 id="movie-details-title">Details unavailable</h1>
-    <p>Try again in a moment.</p>
+    <span class="state-title">Details unavailable</span>
+    <span class="state-message">Try again in a moment.</span>
     <a routerLink="/catalog">Back to catalog</a>
   </div>
 

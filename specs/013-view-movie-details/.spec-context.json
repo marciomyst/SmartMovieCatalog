@@ -4,7 +4,7 @@
   "branch": "013-view-movie-details",
   "selectedAt": "2026-05-09T00:34:54.614Z",
   "currentStep": "plan",
-  "status": "planning",
+  "status": "completed",
   "stepHistory": {
     "plan": {
       "startedAt": "2026-05-09T00:57:19.273Z",
@@ -45,6 +45,16 @@
       },
       "by": "extension",
       "at": "2026-05-09T00:57:19.273Z"
+    },
+    {
+      "step": "plan",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-09T10:30:28.258Z"
     }
   ]
 }

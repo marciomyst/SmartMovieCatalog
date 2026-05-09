@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { App } from './app';
 import { LoginPage } from './auth/login-page/login-page';
 import { CatalogPage } from './catalog/catalog-page/catalog-page';
+import { HomePage } from './home/home-page/home-page';
 import { MovieDetails, PagedMovieSummaryResponse } from './movies/movie.models';
 import { MovieDetailsPage } from './movies/movie-details-page/movie-details-page';
 import { MoviesApi } from './movies/movies-api';
@@ -45,7 +46,8 @@ describe('App', () => {
       imports: [App],
       providers: [
         provideRouter([
-          { path: '', component: LoginPage },
+          { path: '', component: HomePage },
+          { path: 'login', component: LoginPage },
           { path: 'catalog', component: CatalogPage },
           { path: 'movies/:id', component: MovieDetailsPage }
         ]),
@@ -70,12 +72,27 @@ describe('App', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render the app brand and catalog navigation link', () => {
+  it('should render the app brand and primary navigation links', () => {
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.brand-link')?.textContent).toContain('Smart Movie Catalog');
+    expect(compiled.querySelector('nav a[routerLink="/"]')?.textContent).toContain('Home');
     expect(compiled.querySelector('a[routerLink="/catalog"]')?.textContent).toContain('Catalog');
+    expect(compiled.querySelector('a[routerLink="/login"]')?.textContent).toContain('Login');
+  });
+
+  it('should render the public home route', async () => {
+    fixture.detectChanges();
+
+    await router.navigateByUrl('/');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-home-page')).toBeTruthy();
+    expect(compiled.textContent).toContain('Latest from the catalog');
   });
 
   it('should render the public catalog route without an auth guard', async () => {
@@ -102,5 +119,18 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('app-movie-details-page')).toBeTruthy();
     expect(compiled.textContent).toContain('Central do Brasil');
+  });
+
+  it('should render the login route', async () => {
+    fixture.detectChanges();
+
+    await router.navigateByUrl('/login');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-login-page')).toBeTruthy();
+    expect(compiled.textContent).toContain('Smart Movie Catalog');
   });
 });

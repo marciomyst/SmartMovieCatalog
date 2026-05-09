@@ -19,7 +19,7 @@ This plan keeps scope constrained to currently supported movie metadata and expl
   - Typed API services on frontend; components do not call `HttpClient` directly
 - Persistence:
   - Existing movie and genre persistence via EF Core mappings/repositories
-- Deployment model:
+- Deployment model: 
   - ASP.NET Core SPA integration with Angular
 - Testing:
   - Backend xUnit test projects (Api/Application/Domain/Infrastructure)

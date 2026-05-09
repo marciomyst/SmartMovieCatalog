@@ -1,0 +1,36 @@
+{
+  "workflow": "speckit",
+  "specName": "017-home-movie-cards",
+  "branch": "017-home-movie-cards",
+  "selectedAt": "2026-05-09T10:30:32.912Z",
+  "currentStep": "tasks",
+  "status": "completed",
+  "stepHistory": {
+    "tasks": {
+      "startedAt": "2026-05-09T10:40:00.926Z",
+      "completedAt": "2026-05-09T10:40:00.926Z"
+    }
+  },
+  "transitions": [
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "plan",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-09T10:40:00.926Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-09T11:01:13.969Z"
+    }
+  ]
+}
