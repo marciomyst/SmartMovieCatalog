@@ -1,0 +1,97 @@
+{
+  "workflow": "speckit",
+  "specName": "016-basic-title-search",
+  "branch": "016-basic-title-search",
+  "selectedAt": "2026-05-10T19:52:28.164Z",
+  "currentStep": "implement",
+  "status": "completed",
+  "stepHistory": {
+    "tasks": {
+      "startedAt": "2026-05-10T20:18:03.428Z",
+      "completedAt": "2026-05-10T20:22:19.816Z"
+    },
+    "implement": {
+      "startedAt": "2026-05-10T20:22:19.819Z",
+      "completedAt": "2026-05-10T20:25:57.2693472Z",
+      "substeps": [
+        {
+          "name": "run-tests",
+          "startedAt": "2026-05-10T20:25:57.2693472Z",
+          "completedAt": "2026-05-10T20:25:57.2693472Z"
+        }
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-10T20:18:03.428Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "from": {
+        "step": "specify",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-10T20:18:03.432Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "from": {
+        "step": "tasks",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-10T20:22:19.816Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "from": {
+        "step": "implement",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-10T20:22:19.819Z"
+    },
+    {
+      "step": "implement",
+      "substep": "run-tests",
+      "from": {
+        "step": "implement",
+        "substep": null
+      },
+      "by": "ai",
+      "at": "2026-05-10T20:25:57.2693472Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "from": {
+        "step": "implement",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-10T20:37:55.583Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "from": {
+        "step": "implement",
+        "substep": null
+      },
+      "by": "extension",
+      "at": "2026-05-10T21:36:07.397Z"
+    }
+  ]
+}
