@@ -83,6 +83,45 @@ public sealed class EfMovieRepositoryTests
     }
 
     [Fact]
+    public async Task ListAsync_WithQueryMatchingOriginalTitle_ReturnsMatchingMovies()
+    {
+        await using SmartMovieCatalogDbContext dbContext = CreateDbContext();
+        EfMovieRepository repository = new(dbContext);
+        Genre genre = Genre.Create(GenreId.New(), "Drama", externalId: null);
+        Movie movieWithOriginalTitleMatch = CreateMovie("Central do Brasil", genre, originalTitle: "Central Station");
+        Movie movieWithoutMatch = CreateMovie("Cidade de Deus", genre, originalTitle: "Cidade de Deus");
+
+        await repository.AddAsync(movieWithOriginalTitleMatch, CancellationToken.None);
+        await repository.AddAsync(movieWithoutMatch, CancellationToken.None);
+        await repository.SaveChangesAsync(CancellationToken.None);
+
+        SmartMovieCatalog.Application.Abstractions.Persistence.PagedResult<Movie> result =
+            await repository.ListAsync("station", 1, 12, CancellationToken.None);
+
+        Movie movie = Assert.Single(result.Items);
+        Assert.Equal(movieWithOriginalTitleMatch.Id, movie.Id);
+        Assert.Equal(1, result.TotalCount);
+    }
+
+    [Fact]
+    public async Task ListAsync_WithCaseInsensitiveQuery_ReturnsMatchingMovies()
+    {
+        await using SmartMovieCatalogDbContext dbContext = CreateDbContext();
+        EfMovieRepository repository = new(dbContext);
+        Genre genre = Genre.Create(GenreId.New(), "Drama", externalId: null);
+        Movie movie = CreateMovie("Central do Brasil", genre);
+
+        await repository.AddAsync(movie, CancellationToken.None);
+        await repository.SaveChangesAsync(CancellationToken.None);
+
+        SmartMovieCatalog.Application.Abstractions.Persistence.PagedResult<Movie> result =
+            await repository.ListAsync("CeNtRaL", 1, 12, CancellationToken.None);
+
+        Assert.Single(result.Items);
+        Assert.Equal(movie.Id, result.Items.Single().Id);
+    }
+
+    [Fact]
     public async Task GetByIdAsync_WithExistingMovie_ReturnsMovieWithGenres()
     {
         await using SmartMovieCatalogDbContext dbContext = CreateDbContext();
@@ -117,12 +156,12 @@ public sealed class EfMovieRepositoryTests
         Assert.NotNull(movieGenreEntity.FindProperty(nameof(MovieGenre.GenreId)));
     }
 
-    private static Movie CreateMovie(string title, Genre genre)
+    private static Movie CreateMovie(string title, Genre genre, string? originalTitle = null)
     {
         return Movie.Create(
             MovieId.New(),
             title,
-            originalTitle: null,
+            originalTitle: originalTitle,
             2024,
             "BR",
             "pt-BR",
