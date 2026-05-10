@@ -3,4 +3,4 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
-dotnet build .\SmartMovieCatalog.slnx
+dotnet run --project .\build\_build.csproj -- Compile

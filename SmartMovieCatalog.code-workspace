@@ -1,0 +1,42 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": 
+	{
+		"chat.agent.enabled": true,
+		"files.exclude": {
+			"**/.vs":true,
+			"**/.codex": true,
+			"**/.ai": true,
+			"**/node_modules": true,
+			"**/bin": true,
+			"**/obj": true,
+			"**/.angular": true,
+			"**/.husky": true,
+			"**/.agents": true,
+			"**/.github": true,
+			"**/.artifacts": true,
+			"**/.dotnet-cli-home": true,
+			"**/.nuke": true,
+			"**/.dockerignore": true,
+			"**/.gitignore": false,
+			"**/.prettierignore": true,
+			"**/.specify": true,
+		},
+		
+		"search.exclude": {
+			"**/dist": true,
+			"**/*.js.map": true,
+			"**/bin": true,
+			"**/obj": true,
+		},
+		"sonarlint.connectedMode.project": {
+			"connectionId": "marciomyst",
+			"projectKey": "marciomyst_SmartMovieCatalog",
+		}
+	}
+
+}

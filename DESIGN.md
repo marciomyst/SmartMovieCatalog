@@ -5,7 +5,7 @@ This file defines the root-level product design policy for Smart Movie Catalog /
 For implementation-level frontend tokens and component rules, read:
 
 - `frontend/DESIGN.md`
-- `docs/FRONTEND.md`
+- `eng/docs/FRONTEND.md`
 
 ## Product Identity
 - Product type: AI-assisted movie catalog and discovery experience.
@@ -15,12 +15,12 @@ For implementation-level frontend tokens and component rules, read:
 ## Design Source Of Truth
 - Root product design policy: `DESIGN.md`.
 - Angular implementation design system: `frontend/DESIGN.md`.
-- Frontend engineering guidance: `docs/FRONTEND.md`.
+- Frontend engineering guidance: `eng/docs/FRONTEND.md`.
 
 If these documents conflict, prefer the most specific document:
 
 1. `frontend/DESIGN.md` for component-level implementation.
-2. `docs/FRONTEND.md` for frontend architecture and conventions.
+2. `eng/docs/FRONTEND.md` for frontend architecture and conventions.
 3. `DESIGN.md` for product-level visual direction.
 
 ## Experience Principles
@@ -67,4 +67,4 @@ If these documents conflict, prefer the most specific document:
 ## Change Control
 - Update this file when product-level visual direction changes.
 - Update `frontend/DESIGN.md` when implementation tokens, component specs, or frontend styling rules change.
-- Update `docs/FRONTEND.md` when frontend structure, state management, or integration conventions change.
+- Update `eng/docs/FRONTEND.md` when frontend structure, state management, or integration conventions change.

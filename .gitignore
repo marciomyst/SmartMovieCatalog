@@ -2,11 +2,10 @@
 bin/
 obj/
 dist/
-build/
 out/
 .artifacts/
-artifacts/
 .dotnet-cli-home/
+.nuke/temp/
 restore*.log
 *.log
 
