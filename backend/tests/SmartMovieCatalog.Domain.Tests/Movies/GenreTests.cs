@@ -15,18 +15,31 @@ public sealed class GenreTests
         Assert.Equal(18, genre.ExternalId);
     }
 
+    [Fact]
+    public void NormalizeName_WithTrimmedValue_ReturnsUppercaseName()
+    {
+        Assert.Equal("DRAMA", Genre.NormalizeName(" Drama "));
+    }
+
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
     public void Create_WithNonPositiveExternalId_Throws(int externalId)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Genre.Create(GenreId.New(), "Drama", externalId));
+        ArgumentOutOfRangeException exception = Assert.Throws<ArgumentOutOfRangeException>(
+            () => Genre.Create(GenreId.New(), "Drama", externalId));
+
+        Assert.Equal("externalId", exception.ParamName);
+        Assert.Contains("Genre external ID must be positive when supplied.", exception.Message);
     }
 
     [Fact]
     public void From_WithEmptyGenreId_Throws()
     {
-        Assert.Throws<ArgumentException>(() => GenreId.From(Guid.Empty));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => GenreId.From(Guid.Empty));
+
+        Assert.Equal("value", exception.ParamName);
+        Assert.Contains("Genre id cannot be empty.", exception.Message);
     }
 
     [Fact]

@@ -5,20 +5,26 @@ The repository has frontend test tooling in the Angular project and backend test
 
 Known commands:
 
-- Solution build: `dotnet build SmartMovieCatalog.slnx`
-- Backend build: `dotnet build backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj`
-- Backend tests: `dotnet test SmartMovieCatalog.slnx --no-build`
-- Backend coverage: `dotnet test SmartMovieCatalog.slnx --settings backend/tests/coverage.runsettings --collect:"XPlat Code Coverage" --results-directory backend/tests/TestResults/coverage`
-- Frontend build: run `npm run build` from `frontend`
-- Frontend tests: run `npm test -- --watch=false` from `frontend`
-- Backend test project build: `dotnet build backend/tests/SmartMovieCatalog.Domain.Tests/SmartMovieCatalog.Domain.Tests.csproj`
+- NUKE compile: `dotnet run --project eng/build/_build.csproj -- Compile`
+- NUKE tests (backend + frontend): `dotnet run --project eng/build/_build.csproj -- Test`
+- NUKE frontend build: `dotnet run --project eng/build/_build.csproj -- BuildFrontend`
+- NUKE coverage: `dotnet run --project eng/build/_build.csproj -- Coverage`
+- NUKE mutation: `dotnet run --project eng/build/_build.csproj -- Mutation --MutationScope both`
+- NUKE local run: `dotnet run --project eng/build/_build.csproj -- RunLocal`
+- Direct solution build: `dotnet build SmartMovieCatalog.slnx`
+- Architecture tests only: `dotnet test backend/tests/SmartMovieCatalog.Architecture.Tests/SmartMovieCatalog.Architecture.Tests.csproj`
 
-PowerShell helpers:
+PowerShell entrypoint:
 
-- Build: `.\scripts\build.ps1`
-- Test: `.\scripts\test.ps1`
-- Run locally: `.\scripts\run-local.ps1`
-- Clean generated output: `.\scripts\clean.ps1`
+- Root bootstrapper: `.\eng\build.ps1 <Target>`
+
+Legacy wrappers (compatibility):
+
+- Build: `.\eng\scripts\build.ps1`
+- Test: `.\eng\scripts\test.ps1`
+- Mutation: `.\eng\scripts\test-mutation.ps1`
+- Run locally: `.\eng\scripts\run-local.ps1`
+- Clean generated output: `.\eng\scripts\clean.ps1`
 
 ## Testing Policy
 - New behavior should have tests when there is an applicable test structure.
@@ -35,6 +41,7 @@ Recommended test types:
 - Unit tests for pure business rules and validation.
 - Integration tests for HTTP endpoints and dependency injection wiring.
 - Contract-style tests for API request and response shape.
+- Architecture tests for Clean Architecture dependency direction and layer boundaries.
 
 Backend authentication tests use xUnit and `Microsoft.AspNetCore.Mvc.Testing`.
 
@@ -56,3 +63,10 @@ Do not introduce TestContainers or database-backed tests until a separate testin
 - Run the narrowest command that validates the change.
 - Run broader builds when project files, shared contracts, or cross-boundary behavior changes.
 - If a command fails, inspect the error and changed code before attempting another fix.
+
+## Mutation Testing (Stryker)
+- Stryker is configured for:
+  - `backend/tests/SmartMovieCatalog.Domain.Tests/stryker-config.json`
+  - `backend/tests/SmartMovieCatalog.Application.Tests/stryker-config.json`
+- Ensure local tools are restored before running mutation tests: `dotnet tool restore`.
+- Mutation testing is intentionally slower than regular tests. Use it for quality gates and focused hardening, not for every rapid edit loop.

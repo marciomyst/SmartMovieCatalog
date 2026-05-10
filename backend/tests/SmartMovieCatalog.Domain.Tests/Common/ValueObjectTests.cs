@@ -24,6 +24,15 @@ public sealed class ValueObjectTests
     }
 
     [Fact]
+    public void GetHashCode_WithDifferentComponents_ReturnsDifferentValues()
+    {
+        SampleValueObject left = new("left", 7);
+        SampleValueObject right = new("right", 8);
+
+        Assert.NotEqual(left.GetHashCode(), right.GetHashCode());
+    }
+
+    [Fact]
     public void Equals_WithDifferentRuntimeType_ReturnsFalse()
     {
         SampleValueObject sample = new("same", 7);

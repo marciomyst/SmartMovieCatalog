@@ -23,7 +23,10 @@ public sealed class MovieGenreTests
     {
         Genre genre = Genre.Create(GenreId.New(), "Drama", null);
 
-        Assert.Throws<ArgumentException>(() => MovieGenre.Create(Guid.Empty, genre));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => MovieGenre.Create(Guid.Empty, genre));
+
+        Assert.Equal("movieId", exception.ParamName);
+        Assert.Contains("Movie id cannot be empty.", exception.Message);
     }
 
     [Fact]
@@ -38,13 +41,16 @@ public sealed class MovieGenreTests
         Guid movieId = Guid.NewGuid();
         Genre genre1 = Genre.Create(GenreId.New(), "Drama", null);
         Genre genre2 = Genre.Create(GenreId.New(), "Drama", null);
+        Guid otherMovieId = Guid.NewGuid();
 
         MovieGenre movieGenre1 = MovieGenre.Create(movieId, genre1);
         MovieGenre movieGenre2 = MovieGenre.Create(movieId, genre1);
         MovieGenre movieGenre3 = MovieGenre.Create(movieId, genre2);
+        MovieGenre movieGenre4 = MovieGenre.Create(otherMovieId, genre1);
 
         Assert.Equal(movieGenre1, movieGenre2);
         Assert.NotEqual(movieGenre1, movieGenre3);
+        Assert.NotEqual(movieGenre1, movieGenre4);
     }
 
     [Fact]

@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/backend/" />
+  <Folder Name="/backend/src/" />
+  <Folder Name="/backend/tests/">
+    <Project Path="backend/tests/SmartMovieCatalog.Architecture.Tests/SmartMovieCatalog.Architecture.Tests.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj" />
     <Project Path="backend/src/SmartMovieCatalog.Application/SmartMovieCatalog.Application.csproj" />

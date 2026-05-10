@@ -20,8 +20,12 @@ Persistence, local JWT authentication, Clean Architecture layers, and Wolverine-
 ├── SmartMovieCatalog.slnx
 ├── docker-compose.yml
 ├── docker-compose.override.yml
-├── docker/
-│   └── README.md
+├── eng/
+│   ├── build/
+│   ├── docs/
+│   ├── scripts/
+│   ├── docker/
+│   └── .env.example
 ├── backend/
 │   ├── src/
 │   │   ├── SmartMovieCatalog.Api/
@@ -35,21 +39,6 @@ Persistence, local JWT authentication, Clean Architecture layers, and Wolverine-
 │       ├── SmartMovieCatalog.Domain.Tests/
 │       └── SmartMovieCatalog.Infrastructure.Tests/
 ├── frontend/
-├── docs/
-│   ├── ARCHITECTURE.md
-│   ├── API.md
-│   ├── CONVENTIONS.md
-│   ├── DOMAIN.md
-│   ├── FRONTEND.md
-│   ├── ROADMAP.md
-│   ├── SECURITY.md
-│   ├── TESTING.md
-│   └── adr/
-├── scripts/
-│   ├── build.ps1
-│   ├── clean.ps1
-│   ├── run-local.ps1
-│   └── test.ps1
 ```
 
 ## Prerequisites
@@ -62,18 +51,23 @@ Persistence, local JWT authentication, Clean Architecture layers, and Wolverine-
 From the repository root:
 
 ```bash
-dotnet build SmartMovieCatalog.slnx
-dotnet build backend/src/SmartMovieCatalog.Api/SmartMovieCatalog.Api.csproj
+dotnet run --project eng/build/_build.csproj -- Compile
+dotnet run --project eng/build/_build.csproj -- Test
+dotnet run --project eng/build/_build.csproj -- BuildFrontend
 ```
 
-PowerShell helpers:
+NUKE targets:
 
 ```powershell
-.\scripts\build.ps1
-.\scripts\test.ps1
-.\scripts\run-local.ps1
-.\scripts\clean.ps1
+.\eng\build.ps1 Compile
+.\eng\build.ps1 Test
+.\eng\build.ps1 Coverage
+.\eng\build.ps1 Mutation --MutationScope both
+.\eng\build.ps1 Clean
+.\eng\build.ps1 RunLocal
 ```
+
+Legacy wrappers are available in `eng/scripts/*.ps1`.
 
 Docker:
 
@@ -93,7 +87,7 @@ The backend auth endpoints are:
 - `POST /api/auth/authenticate`
 - `GET /api/auth/me`
 
-The Angular login screen is available at the SPA root. It calls `POST /api/auth/authenticate`, then `GET /api/auth/me`, through same-origin `/api` routes. In local frontend development, `frontend/src/proxy.conf.js` proxies `/api` to the backend.
+The Angular home page is available at the SPA root (`/`). The Angular login screen is available at `/login`. It calls `POST /api/auth/authenticate`, then `GET /api/auth/me`, through same-origin `/api` routes. In local frontend development, `frontend/src/proxy.conf.js` proxies `/api` to the backend.
 
 Health check:
 
@@ -112,7 +106,7 @@ npm start
 Local environment:
 
 ```bash
-cp .env.example .env
+cp eng/.env.example .env
 ```
 
 The example values are for local development only. Do not commit real secrets in `.env`.
@@ -149,7 +143,7 @@ ADMIN_SEED_NAME=Admin
 The seed runs only during API startup. After changing `.env`, restart the API process or recreate the Docker Compose API container:
 
 ```powershell
-.\scripts\run-local.ps1
+.\eng\scripts\run-local.ps1
 docker compose up -d --force-recreate api
 ```
 
@@ -163,15 +157,15 @@ docker compose up -d --force-recreate api
 - Root design policy: `DESIGN.md`.
 
 ## Documentation
-- Architecture: `docs/ARCHITECTURE.md`
-- Domain direction: `docs/DOMAIN.md`
-- API conventions: `docs/API.md`
-- Frontend conventions: `docs/FRONTEND.md`
-- Testing policy: `docs/TESTING.md`
-- Security rules: `docs/SECURITY.md`
-- Engineering conventions: `docs/CONVENTIONS.md`
-- Roadmap: `docs/ROADMAP.md`
-- Architecture decisions: `docs/adr`
+- Architecture: `eng/docs/ARCHITECTURE.md`
+- Domain direction: `eng/docs/DOMAIN.md`
+- API conventions: `eng/docs/API.md`
+- Frontend conventions: `eng/docs/FRONTEND.md`
+- Testing policy: `eng/docs/TESTING.md`
+- Security rules: `eng/docs/SECURITY.md`
+- Engineering conventions: `eng/docs/CONVENTIONS.md`
+- Roadmap: `eng/docs/ROADMAP.md`
+- Architecture decisions: `eng/docs/adr`
 
 ## Safety
 - Do not commit secrets, credentials, certificates, connection strings, or private keys.

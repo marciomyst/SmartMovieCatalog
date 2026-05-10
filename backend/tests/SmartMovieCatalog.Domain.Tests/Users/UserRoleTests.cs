@@ -16,12 +16,25 @@ public sealed class UserRoleTests
     }
 
     [Theory]
-    [InlineData("")]
     [InlineData("Manager")]
     [InlineData("admin")]
     public void Create_WithInvalidRole_Throws(string roleName)
     {
-        Assert.Throws<ArgumentException>(() => UserRole.Create(roleName));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => UserRole.Create(roleName));
+
+        Assert.Equal("name", exception.ParamName);
+        Assert.Contains("User role is not recognized.", exception.Message);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void Create_WithBlankRole_Throws(string roleName)
+    {
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => UserRole.Create(roleName));
+
+        Assert.Equal("name", exception.ParamName);
+        Assert.Contains("null or whitespace", exception.Message);
     }
 
     [Fact]
@@ -29,5 +42,14 @@ public sealed class UserRoleTests
     {
         Assert.Contains(UserRole.Admin, UserRole.Allowed);
         Assert.Contains(UserRole.User, UserRole.Allowed);
+    }
+
+    [Fact]
+    public void Equals_IsBasedOnRoleName()
+    {
+        UserRole admin = UserRole.Create(UserRole.Admin);
+        UserRole user = UserRole.Create(UserRole.User);
+
+        Assert.NotEqual(admin, user);
     }
 }

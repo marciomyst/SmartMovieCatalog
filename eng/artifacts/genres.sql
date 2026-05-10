@@ -1,0 +1,21 @@
+INSERT INTO "Genres" ("Id", "Name", "NormalizedName", "ExternalId")
+VALUES
+    (gen_random_uuid(), 'Ação', 'AÇÃO', 28),
+    (gen_random_uuid(), 'Aventura', 'AVENTURA', 12),
+    (gen_random_uuid(), 'Animação', 'ANIMAÇÃO', 16),
+    (gen_random_uuid(), 'Comédia', 'COMÉDIA', 35),
+    (gen_random_uuid(), 'Crime', 'CRIME', 80),
+    (gen_random_uuid(), 'Documentário', 'DOCUMENTÁRIO', 99),
+    (gen_random_uuid(), 'Drama', 'DRAMA', 18),
+    (gen_random_uuid(), 'Família', 'FAMÍLIA', 10751),
+    (gen_random_uuid(), 'Fantasia', 'FANTASIA', 14),
+    (gen_random_uuid(), 'História', 'HISTÓRIA', 36),
+    (gen_random_uuid(), 'Terror', 'TERROR', 27),
+    (gen_random_uuid(), 'Música', 'MÚSICA', 10402),
+    (gen_random_uuid(), 'Mistério', 'MISTÉRIO', 9648),
+    (gen_random_uuid(), 'Romance', 'ROMANCE', 10749),
+    (gen_random_uuid(), 'Ficção científica', 'FICÇÃO CIENTÍFICA', 878),
+    (gen_random_uuid(), 'Cinema TV', 'CINEMA TV', 10770),
+    (gen_random_uuid(), 'Thriller', 'THRILLER', 53),
+    (gen_random_uuid(), 'Guerra', 'GUERRA', 10752),
+    (gen_random_uuid(), 'Faroeste', 'FAROESTE', 37);

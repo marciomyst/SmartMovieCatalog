@@ -7,6 +7,39 @@ namespace SmartMovieCatalog.Application.Tests.Movies;
 public sealed class CreateMovieHandlerTests
 {
     [Fact]
+    public async Task Handle_WithNullGenres_CreatesMovieWithoutGenresAndSavesChanges()
+    {
+        FakeMovieRepository movies = new();
+        FakeGenreRepository genres = new();
+        FakeClock clock = new()
+        {
+            UtcNow = new DateTimeOffset(2026, 5, 4, 12, 0, 0, TimeSpan.Zero)
+        };
+        CreateMovieHandler handler = new(movies, genres, clock);
+
+        CreatedMovie createdMovie = await handler.Handle(
+            new CreateMovieCommand(
+                "Central do Brasil",
+                null,
+                1998,
+                "BR",
+                "pt-BR",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null),
+            CancellationToken.None);
+
+        Assert.Empty(createdMovie.Genres);
+        Assert.Empty(genres.Genres);
+        Assert.Empty(movies.Movies.Single().Genres);
+        Assert.Equal(1, movies.SaveChangesCallCount);
+    }
+
+    [Fact]
     public async Task Handle_WithValidCommand_PersistsMovieAndReturnsCreatedMovie()
     {
         FakeMovieRepository movies = new();

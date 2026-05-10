@@ -27,14 +27,14 @@ Prefer the narrowest verification command that covers the change. Run broader bu
 
 ## 4. Read First
 - `CONTEXT.md` - repository context and backend/frontend routing rules.
-- `docs/ARCHITECTURE.md` - current architecture, boundaries, and architecture decision rules.
-- `docs/DOMAIN.md` - domain scope, candidate concepts, and domain constraints.
-- `docs/API.md` - backend API design conventions.
-- `docs/FRONTEND.md` - frontend structure and Angular guidance.
-- `docs/TESTING.md` - verification and testing policy.
-- `docs/SECURITY.md` - security and secret-handling rules.
-- `docs/CONVENTIONS.md` - coding and commit conventions.
-- `docs/ROADMAP.md` - planned direction and open decisions.
+- `eng/docs/ARCHITECTURE.md` - current architecture, boundaries, and architecture decision rules.
+- `eng/docs/DOMAIN.md` - domain scope, candidate concepts, and domain constraints.
+- `eng/docs/API.md` - backend API design conventions.
+- `eng/docs/FRONTEND.md` - frontend structure and Angular guidance.
+- `eng/docs/TESTING.md` - verification and testing policy.
+- `eng/docs/SECURITY.md` - security and secret-handling rules.
+- `eng/docs/CONVENTIONS.md` - coding and commit conventions.
+- `eng/docs/ROADMAP.md` - planned direction and open decisions.
 - `.specify/memory/constitution.md` - repository-wide Spec Kit governance.
 - `.specify/memory/constitution-backend.md` - backend-specific Spec Kit governance when backend files are in scope.
 - `.specify/memory/constitution-frontend.md` - frontend-specific Spec Kit governance when frontend files are in scope.
@@ -57,7 +57,7 @@ If a referenced architecture document does not exist, do not invent rules from i
 - `backend/src/SmartMovieCatalog.Contracts/` - public API contracts.
 - `backend/tests/` - backend test projects.
 - `frontend/` - Angular SPA.
-- `docs/` - project documentation when present.
+- `eng/docs/` - project documentation when present.
 
 Do not read, modify, or base analysis on generated/vendor output unless explicitly required:
 - `node_modules/`

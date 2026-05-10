@@ -17,10 +17,10 @@
 
 **Purpose**: Prepare the feature slice structure and shared contract surface.
 
-- [ ] T001 Create the details contract file `backend/src/SmartMovieCatalog.Contracts/Movies/MovieDetailsResponse.cs`
-- [ ] T002 Create application get-by-id query/handler files under `backend/src/SmartMovieCatalog.Application/Features/Movies/`
-- [ ] T003 [P] Create API endpoint slice folder `backend/src/SmartMovieCatalog.Api/Features/Movies/GetMovieById/`
-- [ ] T004 [P] Create frontend details page folder `frontend/src/app/movies/movie-details-page/`
+- [X] T001 Create the details contract file `backend/src/SmartMovieCatalog.Contracts/Movies/MovieDetailsResponse.cs`
+- [X] T002 Create application get-by-id query/handler files under `backend/src/SmartMovieCatalog.Application/Features/Movies/`
+- [X] T003 [P] Create API endpoint slice folder `backend/src/SmartMovieCatalog.Api/Features/Movies/GetMovieById/`
+- [X] T004 [P] Create frontend details page folder `frontend/src/app/movies/movie-details-page/`
 ---
 
 ## Phase 2: Foundational (Blocking Prerequisites)
@@ -29,12 +29,12 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Extend repository abstraction with single-movie lookup in `backend/src/SmartMovieCatalog.Application/Abstractions/Persistence/IMovieRepository.cs`
-- [ ] T006 Implement single-movie lookup with genres include in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/EfMovieRepository.cs`
-- [ ] T007 [P] Update application fake repository for new lookup contract in `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakeMovieRepository.cs`
-- [ ] T008 [P] Update API fake repository for new lookup contract in `backend/tests/SmartMovieCatalog.Api.Tests/TestSupport/FakeMovieRepository.cs`
-- [ ] T009 Add frontend details models in `frontend/src/app/movies/movie.models.ts`
-- [ ] T010 Add typed details API method in `frontend/src/app/movies/movies-api.ts`
+- [X] T005 Extend repository abstraction with single-movie lookup in `backend/src/SmartMovieCatalog.Application/Abstractions/Persistence/IMovieRepository.cs`
+- [X] T006 Implement single-movie lookup with genres include in `backend/src/SmartMovieCatalog.Infrastructure/Persistence/EfMovieRepository.cs`
+- [X] T007 [P] Update application fake repository for new lookup contract in `backend/tests/SmartMovieCatalog.Application.Tests/TestSupport/FakeMovieRepository.cs`
+- [X] T008 [P] Update API fake repository for new lookup contract in `backend/tests/SmartMovieCatalog.Api.Tests/TestSupport/FakeMovieRepository.cs`
+- [X] T009 Add frontend details models in `frontend/src/app/movies/movie.models.ts`
+- [X] T010 Add typed details API method in `frontend/src/app/movies/movies-api.ts`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin.
 
@@ -48,15 +48,15 @@
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Implement application details projection model in `backend/src/SmartMovieCatalog.Application/Features/Movies/`
-- [ ] T012 [US1] Implement get-by-id query handler orchestration in `backend/src/SmartMovieCatalog.Application/Features/Movies/`
-- [ ] T013 [US1] Implement `GET /api/movies/{id}` endpoint response mapping in `backend/src/SmartMovieCatalog.Api/Features/Movies/GetMovieById/GetMovieByIdEndpoint.cs`
-- [ ] T014 [US1] Register details endpoint mapping in `backend/src/SmartMovieCatalog.Api/Features/Movies/MoviesEndpoints.cs`
-- [ ] T015 [US1] Add details page component logic in `frontend/src/app/movies/movie-details-page/movie-details-page.ts`
-- [ ] T016 [P] [US1] Add details page template in `frontend/src/app/movies/movie-details-page/movie-details-page.html`
-- [ ] T017 [P] [US1] Add details page styling in `frontend/src/app/movies/movie-details-page/movie-details-page.css`
-- [ ] T018 [US1] Register `/movies/:id` route in `frontend/src/main.ts`
-- [ ] T019 [US1] Confirm and adjust catalog navigation links to details in `frontend/src/app/catalog/catalog-page/catalog-page.ts` and `frontend/src/app/catalog/catalog-page/catalog-page.html`
+- [X] T011 [US1] Implement application details projection model in `backend/src/SmartMovieCatalog.Application/Features/Movies/`
+- [X] T012 [US1] Implement get-by-id query handler orchestration in `backend/src/SmartMovieCatalog.Application/Features/Movies/`
+- [X] T013 [US1] Implement `GET /api/movies/{id}` endpoint response mapping in `backend/src/SmartMovieCatalog.Api/Features/Movies/GetMovieById/GetMovieByIdEndpoint.cs`
+- [X] T014 [US1] Register details endpoint mapping in `backend/src/SmartMovieCatalog.Api/Features/Movies/MoviesEndpoints.cs`
+- [X] T015 [US1] Add details page component logic in `frontend/src/app/movies/movie-details-page/movie-details-page.ts`
+- [X] T016 [P] [US1] Add details page template in `frontend/src/app/movies/movie-details-page/movie-details-page.html`
+- [X] T017 [P] [US1] Add details page styling in `frontend/src/app/movies/movie-details-page/movie-details-page.css`
+- [X] T018 [US1] Register `/movies/:id` route in `frontend/src/main.ts`
+- [X] T019 [US1] Confirm and adjust catalog navigation links to details in `frontend/src/app/catalog/catalog-page/catalog-page.ts` and `frontend/src/app/catalog/catalog-page/catalog-page.html`
 
 **Checkpoint**: User Story 1 is functional and can be validated independently.
 
@@ -70,10 +70,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T020 [US2] Add application not-found result type in `backend/src/SmartMovieCatalog.Application/Features/Movies/`
-- [ ] T021 [US2] Update get-by-id handler to return success/failure result in `backend/src/SmartMovieCatalog.Application/Features/Movies/`
-- [ ] T022 [US2] Map not-found result to RFC7807 response in `backend/src/SmartMovieCatalog.Api/Features/Movies/GetMovieById/GetMovieByIdEndpoint.cs`
-- [ ] T023 [US2] Add details page not-found state rendering in `frontend/src/app/movies/movie-details-page/movie-details-page.ts` and `frontend/src/app/movies/movie-details-page/movie-details-page.html`
+- [X] T020 [US2] Add application not-found result type in `backend/src/SmartMovieCatalog.Application/Features/Movies/`
+- [X] T021 [US2] Update get-by-id handler to return success/failure result in `backend/src/SmartMovieCatalog.Application/Features/Movies/`
+- [X] T022 [US2] Map not-found result to RFC7807 response in `backend/src/SmartMovieCatalog.Api/Features/Movies/GetMovieById/GetMovieByIdEndpoint.cs`
+- [X] T023 [US2] Add details page not-found state rendering in `frontend/src/app/movies/movie-details-page/movie-details-page.ts` and `frontend/src/app/movies/movie-details-page/movie-details-page.html`
 
 **Checkpoint**: User Story 2 is functional and can be validated independently.
 
@@ -87,9 +87,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T024 [US3] Add details load-state model for generic failure handling in `frontend/src/app/movies/movie.models.ts`
-- [ ] T025 [US3] Implement HTTP error classification (404 vs other failures) in `frontend/src/app/movies/movie-details-page/movie-details-page.ts`
-- [ ] T026 [US3] Add failure UI state in `frontend/src/app/movies/movie-details-page/movie-details-page.html` and `frontend/src/app/movies/movie-details-page/movie-details-page.css`
+- [X] T024 [US3] Add details load-state model for generic failure handling in `frontend/src/app/movies/movie.models.ts`
+- [X] T025 [US3] Implement HTTP error classification (404 vs other failures) in `frontend/src/app/movies/movie-details-page/movie-details-page.ts`
+- [X] T026 [US3] Add failure UI state in `frontend/src/app/movies/movie-details-page/movie-details-page.html` and `frontend/src/app/movies/movie-details-page/movie-details-page.css`
 
 **Checkpoint**: User Story 3 is functional and can be validated independently.
 
@@ -99,10 +99,10 @@
 
 **Purpose**: Final consistency updates across docs and verification.
 
-- [ ] T027 [P] Document new endpoint and response contract in `docs/API.md`
-- [ ] T028 [P] Document frontend route/details behavior in `docs/FRONTEND.md`
-- [ ] T029 Verify backend build and tests from `SmartMovieCatalog.slnx`
-- [ ] T030 Verify frontend build and tests from `frontend/package.json`
+- [X] T027 [P] Document new endpoint and response contract in `docs/API.md`
+- [X] T028 [P] Document frontend route/details behavior in `docs/FRONTEND.md`
+- [X] T029 Verify backend build and tests from `SmartMovieCatalog.slnx`
+- [X] T030 Verify frontend build and tests from `frontend/package.json`
 
 ---
 
