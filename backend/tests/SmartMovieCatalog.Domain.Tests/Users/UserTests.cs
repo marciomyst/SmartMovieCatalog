@@ -25,7 +25,7 @@ public sealed class UserTests
     [Fact]
     public void Create_WithoutRoles_Throws()
     {
-        Assert.Throws<ArgumentException>(() => User.Create(
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => User.Create(
             UserId.New(),
             EmailAddress.Create("user@example.com"),
             "Example User",
@@ -33,6 +33,9 @@ public sealed class UserTests
             [],
             mustChangePasswordOnFirstLogin: false,
             DateTimeOffset.UtcNow));
+
+        Assert.Equal("roles", exception.ParamName);
+        Assert.Contains("at least one role", exception.Message);
     }
 
     [Fact]
@@ -86,6 +89,17 @@ public sealed class UserTests
 
         Assert.Equal("new-hash", user.PasswordHash);
         Assert.Equal(updatedAtUtc, user.UpdatedAtUtc);
+    }
+
+    [Fact]
+    public void SetPasswordHash_WithBlankValue_Throws()
+    {
+        User user = CreateUser();
+
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => user.SetPasswordHash(" ", DateTimeOffset.UtcNow));
+
+        Assert.Equal("passwordHash", exception.ParamName);
+        Assert.Contains("null or whitespace", exception.Message);
     }
 
     private static User CreateUser(DateTimeOffset? createdAtUtc = null)

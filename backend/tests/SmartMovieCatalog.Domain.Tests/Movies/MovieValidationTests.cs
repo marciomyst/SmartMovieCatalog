@@ -7,7 +7,10 @@ public sealed class MovieValidationTests
     [Fact]
     public void Create_WithEmptyMovieId_Throws()
     {
-        Assert.Throws<ArgumentException>(() => MovieId.From(Guid.Empty));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => MovieId.From(Guid.Empty));
+
+        Assert.Equal("value", exception.ParamName);
+        Assert.Contains("Movie id cannot be empty.", exception.Message);
     }
 
     [Fact]
@@ -21,25 +24,46 @@ public sealed class MovieValidationTests
         Assert.Equal(id.ToString(), movieId.ToString());
     }
 
+    [Fact]
+    public void Create_WithBoundaryReleaseYearValues_AcceptsLowerAndUpperBounds()
+    {
+        int upperBoundReleaseYear = DateTimeOffset.UtcNow.Year + 1;
+
+        Movie lowerBoundMovie = CreateMovie(releaseYear: 1888);
+        Movie upperBoundMovie = CreateMovie(releaseYear: upperBoundReleaseYear);
+
+        Assert.Equal(1888, lowerBoundMovie.ReleaseYear);
+        Assert.Equal(upperBoundReleaseYear, upperBoundMovie.ReleaseYear);
+    }
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
     public void Create_WithBlankTitle_Throws(string? title)
     {
-        Assert.Throws<ArgumentException>(() => CreateMovie(title: title));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => CreateMovie(title: title));
+
+        Assert.Equal("title", exception.ParamName);
+        Assert.Contains("null or whitespace", exception.Message);
     }
 
     [Fact]
     public void Create_WithReleaseYearBeforeFirstFilmYear_Throws()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => CreateMovie(releaseYear: 1887));
+        ArgumentOutOfRangeException exception = Assert.Throws<ArgumentOutOfRangeException>(() => CreateMovie(releaseYear: 1887));
+
+        Assert.Equal("releaseYear", exception.ParamName);
+        Assert.Contains("between 1888 and", exception.Message);
     }
 
     [Fact]
     public void Create_WithReleaseYearAfterNextCalendarYear_Throws()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => CreateMovie(releaseYear: DateTimeOffset.UtcNow.Year + 2));
+        ArgumentOutOfRangeException exception = Assert.Throws<ArgumentOutOfRangeException>(() => CreateMovie(releaseYear: DateTimeOffset.UtcNow.Year + 2));
+
+        Assert.Equal("releaseYear", exception.ParamName);
+        Assert.Contains("between 1888 and", exception.Message);
     }
 
     [Theory]
@@ -48,7 +72,10 @@ public sealed class MovieValidationTests
     [InlineData("B1")]
     public void Create_WithInvalidCountryCode_Throws(string countryCode)
     {
-        Assert.Throws<ArgumentException>(() => CreateMovie(countryCode: countryCode));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => CreateMovie(countryCode: countryCode));
+
+        Assert.Equal("countryCode", exception.ParamName);
+        Assert.Contains("Country code must contain exactly two letters.", exception.Message);
     }
 
     [Theory]
@@ -57,7 +84,10 @@ public sealed class MovieValidationTests
     [InlineData("   ")]
     public void Create_WithBlankOriginalLanguage_Throws(string? originalLanguage)
     {
-        Assert.Throws<ArgumentException>(() => CreateMovie(originalLanguage: originalLanguage));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => CreateMovie(originalLanguage: originalLanguage));
+
+        Assert.Equal("originalLanguage", exception.ParamName);
+        Assert.Contains("null or whitespace", exception.Message);
     }
 
     [Theory]
@@ -65,7 +95,10 @@ public sealed class MovieValidationTests
     [InlineData(-1)]
     public void Create_WithNonPositiveDuration_Throws(int durationMinutes)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => CreateMovie(durationMinutes: durationMinutes));
+        ArgumentOutOfRangeException exception = Assert.Throws<ArgumentOutOfRangeException>(() => CreateMovie(durationMinutes: durationMinutes));
+
+        Assert.Equal("durationMinutes", exception.ParamName);
+        Assert.Contains("Duration must be positive when supplied.", exception.Message);
     }
 
     [Fact]
@@ -82,7 +115,10 @@ public sealed class MovieValidationTests
     [InlineData(-1)]
     public void Create_WithNonPositiveExternalId_Throws(int externalId)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => CreateMovie(externalId: externalId));
+        ArgumentOutOfRangeException exception = Assert.Throws<ArgumentOutOfRangeException>(() => CreateMovie(externalId: externalId));
+
+        Assert.Equal("externalId", exception.ParamName);
+        Assert.Contains("External ID must be positive when supplied.", exception.Message);
     }
 
     [Theory]
@@ -112,7 +148,10 @@ public sealed class MovieValidationTests
     [InlineData("/p\\example-card.jpg")]
     public void Create_WithNonRelativeImage_Throws(string image)
     {
-        Assert.Throws<ArgumentException>(() => CreateMovie(image: image));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => CreateMovie(image: image));
+
+        Assert.Equal("image", exception.ParamName);
+        Assert.Contains("Image must be a relative path.", exception.Message);
     }
 
     [Fact]
@@ -134,7 +173,10 @@ public sealed class MovieValidationTests
     [Fact]
     public void Genre_WithBlankName_Throws()
     {
-        Assert.Throws<ArgumentException>(() => Genre.Create(GenreId.New(), " ", externalId: null));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => Genre.Create(GenreId.New(), " ", externalId: null));
+
+        Assert.Equal("name", exception.ParamName);
+        Assert.Contains("null or whitespace", exception.Message);
     }
 
     [Fact]
@@ -142,7 +184,10 @@ public sealed class MovieValidationTests
     {
         Genre genre = Genre.Create(GenreId.New(), "Drama", externalId: null);
 
-        Assert.Throws<ArgumentException>(() => MovieGenre.Create(Guid.Empty, genre));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => MovieGenre.Create(Guid.Empty, genre));
+
+        Assert.Equal("movieId", exception.ParamName);
+        Assert.Contains("Movie id cannot be empty.", exception.Message);
     }
 
     [Fact]

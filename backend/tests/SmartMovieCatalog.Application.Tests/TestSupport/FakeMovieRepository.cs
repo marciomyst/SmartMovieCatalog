@@ -9,6 +9,8 @@ public sealed class FakeMovieRepository : IMovieRepository
 
     public IReadOnlyCollection<Movie> Movies => _movies.AsReadOnly();
 
+    public int SaveChangesCallCount { get; private set; }
+
     public Task AddAsync(Movie movie, CancellationToken cancellationToken)
     {
         _movies.Add(movie);
@@ -51,6 +53,7 @@ public sealed class FakeMovieRepository : IMovieRepository
 
     public Task SaveChangesAsync(CancellationToken cancellationToken)
     {
+        SaveChangesCallCount++;
         return Task.CompletedTask;
     }
 

@@ -1,0 +1,13 @@
+{
+  "stryker-config": {
+    "project": "SmartMovieCatalog.Application.csproj",
+    "test-runner": "vstest",
+    "reporters": [ "Progress", "Html", "Json" ],
+    "thresholds": {
+      "high": 80,
+      "low": 70,
+      "break": 60
+    },
+    "mutation-level": "Standard"
+  }
+}

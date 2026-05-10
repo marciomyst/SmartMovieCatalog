@@ -16,7 +16,10 @@ public sealed class UserIdTests
     [Fact]
     public void From_WithEmptyGuid_Throws()
     {
-        Assert.Throws<ArgumentException>(() => UserId.From(Guid.Empty));
+        ArgumentException exception = Assert.Throws<ArgumentException>(() => UserId.From(Guid.Empty));
+
+        Assert.Equal("value", exception.ParamName);
+        Assert.Contains("User id cannot be empty.", exception.Message);
     }
 
     [Fact]

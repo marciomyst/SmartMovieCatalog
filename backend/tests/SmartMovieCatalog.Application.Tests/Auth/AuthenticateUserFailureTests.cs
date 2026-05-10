@@ -6,6 +6,27 @@ namespace SmartMovieCatalog.Application.Tests.Auth;
 
 public sealed class AuthenticateUserFailureTests
 {
+    [Theory]
+    [InlineData(null, "Password123!")]
+    [InlineData("", "Password123!")]
+    [InlineData("   ", "Password123!")]
+    [InlineData("user@example.com", null)]
+    [InlineData("user@example.com", "")]
+    [InlineData("user@example.com", "   ")]
+    public async Task AuthenticateAsync_WithBlankEmailOrPassword_ReturnsGenericFailure(string? email, string? password)
+    {
+        AuthenticateUser useCase = CreateUseCase(new FakeUserRepository());
+
+        Result<AuthenticatedUser, AuthenticationFailure> result = await useCase.AuthenticateAsync(
+            email,
+            password,
+            CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationFailure.InvalidCredentials, result.Error);
+    }
+
     [Fact]
     public async Task AuthenticateAsync_WithWrongPassword_ReturnsGenericFailure()
     {

@@ -18,6 +18,15 @@ public sealed class ResultTests
     }
 
     [Fact]
+    public void Success_WithNullValue_ThrowsArgumentNullException()
+    {
+        ArgumentNullException exception = Assert.Throws<ArgumentNullException>(
+            () => Result<string, string>.Success(null!));
+
+        Assert.Equal("value", exception.ParamName);
+    }
+
+    [Fact]
     public void Failure_CreatesFailedResult()
     {
         Result<string, string> result = Result<string, string>.Failure("error");
@@ -31,11 +40,22 @@ public sealed class ResultTests
     }
 
     [Fact]
+    public void Failure_WithNullError_ThrowsArgumentNullException()
+    {
+        ArgumentNullException exception = Assert.Throws<ArgumentNullException>(
+            () => Result<string, string>.Failure(null!));
+
+        Assert.Equal("error", exception.ParamName);
+    }
+
+    [Fact]
     public void Value_OnFailedResult_Throws()
     {
         Result<string, string> result = Result<string, string>.Failure("error");
 
-        Assert.Throws<InvalidOperationException>(() => result.Value);
+        InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => result.Value);
+
+        Assert.Equal("Cannot access the value of a failed result.", exception.Message);
     }
 
     [Fact]
@@ -43,6 +63,30 @@ public sealed class ResultTests
     {
         Result<string, string> result = Result<string, string>.Success("value");
 
-        Assert.Throws<InvalidOperationException>(() => result.Error);
+        InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => result.Error);
+
+        Assert.Equal("Cannot access the error of a successful result.", exception.Message);
+    }
+
+    [Fact]
+    public void Match_WithNullSuccessDelegate_ThrowsArgumentNullException()
+    {
+        Result<string, string> result = Result<string, string>.Success("value");
+
+        ArgumentNullException exception = Assert.Throws<ArgumentNullException>(
+            () => result.Match(null!, error => $"failure:{error}"));
+
+        Assert.Equal("onSuccess", exception.ParamName);
+    }
+
+    [Fact]
+    public void Match_WithNullFailureDelegate_ThrowsArgumentNullException()
+    {
+        Result<string, string> result = Result<string, string>.Success("value");
+
+        ArgumentNullException exception = Assert.Throws<ArgumentNullException>(
+            () => result.Match(value => $"success:{value}", null!));
+
+        Assert.Equal("onFailure", exception.ParamName);
     }
 }

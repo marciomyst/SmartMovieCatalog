@@ -11,8 +11,9 @@ public sealed class GetMovieByIdHandlerTests
     public async Task Handle_WithExistingMovie_ReturnsMovieDetails()
     {
         FakeMovieRepository movies = new();
-        Genre drama = Genre.Create(GenreId.New(), "Drama", externalId: null);
-        Movie movie = CreateMovie("Central do Brasil", drama);
+        Genre zulu = Genre.Create(GenreId.New(), "Zulu", externalId: null);
+        Genre alpha = Genre.Create(GenreId.New(), "Alpha", externalId: null);
+        Movie movie = CreateMovie("Central do Brasil", zulu, alpha);
         await movies.AddAsync(movie, CancellationToken.None);
         GetMovieByIdHandler handler = new(movies);
 
@@ -25,7 +26,7 @@ public sealed class GetMovieByIdHandlerTests
         Assert.Equal(movie.Id, details.Id);
         Assert.Equal("Central do Brasil", details.Title);
         Assert.Equal("BR", details.CountryCode);
-        Assert.Equal(["Drama"], details.Genres);
+        Assert.Equal(["Alpha", "Zulu"], details.Genres);
         Assert.Equal("/p/central.jpg", details.PosterUrl);
     }
 
@@ -43,7 +44,7 @@ public sealed class GetMovieByIdHandlerTests
         Assert.Equal(GetMovieByIdFailure.NotFound, result.Error);
     }
 
-    private static Movie CreateMovie(string title, Genre genre)
+    private static Movie CreateMovie(string title, params Genre[] genres)
     {
         return Movie.Create(
             MovieId.New(),
@@ -52,7 +53,7 @@ public sealed class GetMovieByIdHandlerTests
             1998,
             "BR",
             "pt-BR",
-            [genre],
+            genres,
             "Walter Salles",
             "A retired teacher and a young boy travel through Brazil.",
             110,
